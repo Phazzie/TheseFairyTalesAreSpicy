@@ -1,22 +1,24 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '../lib/supabase.js';
 
-interface PlotThread {
+/** Matches the actual plot_threads DB columns. */
+export interface PlotThreadRecord {
   id: string;
   arc_id: string;
-  title: string;
-  description: string | null;
-  status: 'open' | 'resolved';
-  introduced_chapter: number | null;
-  resolved_chapter: number | null;
+  /** Primary text for the thread — there is no 'title' column. */
+  description: string;
+  status: 'open' | 'resolved' | 'abandoned';
+  planted_in_chapter: number | null;
+  resolved_in_chapter: number | null;
+  expected_payoff_chapter: string | null;
+  thread_type?: string;
   created_at: string;
 }
 
 interface CreatePlotThreadInput {
   arc_id: string;
-  title: string;
-  description?: string;
-  introduced_chapter?: number;
+  description: string;
+  planted_in_chapter?: number;
 }
 
 interface ResolveThreadInput {
@@ -38,7 +40,7 @@ export function useOpenThreads(arcId: string | null) {
         .eq('status', 'open')
         .order('created_at', { ascending: true });
       if (error) throw new Error(error.message);
-      return data as PlotThread[];
+      return data as PlotThreadRecord[];
     },
   });
 }
@@ -53,7 +55,7 @@ export function useCreateThread() {
         .select()
         .single();
       if (error) throw new Error(error.message);
-      return data as PlotThread;
+      return data as PlotThreadRecord;
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['plot-threads', data.arc_id] });
@@ -65,9 +67,9 @@ export function useResolveThread() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ threadId, arcId, resolvedChapter }: ResolveThreadInput) => {
-      const updatePayload: Partial<PlotThread> = { status: 'resolved' };
+      const updatePayload: Partial<PlotThreadRecord> = { status: 'resolved' };
       if (resolvedChapter !== undefined) {
-        updatePayload.resolved_chapter = resolvedChapter;
+        updatePayload.resolved_in_chapter = resolvedChapter;
       }
       const { data, error } = await supabase
         .from('plot_threads')
@@ -76,7 +78,7 @@ export function useResolveThread() {
         .select()
         .single();
       if (error) throw new Error(error.message);
-      return { data: data as PlotThread, arcId };
+      return { data: data as PlotThreadRecord, arcId };
     },
     onSuccess: ({ arcId }) => {
       queryClient.invalidateQueries({ queryKey: ['plot-threads', arcId] });
@@ -100,7 +102,7 @@ export function useAbandonThread() {
         .select()
         .single();
       if (error) throw new Error(error.message);
-      return { data: data as PlotThread, arcId };
+      return { data: data as PlotThreadRecord, arcId };
     },
     onSuccess: ({ arcId }) => {
       queryClient.invalidateQueries({ queryKey: ['plot-threads', arcId] });

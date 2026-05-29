@@ -19,7 +19,8 @@ interface ChapterRecord {
   title: string;
   word_count?: number;
   cliffhanger_type?: string;
-  spice_level?: number;
+  /** Actual DB column name. */
+  spice_level_used?: number;
 }
 
 export default function LibraryScreen() {
@@ -96,7 +97,7 @@ export default function LibraryScreen() {
             title={item.title}
             wordCount={item.word_count}
             cliffhangerType={item.cliffhanger_type}
-            spiceLevel={item.spice_level}
+            spiceLevel={item.spice_level_used}
           />
         )}
       />

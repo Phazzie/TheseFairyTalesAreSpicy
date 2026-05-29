@@ -6,11 +6,13 @@ import {
   ScrollView,
   SafeAreaView,
   RefreshControl,
+  TouchableOpacity,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useArcs } from '../../../hooks/useArcs.js';
 import { useChapters } from '../../../hooks/useChapters.js';
 import { useArcStore } from '../../../stores/arcStore.js';
+import { useAuthStore } from '../../../stores/authStore.js';
 import { Button } from '../../../components/ui/Button.js';
 import { Badge } from '../../../components/ui/Badge.js';
 import { CREATURE_LABELS, SPICE_LEVEL_LABELS } from '../../../lib/constants.js';
@@ -113,6 +115,13 @@ export default function WriteIndexScreen() {
       >
         {/* Header */}
         <View className="gap-1">
+          <TouchableOpacity
+            onPress={() => useAuthStore.getState().signOut()}
+            className="absolute top-4 right-4 p-2"
+            accessibilityLabel="Sign out"
+          >
+            <Text className="text-gray-500 text-sm">Sign out</Text>
+          </TouchableOpacity>
           <Text className="text-gray-400 text-xs uppercase tracking-widest">
             Current Arc
           </Text>

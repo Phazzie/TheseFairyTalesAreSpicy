@@ -57,7 +57,7 @@ const arcBaseSchema = z.object({
   recurringMotif: z.string().max(200).optional(),
   genreBlendPrimary: z.string(),
   genreBlendSecondary: z.string().optional(),
-  genreBlendRatio: z.number().min(0).max(1),
+  genreBlendRatio: z.number().int().min(50).max(100).optional().default(80),
   toneAllowance: z.string(),
   isQuickStart: z.boolean().optional(),
   coverImageUrl: z.string().url().optional(),

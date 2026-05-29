@@ -120,24 +120,29 @@ export const useWizardStore = create<WizardState>()(
   toArcInsert: () => {
     const s = get();
     return {
-      creature_type: s.creatureType,
-      arc_type: 'single_couple',
-      themes: s.themes,
-      default_spice_level: s.spiceLevel,
-      reading_level: s.readingLevel,
-      genre_blend_primary: s.genreBlendPrimary,
-      pov_mode: s.povMode,
+      creatureType: s.creatureType ?? 'vampire',
+      arcType: 'single_couple' as const,
+      themes: s.themes.length > 0 ? s.themes : ['forbidden love'],
+      defaultSpiceLevel: s.spiceLevel,
+      readingLevel: s.readingLevel,
+      genreBlendPrimary: s.genreBlendPrimary || 'romance',
+      genreBlendRatio: s.genreBlendRatio, // 50-100 range
+      povMode: s.povMode || 'third_limited',
       tense: s.tense,
-      narrative_distance: s.narrativeDistance,
-      pacing_rhythm: s.pacingRhythm,
-      atmosphere_archetype: s.atmosphereArchetype,
-      default_sense_primary: s.sensoryPrimary,
-      default_sense_secondary: s.sensoryPrimary === 'visual' ? 'tactile' : 'visual',
-      recurring_motif: s.recurringMotif || undefined,
-      is_quick_start: false,
+      narrativeDistance: s.narrativeDistance,
+      pacingRhythm: s.pacingRhythm,
+      atmosphereArchetype: s.atmosphereArchetype ?? 'contemporary_urban',
+      defaultSensePrimary: s.sensoryPrimary,
+      defaultSenseSecondary: s.sensoryPrimary === 'visual' ? 'tactile' : 'visual',
+      dialogueRatioPct: 40, // default
+      hookDensity: 'medium' as const, // default
+      sceneCountDefault: 1 as const, // default
+      toneAllowance: 'locked' as const, // default
+      recurringMotif: s.recurringMotif || undefined,
+      isQuickStart: false,
       protagonist: s.protagonistName ? {
         displayName: s.protagonistName,
-        species: s.protagonistSpecies || 'human',
+        species: (s.protagonistSpecies || 'human') as 'human' | 'vampire' | 'werewolf' | 'fairy',
         statedDesire: s.protagonistDesire || undefined,
         hiddenNeed: s.protagonistNeed || undefined,
         wound: s.protagonistWound || undefined,
@@ -146,7 +151,7 @@ export const useWizardStore = create<WizardState>()(
       } : undefined,
       loveInterest: s.loveInterestName ? {
         displayName: s.loveInterestName,
-        species: s.loveInterestSpecies || 'human',
+        species: (s.loveInterestSpecies || 'human') as 'human' | 'vampire' | 'werewolf' | 'fairy',
         statedDesire: s.loveInterestDesire || undefined,
         hiddenNeed: s.loveInterestNeed || undefined,
         wound: s.loveInterestWound || undefined,

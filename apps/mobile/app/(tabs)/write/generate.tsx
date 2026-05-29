@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -22,8 +22,14 @@ export default function GenerateScreen() {
   const currentArc = useArcStore((s) => s.currentArc);
   const isGenerating = useArcStore((s) => s.isGenerating);
   const streamingText = useArcStore((s) => s.streamingText);
+  const { clearStreamingText } = useArcStore();
 
   const { generate, cancel } = useGeneration();
+
+  // Clear any leftover streaming text from a previous generation on mount
+  useEffect(() => {
+    clearStreamingText();
+  }, []);
   const [generationComplete, setGenerationComplete] = useState(false);
   const [generateError, setGenerateError] = useState<string | null>(null);
   // showForm controls whether the GenerationPanel is visible; persists across generation
@@ -144,6 +150,7 @@ export default function GenerateScreen() {
             size="sm"
             className="w-full"
             onPress={() => {
+              clearStreamingText();
               setGenerationComplete(false);
               setShowForm(true);
             }}

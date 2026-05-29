@@ -15,16 +15,17 @@ import { Badge } from '../../../components/ui/Badge.js';
 
 type ThreadType = 'chekhov' | 'callback' | 'dramatic_irony' | 'open' | string;
 
+/** Matches the actual plot_threads DB columns. */
 interface PlotThread {
   id: string;
   arc_id: string;
-  title: string;
-  description: string | null;
-  status: 'open' | 'resolved';
-  introduced_chapter: number | null;
-  resolved_chapter: number | null;
+  /** Primary text for the thread — there is no 'title' column. */
+  description: string;
+  status: 'open' | 'resolved' | 'abandoned';
+  planted_in_chapter: number | null;
+  resolved_in_chapter: number | null;
+  expected_payoff_chapter: string | null;
   thread_type?: ThreadType;
-  expected_payoff?: string | null;
   created_at: string;
 }
 
@@ -65,7 +66,7 @@ function ThreadCard({ thread, onTap }: ThreadCardProps) {
     >
       <View className="flex-row items-start justify-between gap-2">
         <Text className="text-white text-base font-semibold flex-1" numberOfLines={2}>
-          {thread.title}
+          {thread.description}
         </Text>
         {thread.thread_type ? (
           <Badge
@@ -75,21 +76,15 @@ function ThreadCard({ thread, onTap }: ThreadCardProps) {
         ) : null}
       </View>
 
-      {thread.description ? (
-        <Text className="text-gray-400 text-sm mt-1 leading-5" numberOfLines={3}>
-          {thread.description}
-        </Text>
-      ) : null}
-
       <View className="flex-row gap-4 mt-2">
-        {thread.introduced_chapter != null ? (
+        {thread.planted_in_chapter != null ? (
           <Text className="text-gray-600 text-xs">
-            Planted ch. {thread.introduced_chapter}
+            Planted ch. {thread.planted_in_chapter}
           </Text>
         ) : null}
-        {thread.expected_payoff ? (
+        {thread.expected_payoff_chapter ? (
           <Text className="text-gray-600 text-xs" numberOfLines={1}>
-            Payoff: {thread.expected_payoff}
+            Payoff: {thread.expected_payoff_chapter}
           </Text>
         ) : null}
       </View>
@@ -124,28 +119,22 @@ function ThreadDetailModal({
         <View className="bg-brand-deep border border-gray-800 rounded-t-3xl px-6 pt-6 pb-10">
           <View className="flex-row items-center justify-between mb-4">
             <Text className="text-white text-xl font-bold flex-1 mr-4" numberOfLines={2}>
-              {thread.title}
+              {thread.description}
             </Text>
             <TouchableOpacity onPress={onClose}>
               <Text className="text-gray-400 text-2xl">✕</Text>
             </TouchableOpacity>
           </View>
 
-          {thread.description ? (
-            <Text className="text-gray-300 text-sm leading-6 mb-4">
-              {thread.description}
-            </Text>
-          ) : null}
-
           <View className="gap-2 mb-6">
-            {thread.introduced_chapter != null ? (
+            {thread.planted_in_chapter != null ? (
               <Text className="text-gray-500 text-sm">
-                Planted in Chapter {thread.introduced_chapter}
+                Planted in Chapter {thread.planted_in_chapter}
               </Text>
             ) : null}
-            {thread.expected_payoff ? (
+            {thread.expected_payoff_chapter ? (
               <Text className="text-gray-500 text-sm">
-                Expected payoff: {thread.expected_payoff}
+                Expected payoff: {thread.expected_payoff_chapter}
               </Text>
             ) : null}
           </View>
@@ -179,8 +168,8 @@ function ThreadDetailModal({
             <View className="bg-green-900/30 border border-green-700/50 rounded-xl p-3">
               <Text className="text-green-300 text-sm text-center font-semibold">
                 Resolved
-                {thread.resolved_chapter != null
-                  ? ` in Chapter ${thread.resolved_chapter}`
+                {thread.resolved_in_chapter != null
+                  ? ` in Chapter ${thread.resolved_in_chapter}`
                   : ''}
               </Text>
             </View>

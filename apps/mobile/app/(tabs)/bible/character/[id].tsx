@@ -10,10 +10,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   Modal,
-  TextInput,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useArc } from '../../../../hooks/useArcs.js';
+import { useArcWithDetails } from '../../../../hooks/useArcs.js';
 import { useArcStore } from '../../../../stores/arcStore.js';
 import { Card } from '../../../../components/ui/Card.js';
 import { Button } from '../../../../components/ui/Button.js';
@@ -39,7 +38,16 @@ interface EditModalProps {
 }
 
 function EditModal({ visible, character, onClose, onSave }: EditModalProps) {
-  const [form, setForm] = useState<CharacterRecord>({ ...character });
+  const [form, setForm] = useState<CharacterRecord>({
+    ...character,
+    // Ensure correct column names are pre-filled
+    display_name: character.display_name ?? '',
+    stated_desire: character.stated_desire ?? '',
+    hidden_need: character.hidden_need ?? '',
+    wound: character.wound ?? '',
+    flaw: character.flaw ?? '',
+    lie: character.lie ?? '',
+  });
 
   const field = (key: string) => (text: string) =>
     setForm((f) => ({ ...f, [key]: text }));
@@ -62,8 +70,8 @@ function EditModal({ visible, character, onClose, onSave }: EditModalProps) {
               <View className="gap-4">
                 <Input
                   label="Name"
-                  value={form.name as string}
-                  onChangeText={field('name')}
+                  value={form.display_name as string}
+                  onChangeText={field('display_name')}
                 />
                 <Input
                   label="Species"
@@ -124,20 +132,22 @@ export default function CharacterDetailScreen() {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
   const currentArcId = useArcStore((s) => s.currentArcId);
-  const { data: arc, isLoading, error } = useArc(currentArcId);
+  const { data, isLoading, error } = useArcWithDetails(currentArcId);
   const [editVisible, setEditVisible] = useState(false);
   const queryClient = useQueryClient();
 
   const updateCharacterMutation = useMutation({
-    mutationFn: async ({ characterId, patch }: { characterId: string; patch: Record<string, unknown> }) => {
+    mutationFn: async ({ characterId, updated }: { characterId: string; updated: CharacterRecord }) => {
+      // Exclude read-only / relational fields from the update payload
+      const { id: _id, arc_id: _arcId, created_at: _createdAt, ...updatePayload } = updated;
       const { error: updateError } = await supabase
         .from('characters')
-        .update(patch)
+        .update(updatePayload)
         .eq('id', characterId);
       if (updateError) throw new Error(updateError.message);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['arcs', currentArcId] });
+      queryClient.invalidateQueries({ queryKey: ['arc-details', currentArcId] });
     },
   });
 
@@ -149,7 +159,7 @@ export default function CharacterDetailScreen() {
     );
   }
 
-  if (error || !arc) {
+  if (error || !data?.arc) {
     return (
       <SafeAreaView className="flex-1 bg-brand-deep items-center justify-center px-6">
         <Text className="text-red-400 text-base text-center">
@@ -162,16 +172,12 @@ export default function CharacterDetailScreen() {
     );
   }
 
-  const arcRecord = arc as Record<string, unknown>;
-  const protagonist = arcRecord.protagonist as CharacterRecord | undefined;
-  const loveInterest = arcRecord.love_interest as CharacterRecord | undefined;
+  const characters = data.characters as CharacterRecord[];
 
   const character: CharacterRecord | undefined =
-    protagonist?.id === id || id === 'protagonist'
-      ? protagonist
-      : loveInterest?.id === id || id === 'love_interest'
-      ? loveInterest
-      : protagonist; // fallback
+    characters.find((c) => c.id === id) ??
+    characters.find((c) => c.is_protagonist) ?? // fallback to protagonist
+    undefined;
 
   if (!character) {
     return (
@@ -212,7 +218,7 @@ export default function CharacterDetailScreen() {
         {/* Name + species */}
         <View className="gap-1">
           <Text className="text-white text-3xl font-bold">
-            {(character.name as string | undefined) ?? 'Unknown'}
+            {(character.display_name as string | undefined) ?? 'Unknown'}
           </Text>
           <Text className="text-gray-400 text-sm capitalize">
             {(character.species as string | undefined) ?? '—'}
@@ -312,7 +318,7 @@ export default function CharacterDetailScreen() {
         character={character}
         onClose={() => setEditVisible(false)}
         onSave={(updated) => {
-          updateCharacterMutation.mutate({ characterId: character.id, patch: updated });
+          updateCharacterMutation.mutate({ characterId: character.id as string, updated });
           setEditVisible(false);
         }}
       />

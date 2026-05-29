@@ -59,9 +59,9 @@ export default function WizardStep4() {
           value={povMode}
           onChange={(v) => setField('povMode', v)}
           options={[
-            { label: '1st Person', value: 'first_person_singular' },
-            { label: '3rd Close', value: 'third_person_close' },
-            { label: '3rd Omni', value: 'third_person_omniscient' },
+            { label: '1st Person', value: 'first_person' },
+            { label: '3rd Close', value: 'third_limited' },
+            { label: '3rd Omni', value: 'third_omniscient' },
           ]}
         />
 

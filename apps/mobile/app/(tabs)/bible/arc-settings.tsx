@@ -26,7 +26,7 @@ export default function ArcSettingsScreen() {
   const { data: arc, isLoading, error } = useArc(currentArcId);
 
   const [spiceLevel, setSpiceLevel] = useState(3);
-  const [povMode, setPovMode] = useState('first_person_singular');
+  const [povMode, setPovMode] = useState('first_person');
   const [tense, setTense] = useState('past');
   const [narrativeDistance, setNarrativeDistance] = useState('close');
   const [pacing, setPacing] = useState('slow_burn');
@@ -130,9 +130,9 @@ export default function ArcSettingsScreen() {
             value={povMode}
             onChange={setPovMode}
             options={[
-              { label: '1st Person', value: 'first_person_singular' },
-              { label: '3rd Close', value: 'third_person_close' },
-              { label: '3rd Omni', value: 'third_person_omniscient' },
+              { label: '1st Person', value: 'first_person' },
+              { label: '3rd Close', value: 'third_limited' },
+              { label: '3rd Omni', value: 'third_omniscient' },
             ]}
           />
 

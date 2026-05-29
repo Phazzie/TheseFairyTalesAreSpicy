@@ -78,7 +78,9 @@ export default function LoginScreen() {
       setAuthError('Please enter your email address above, then tap "Forgot password?".');
       return;
     }
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'spicyfairytales://auth/reset-password',
+    });
     if (error) {
       setAuthError(getAuthErrorMessage(error));
     } else {

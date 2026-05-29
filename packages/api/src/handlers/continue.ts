@@ -15,7 +15,7 @@ import {
 } from '@story/engine';
 import { assembleArcContext } from '../db/continuityInjector.js';
 import { getProfile, incrementGenerationCount, resetGenerationCountIfExpired } from '../db/profiles.js';
-import { getChapter, saveChapter, getChaptersByArc } from '../db/chapters.js';
+import { getChapter, saveChapter, publishChapter, getChaptersByArc } from '../db/chapters.js';
 import { createThread } from '../db/plotThreads.js';
 import { saveSummary } from '../db/arcSummaries.js';
 import { generateStoryStreaming, generateSummary } from '../clients/grok.js';
@@ -125,6 +125,10 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
 
   const responseStream = new ReadableStream({
     async start(controller) {
+      let closed = false;
+      const safeClose = () => { if (!closed) { closed = true; controller.close(); } };
+      const safeEnqueue = (data: Uint8Array) => { if (!closed) controller.enqueue(data); };
+
       const reader = stream.getReader();
       try {
         while (true) {
@@ -133,7 +137,7 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
           fullText += value;
           // Send SSE event
           const sseEvent = `data: ${JSON.stringify({ type: 'token', content: value })}\n\n`;
-          controller.enqueue(encoder.encode(sseEvent));
+          safeEnqueue(encoder.encode(sseEvent));
         }
 
         // Post-process
@@ -165,11 +169,13 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
           cliffhangerType,
           spiceLevelUsed: spiceUsed,
           engineVersion: assembled.engineVersion,
-          status: 'published' as const,
+          status: 'draft' as const,
           generationAttempt: 1,
           droppedModules: assembled.droppedModules,
           systemPromptUsed: assembled.prompt,
         });
+        // Atomically archive any prior published chapter and publish this one
+        await publishChapter(chapterId);
 
         // Create plot threads for seeded Chekhov elements
         await Promise.all(
@@ -195,8 +201,7 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
           wordCount: displayText.split(/\s+/).length,
           droppedModules: assembled.droppedModules,
         })}\n\n`;
-        controller.enqueue(encoder.encode(completionEvent));
-        controller.close();
+        safeEnqueue(encoder.encode(completionEvent));
 
         // Non-blocking: generate rolling summary if due
         const shouldSummarize = body.chapterNumber % 5 === 0;
@@ -211,8 +216,9 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
           type: 'error',
           message: 'Generation failed mid-stream',
         })}\n\n`;
-        controller.enqueue(encoder.encode(errorEvent));
-        controller.close();
+        safeEnqueue(encoder.encode(errorEvent));
+      } finally {
+        safeClose();
       }
     },
   });

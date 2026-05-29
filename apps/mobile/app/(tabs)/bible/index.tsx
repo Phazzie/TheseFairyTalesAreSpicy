@@ -9,7 +9,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useArc } from '../../../hooks/useArcs.js';
+import { useArcWithDetails } from '../../../hooks/useArcs.js';
 import { useArcStore } from '../../../stores/arcStore.js';
 import { Card } from '../../../components/ui/Card.js';
 import { Badge } from '../../../components/ui/Badge.js';
@@ -19,7 +19,7 @@ import { CREATURE_LABELS } from '../../../lib/constants.js';
 export default function BibleIndexScreen() {
   const router = useRouter();
   const currentArcId = useArcStore((s) => s.currentArcId);
-  const { data: arc, isLoading, error, refetch } = useArc(currentArcId);
+  const { data, isLoading, error, refetch } = useArcWithDetails(currentArcId);
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -46,7 +46,7 @@ export default function BibleIndexScreen() {
     );
   }
 
-  if (!arc) {
+  if (!data?.arc) {
     return (
       <SafeAreaView className="flex-1 bg-brand-deep items-center justify-center px-6">
         <Text className="text-4xl mb-4">📖</Text>
@@ -66,19 +66,17 @@ export default function BibleIndexScreen() {
     );
   }
 
-  const arcRecord = arc as Record<string, unknown>;
+  const arcRecord = data.arc as Record<string, unknown>;
+  const characters = data.characters as Record<string, unknown>[];
+  const creatureLore = data.creatureLore as Record<string, unknown> | null;
+  const worldNotes = data.worldNotes as unknown[];
+
   const isQuickStart = arcRecord.is_quick_start as boolean | undefined;
-  const protagonist = arcRecord.protagonist as Record<string, unknown> | undefined;
-  const loveInterest = arcRecord.love_interest as Record<string, unknown> | undefined;
-  const creatureLore = arcRecord.creature_lore as Record<string, unknown> | undefined;
   const creatureType = arcRecord.creature_type as string | undefined;
   const recurringMotif = arcRecord.recurring_motif as string | undefined;
-  const worldNotes = arcRecord.world_notes as unknown[] | undefined;
 
-  const characters = [protagonist, loveInterest].filter(Boolean) as Record<
-    string,
-    unknown
-  >[];
+  const protagonist = characters.find((c) => c.is_protagonist);
+  const loveInterest = characters.find((c) => !c.is_protagonist);
 
   return (
     <SafeAreaView className="flex-1 bg-brand-deep">
@@ -125,9 +123,9 @@ export default function BibleIndexScreen() {
           {characters.length === 0 ? (
             <Text className="text-gray-500 text-sm italic">No characters defined.</Text>
           ) : (
-            characters.map((char, i) => {
-              const charId = (char.id as string | undefined) ?? String(i);
-              const isProtagonist = i === 0;
+            characters.map((char) => {
+              const charId = (char.id as string | undefined) ?? String(Math.random());
+              const isProtag = char.is_protagonist as boolean | undefined;
               return (
                 <Card
                   key={charId}
@@ -138,9 +136,9 @@ export default function BibleIndexScreen() {
                     <View className="flex-1">
                       <View className="flex-row items-center gap-2">
                         <Text className="text-white text-base font-semibold">
-                          {(char.name as string | undefined) ?? 'Unknown'}
+                          {(char.display_name as string | undefined) ?? 'Unknown'}
                         </Text>
-                        {isProtagonist ? (
+                        {isProtag ? (
                           <Badge label="Protagonist" variant="status-open" />
                         ) : (
                           <Badge label="Love Interest" variant="dramatic-irony" />
@@ -174,17 +172,50 @@ export default function BibleIndexScreen() {
               />
             </View>
             <Card className="gap-3">
-              {creatureLore?.rules && (creatureLore.rules as string[]).length > 0 ? (
-                <View>
-                  <Text className="text-gray-500 text-xs uppercase tracking-wide mb-1">
-                    Rules
-                  </Text>
-                  {(creatureLore.rules as string[]).map((rule, i) => (
-                    <Text key={i} className="text-gray-300 text-sm">
-                      • {rule}
+              {creatureLore ? (
+                <>
+                  {creatureLore.rules && (creatureLore.rules as string[]).length > 0 ? (
+                    <View>
+                      <Text className="text-gray-500 text-xs uppercase tracking-wide mb-1">
+                        Rules
+                      </Text>
+                      {(creatureLore.rules as string[]).map((rule, i) => (
+                        <Text key={i} className="text-gray-300 text-sm">
+                          • {rule}
+                        </Text>
+                      ))}
+                    </View>
+                  ) : null}
+                  {creatureLore.weaknesses && (creatureLore.weaknesses as string[]).length > 0 ? (
+                    <View>
+                      <Text className="text-gray-500 text-xs uppercase tracking-wide mb-1">
+                        Weaknesses
+                      </Text>
+                      {(creatureLore.weaknesses as string[]).map((w, i) => (
+                        <Text key={i} className="text-gray-300 text-sm">
+                          • {w}
+                        </Text>
+                      ))}
+                    </View>
+                  ) : null}
+                  {creatureLore.abilities && (creatureLore.abilities as string[]).length > 0 ? (
+                    <View>
+                      <Text className="text-gray-500 text-xs uppercase tracking-wide mb-1">
+                        Abilities
+                      </Text>
+                      {(creatureLore.abilities as string[]).map((a, i) => (
+                        <Text key={i} className="text-gray-300 text-sm">
+                          • {a}
+                        </Text>
+                      ))}
+                    </View>
+                  ) : null}
+                  {!creatureLore.rules && !creatureLore.weaknesses && !creatureLore.abilities ? (
+                    <Text className="text-gray-600 text-sm italic">
+                      No lore defined yet.
                     </Text>
-                  ))}
-                </View>
+                  ) : null}
+                </>
               ) : (
                 <Text className="text-gray-600 text-sm italic">
                   No lore defined yet.

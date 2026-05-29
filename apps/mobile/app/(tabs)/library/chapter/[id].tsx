@@ -23,12 +23,15 @@ interface ChapterRecord {
   title: string;
   content: string;
   word_count?: number;
-  spice_level?: number;
+  /** Actual DB column name. */
+  spice_level_used?: number;
   cliffhanger_type?: string;
-  attempt_count?: number;
+  /** Actual DB column name. */
+  generation_attempt?: number;
   beat_used?: string;
   emotional_arc?: string;
-  dialogue_ratio?: number;
+  /** Actual DB column name. */
+  dialogue_ratio_pct?: number;
   chekhov_seeded?: string[];
   engine_version?: string;
   has_audio?: boolean;
@@ -40,6 +43,8 @@ export default function ChapterDetailScreen() {
   const { data: chapter, isLoading, error, refetch } = useChapter(id ?? null);
   const [metaOpen, setMetaOpen] = useState(false);
   const [regenerating, setRegenerating] = useState(false);
+  // canRegenerate is determined by the server (429 = limit hit), not a client-side count
+  const [canRegenerate, setCanRegenerate] = useState(true);
   const { openUpgradeSheet } = useUIStore();
 
   async function handleRegenerate() {
@@ -58,7 +63,11 @@ export default function ChapterDetailScreen() {
           },
         },
       );
-      if (res.status === 429) { openUpgradeSheet(); return; }
+      if (res.status === 429) {
+        setCanRegenerate(false);
+        openUpgradeSheet();
+        return;
+      }
       if (!res.ok) throw new Error('Regeneration failed');
       router.push('/(tabs)/write/generate' as never);
     } catch {
@@ -104,9 +113,7 @@ export default function ChapterDetailScreen() {
   }
 
   const ch = chapter as unknown as ChapterRecord;
-  const attemptCount = ch.attempt_count ?? 1;
-  const maxAttempts = 3; // pro tier limit; free = 1
-  const canRegenerate = attemptCount < maxAttempts;
+  const generationAttempt = ch.generation_attempt ?? 1;
 
   return (
     <SafeAreaView className="flex-1 bg-brand-deep">
@@ -150,11 +157,11 @@ export default function ChapterDetailScreen() {
 
         {/* Badges row */}
         <View className="flex-row flex-wrap gap-2 mb-6">
-          {ch.spice_level != null ? (
+          {ch.spice_level_used != null ? (
             <Badge
-              label={SPICE_LEVEL_LABELS[ch.spice_level] ?? `Level ${ch.spice_level}`}
+              label={SPICE_LEVEL_LABELS[ch.spice_level_used] ?? `Level ${ch.spice_level_used}`}
               variant="spice"
-              spiceLevel={ch.spice_level}
+              spiceLevel={ch.spice_level_used}
             />
           ) : null}
           {ch.word_count != null ? (
@@ -163,6 +170,10 @@ export default function ChapterDetailScreen() {
               variant="default"
             />
           ) : null}
+          <Badge
+            label={`Attempt ${generationAttempt}`}
+            variant="default"
+          />
         </View>
 
         {/* Meta panel */}
@@ -172,7 +183,7 @@ export default function ChapterDetailScreen() {
               meta={{
                 beatUsed: ch.beat_used,
                 emotionalArc: ch.emotional_arc,
-                dialogueRatio: ch.dialogue_ratio,
+                dialogueRatio: ch.dialogue_ratio_pct,
                 chekhovSeeded: ch.chekhov_seeded,
                 engineVersion: ch.engine_version,
               }}
@@ -190,19 +201,9 @@ export default function ChapterDetailScreen() {
 
         {/* Bottom actions */}
         <View className="mt-10 gap-3">
-          {/* Listen */}
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full"
-            onPress={() =>
-              router.push({
-                pathname: '/audio/[chapterId]',
-                params: { chapterId: ch.id },
-              })
-            }
-          >
-            🎧 Listen to Chapter
+          {/* Listen — feature not yet available */}
+          <Button variant="ghost" size="sm" disabled className="opacity-40 w-full">
+            🎧 Audio Narration — Coming Soon
           </Button>
 
           {/* Regenerate */}
@@ -221,8 +222,8 @@ export default function ChapterDetailScreen() {
             }}
           >
             {canRegenerate
-              ? `Regenerate (${attemptCount}/${maxAttempts} attempts)`
-              : `Max regenerations reached (${attemptCount}/${maxAttempts})`}
+              ? `Regenerate (Attempt ${generationAttempt})`
+              : 'Regeneration limit reached'}
           </Button>
         </View>
       </ScrollView>
