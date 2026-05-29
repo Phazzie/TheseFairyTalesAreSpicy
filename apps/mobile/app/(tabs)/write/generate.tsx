@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useArcStore } from '../../../stores/arcStore.js';
@@ -15,14 +16,16 @@ import { Button } from '../../../components/ui/Button.js';
 
 export default function GenerateScreen() {
   const router = useRouter();
-  const params = useLocalSearchParams<{ arcId: string; chapterNumber: string }>();
+  const params = useLocalSearchParams<{ arcId: string; chapterNumber: string; priorChapterId?: string }>();
   const arcId = params.arcId ?? '';
   const chapterNumber = parseInt(params.chapterNumber ?? '1', 10);
+  const priorChapterId = params.priorChapterId ?? undefined;
 
   const currentArc = useArcStore((s) => s.currentArc);
   const isGenerating = useArcStore((s) => s.isGenerating);
   const streamingText = useArcStore((s) => s.streamingText);
   const { clearStreamingText } = useArcStore();
+  const waitingForFirstToken = isGenerating && streamingText.length === 0;
 
   const { generate, cancel } = useGeneration();
 
@@ -39,7 +42,7 @@ export default function GenerateScreen() {
     | string
     | undefined;
 
-  const handleGenerate = async (params: {
+  const handleGenerate = async (panelParams: {
     arcId: string;
     chapterNumber: number;
     spiceLevelOverride?: number;
@@ -49,7 +52,7 @@ export default function GenerateScreen() {
     setGenerationComplete(false);
     setShowForm(false);
     try {
-      await generate(params);
+      await generate({ ...panelParams, priorChapterId });
       setGenerationComplete(true);
     } catch (err) {
       setGenerateError(err instanceof Error ? err.message : 'Generation failed');
@@ -109,8 +112,18 @@ export default function GenerateScreen() {
           </View>
         ) : null}
 
+        {/* Waiting for first token — show a loading indicator so it doesn't look like a crash */}
+        {waitingForFirstToken && (
+          <View className="flex-1 items-center justify-center px-8">
+            <ActivityIndicator color="#7c3aed" size="large" />
+            <Text className="text-gray-400 text-sm mt-4 text-center">
+              Conjuring your story…{'\n'}This typically takes 30–60 seconds.
+            </Text>
+          </View>
+        )}
+
         {/* Streaming output */}
-        {(isGenerating || streamingText) ? (
+        {!waitingForFirstToken && (streamingText.length > 0 || isGenerating) ? (
           <View className="flex-1 min-h-96">
             <StreamingText />
           </View>

@@ -7,6 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 import { queryClient } from '../lib/queryClient.js';
 import { supabase } from '../lib/supabase.js';
 import { useAuthStore } from '../stores/authStore.js';
+import { ErrorBoundary } from '../components/ErrorBoundary.js';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -30,11 +31,13 @@ export default function RootLayout() {
   }, [setSession, setIsLoading]);
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <QueryClientProvider client={queryClient}>
-        <Stack screenOptions={{ headerShown: false }} />
-        <StatusBar style="light" />
-      </QueryClientProvider>
-    </GestureHandlerRootView>
+    <ErrorBoundary>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <QueryClientProvider client={queryClient}>
+          <Stack screenOptions={{ headerShown: false }} />
+          <StatusBar style="light" />
+        </QueryClientProvider>
+      </GestureHandlerRootView>
+    </ErrorBoundary>
   );
 }

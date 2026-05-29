@@ -167,6 +167,14 @@ export default function WriteIndexScreen() {
           </View>
         )}
 
+        {/* Welcome callout — shown only when user just created their first arc with no chapters yet */}
+        {arcs && arcs.length === 1 && chapters && chapters.length === 0 && (
+          <View className="bg-brand-purple/20 border border-brand-purple/40 rounded-xl p-4">
+            <Text className="text-brand-purple font-semibold mb-1">Your arc is ready! ✨</Text>
+            <Text className="text-gray-300 text-sm">Tap "Begin Chapter 1" below to generate your first chapter.</Text>
+          </View>
+        )}
+
         {/* Generating indicator */}
         {isGenerating ? (
           <View className="flex-row items-center gap-3 bg-brand-purple/10 border border-brand-purple/40 rounded-xl p-4">
@@ -186,11 +194,15 @@ export default function WriteIndexScreen() {
           onPress={() =>
             router.push({
               pathname: '/(tabs)/write/generate',
-              params: { arcId, chapterNumber: String(nextChapterNumber) },
+              params: {
+                arcId,
+                chapterNumber: String(nextChapterNumber),
+                priorChapterId: (lastChapter as Record<string, unknown> | null)?.id as string | undefined,
+              },
             })
           }
         >
-          Continue Story — Chapter {nextChapterNumber}
+          {chapters.length === 0 ? 'Begin Chapter 1' : `Continue — Chapter ${nextChapterNumber}`}
         </Button>
 
         {/* New Arc */}

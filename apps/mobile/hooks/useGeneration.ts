@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
 import { useArcStore } from '../stores/arcStore.js';
-import { generateChapter } from '../lib/api.js';
+import { generateChapter, continueChapter } from '../lib/api.js';
 import { useQueryClient } from '@tanstack/react-query';
 
 export function useGeneration() {
@@ -13,6 +13,7 @@ export function useGeneration() {
     async (params: {
       arcId: string;
       chapterNumber: number;
+      priorChapterId?: string;
       spiceLevelOverride?: number;
       userCreativeDirection?: string;
     }) => {
@@ -25,8 +26,12 @@ export function useGeneration() {
       clearStreamingText();
       bufferRef.current = '';
 
+      const iterator = params.priorChapterId
+        ? continueChapter({ ...params, priorChapterId: params.priorChapterId }, signal)
+        : generateChapter(params, signal);
+
       try {
-        for await (const event of generateChapter(params, signal)) {
+        for await (const event of iterator) {
           if (signal.aborted) break;
           if (event.type === 'token') {
             bufferRef.current += event.content;

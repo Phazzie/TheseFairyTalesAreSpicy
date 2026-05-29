@@ -13,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Link, router } from 'expo-router';
 import { supabase } from '../../lib/supabase.js';
+import { useAuthStore } from '../../stores/authStore.js';
 import { Input } from '../../components/ui/Input.js';
 
 const registerSchema = z
@@ -71,14 +72,19 @@ export default function RegisterScreen() {
   const onSubmit = async (formData: RegisterFormData) => {
     setAuthError(null);
 
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
     });
 
     if (error) {
       setAuthError(getAuthErrorMessage(error));
+    } else if (data.session) {
+      // Email confirmation is disabled — user is already logged in
+      useAuthStore.getState().setSession(data.session);
+      router.replace('/(tabs)/write');
     } else {
+      // Email confirmation required — prompt user to check inbox
       setRegistrationSuccess(true);
     }
   };

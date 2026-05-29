@@ -62,6 +62,11 @@ export async function generateStoryStreaming(
   const apiKey = process.env['XAI_API_KEY'];
   if (!apiKey) throw new Error('XAI_API_KEY env var is required');
 
+  const timeoutController = new AbortController();
+  const timeoutId = setTimeout(() => {
+    timeoutController.abort(new Error('Grok API timeout after 20 seconds'));
+  }, 20000);
+
   const response = await fetch(XAI_API_URL, {
     method: 'POST',
     headers: {
@@ -78,7 +83,9 @@ export async function generateStoryStreaming(
       temperature: opts?.temperature ?? 0.85,
       stream: true,
     }),
+    signal: timeoutController.signal,
   });
+  clearTimeout(timeoutId);
 
   if (!response.ok || !response.body) {
     const errorText = await response.text();

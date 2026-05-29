@@ -206,6 +206,25 @@ export default function ChapterDetailScreen() {
             🎧 Audio Narration — Coming Soon
           </Button>
 
+          {/* Primary CTA: Continue the story */}
+          <Button
+            variant="primary"
+            size="lg"
+            className="w-full"
+            onPress={() => {
+              router.push({
+                pathname: '/(tabs)/write/generate',
+                params: {
+                  arcId: ch.arc_id,
+                  chapterNumber: (ch.chapter_number ?? 1) + 1,
+                  priorChapterId: ch.id,
+                },
+              } as never);
+            }}
+          >
+            Continue — Chapter {(ch.chapter_number ?? 1) + 1}
+          </Button>
+
           {/* Regenerate */}
           <Button
             variant="ghost"

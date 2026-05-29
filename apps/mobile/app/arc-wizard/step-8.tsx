@@ -59,7 +59,10 @@ export default function WizardStep8() {
       setCurrentArcId(arcRecord.id as string);
       wizard.reset();
       setWizardStep(1);
-      router.replace('/(tabs)/write');
+      // Small delay to allow store updates to propagate before routing
+      setTimeout(() => {
+        router.replace('/(tabs)/write');
+      }, 300);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create arc');
     }

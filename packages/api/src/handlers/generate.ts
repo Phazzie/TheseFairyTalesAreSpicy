@@ -82,7 +82,10 @@ generateApp.post('/', authMiddleware, validate(generateSchema), async (c) => {
     assembled = assembleSystemPrompt(input, arcContext);
   } catch (err) {
     if (err instanceof Error && err.name === 'ContextOverflowError') {
-      return c.json({ error: 'context_overflow', message: err.message }, 422);
+      return c.json({
+        error: 'context_overflow',
+        message: 'Your story\'s world has grown too rich for a single generation. Try archiving some world notes or starting a fresh arc.',
+      }, 422);
     }
     throw err;
   }
@@ -107,6 +110,13 @@ generateApp.post('/', authMiddleware, validate(generateSchema), async (c) => {
       let closed = false;
       const safeClose = () => { if (!closed) { closed = true; controller.close(); } };
       const safeEnqueue = (data: Uint8Array) => { if (!closed) controller.enqueue(data); };
+
+      // Keepalive: send an SSE comment every 15 s so NAT gateways don't kill
+      // idle TCP connections on cellular networks during long Grok pauses.
+      let keepaliveInterval: ReturnType<typeof setInterval> | null = null;
+      keepaliveInterval = setInterval(() => {
+        safeEnqueue(encoder.encode(': keepalive\n\n'));
+      }, 15000);
 
       const reader = stream.getReader();
       try {
@@ -198,6 +208,7 @@ generateApp.post('/', authMiddleware, validate(generateSchema), async (c) => {
         })}\n\n`;
         safeEnqueue(encoder.encode(errorEvent));
       } finally {
+        if (keepaliveInterval) clearInterval(keepaliveInterval);
         safeClose();
       }
     },

@@ -29,10 +29,17 @@ export async function getProfile(userId: string): Promise<UserProfile> {
     .single();
 
   if (error) {
+    if (error.code === 'PGRST116') {
+      // Profile doesn't exist — create it (defensive, handles trigger failures)
+      const { data: newProfile, error: insertError } = await adminClient
+        .from('profiles')
+        .upsert({ id: userId }, { onConflict: 'id' })
+        .select()
+        .single();
+      if (insertError) throw new Error(`Failed to create profile: ${insertError.message}`);
+      return dbRowToUserProfile(newProfile);
+    }
     throw new Error(`Failed to fetch profile for user ${userId}: ${error.message}`);
-  }
-  if (!data) {
-    throw new Error(`Profile not found for user ${userId}`);
   }
 
   return dbRowToUserProfile(data);
