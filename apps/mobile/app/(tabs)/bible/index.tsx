@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   ActivityIndicator,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useArc } from '../../../hooks/useArcs.js';
@@ -19,6 +20,12 @@ export default function BibleIndexScreen() {
   const router = useRouter();
   const currentArcId = useArcStore((s) => s.currentArcId);
   const { data: arc, isLoading, error, refetch } = useArc(currentArcId);
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  }, [refetch]);
 
   if (isLoading) {
     return (
@@ -79,6 +86,7 @@ export default function BibleIndexScreen() {
         className="flex-1"
         contentContainerStyle={{ padding: 20, gap: 20 }}
         showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#7c3aed" />}
       >
         {/* Title */}
         <View className="gap-1">
@@ -189,7 +197,7 @@ export default function BibleIndexScreen() {
         {/* World Notes */}
         <View className="flex-row items-center justify-between">
           <Text className="text-white text-lg font-semibold">World Notes</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => router.push('/(tabs)/bible/notes')}>
             <Text className="text-brand-purple text-sm">
               {worldNotes?.length ?? 0} notes — View all ›
             </Text>

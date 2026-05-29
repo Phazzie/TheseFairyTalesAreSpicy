@@ -100,37 +100,37 @@ export default function WizardStep7() {
           />
 
           <Input
-            label="What does he want?"
+            label="What do they want?"
             value={loveInterestDesire}
             onChangeText={(v) => setField('loveInterestDesire', v)}
-            placeholder="e.g. To protect his bloodline at any cost"
-            helpText="His stated desire — what he says he wants."
+            placeholder="e.g. To protect their bloodline at any cost"
+            helpText="Their stated desire — what they say they want."
             multiline
             style={{ minHeight: 64, textAlignVertical: 'top' }}
           />
 
           <Input
-            label="What does he actually need?"
+            label="What do they actually need?"
             value={loveInterestNeed}
             onChangeText={(v) => setField('loveInterestNeed', v)}
-            placeholder="e.g. To be loved for who he is, not what he is"
-            helpText="His hidden need — what would truly fulfill him."
+            placeholder="e.g. To be loved for who they are, not what they are"
+            helpText="Their hidden need — what would truly fulfill them."
             multiline
             style={{ minHeight: 64, textAlignVertical: 'top' }}
           />
 
           <Input
-            label="His wound"
+            label="Their wound"
             value={loveInterestWound}
             onChangeText={(v) => setField('loveInterestWound', v)}
-            placeholder="e.g. Was betrayed by the one human he loved, centuries ago"
-            helpText="The backstory trauma that drives his behavior."
+            placeholder="e.g. Was betrayed by the one human they loved, centuries ago"
+            helpText="The backstory trauma that drives their behavior."
             multiline
             style={{ minHeight: 64, textAlignVertical: 'top' }}
           />
 
           <Input
-            label="His flaw"
+            label="Their flaw"
             value={loveInterestFlaw}
             onChangeText={(v) => setField('loveInterestFlaw', v)}
             placeholder="e.g. Treats love as a transaction — protection in exchange for control"
@@ -140,11 +140,11 @@ export default function WizardStep7() {
           />
 
           <Input
-            label="The lie he believes"
+            label="The lie they believe"
             value={loveInterestLie}
             onChangeText={(v) => setField('loveInterestLie', v)}
-            placeholder="e.g. He is too dangerous to love"
-            helpText="The false belief he holds about himself."
+            placeholder="e.g. They are too dangerous to love"
+            helpText="The false belief they hold about themselves."
             multiline
             style={{ minHeight: 64, textAlignVertical: 'top' }}
           />

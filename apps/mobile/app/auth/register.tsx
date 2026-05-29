@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
@@ -14,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Link, router } from 'expo-router';
 import { supabase } from '../../lib/supabase.js';
+import { Input } from '../../components/ui/Input.js';
 
 const registerSchema = z
   .object({
@@ -51,7 +51,9 @@ function getAuthErrorMessage(error: unknown): string {
 
 export default function RegisterScreen() {
   const [authError, setAuthError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  // Track live password value for the requirements checklist
+  const [livePassword, setLivePassword] = useState('');
 
   const {
     control,
@@ -68,7 +70,6 @@ export default function RegisterScreen() {
 
   const onSubmit = async (formData: RegisterFormData) => {
     setAuthError(null);
-    setSuccessMessage(null);
 
     const { error } = await supabase.auth.signUp({
       email: formData.email,
@@ -78,12 +79,44 @@ export default function RegisterScreen() {
     if (error) {
       setAuthError(getAuthErrorMessage(error));
     } else {
-      setSuccessMessage('Account created! Check your email to confirm, then sign in.');
-      setTimeout(() => {
-        router.replace('/auth/login');
-      }, 2500);
+      setRegistrationSuccess(true);
     }
   };
+
+  // Success state — show message + explicit Sign In button (no setTimeout)
+  if (registrationSuccess) {
+    return (
+      <KeyboardAvoidingView
+        className="flex-1 bg-brand-deep"
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <ScrollView
+          contentContainerClassName="flex-grow justify-center px-6 py-12"
+          keyboardShouldPersistTaps="handled"
+        >
+          <View className="mb-10 items-center">
+            <Text className="text-4xl font-bold text-brand-purple mb-2">Spicy Fairy Tales</Text>
+          </View>
+
+          <View className="bg-white/5 rounded-2xl p-6 border border-white/10 items-center gap-4">
+            <Text className="text-green-400 text-2xl font-bold text-center">
+              Account created! ✓
+            </Text>
+            <Text className="text-gray-300 text-sm text-center">
+              Check your email to confirm your account, then sign in.
+            </Text>
+            <TouchableOpacity
+              className="bg-brand-purple rounded-xl py-4 px-8 items-center mt-2 w-full"
+              onPress={() => router.replace('/auth/login')}
+              activeOpacity={0.8}
+            >
+              <Text className="text-white font-semibold text-base">Sign In</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    );
+  }
 
   return (
     <KeyboardAvoidingView
@@ -109,92 +142,79 @@ export default function RegisterScreen() {
             </View>
           ) : null}
 
-          {/* Success banner */}
-          {successMessage ? (
-            <View className="mb-4 rounded-lg bg-green-500/20 border border-green-500/40 px-4 py-3">
-              <Text className="text-green-400 text-sm">{successMessage}</Text>
-            </View>
-          ) : null}
-
           {/* Email field */}
           <View className="mb-4">
-            <Text className="text-gray-300 text-sm mb-2 font-medium">Email</Text>
             <Controller
               control={control}
               name="email"
               render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  className={`bg-white/10 rounded-xl px-4 py-3 text-white text-base border ${
-                    errors.email ? 'border-brand-rose' : 'border-white/20'
-                  }`}
-                  placeholder="you@example.com"
-                  placeholderTextColor="#6b7280"
+                <Input
+                  label="Email"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
                   keyboardType="email-address"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
+                  placeholder="you@example.com"
+                  error={errors.email?.message}
                 />
               )}
             />
-            {errors.email ? (
-              <Text className="text-brand-rose text-xs mt-1">{errors.email.message}</Text>
-            ) : null}
           </View>
 
           {/* Password field */}
-          <View className="mb-4">
-            <Text className="text-gray-300 text-sm mb-2 font-medium">Password</Text>
+          <View className="mb-2">
             <Controller
               control={control}
               name="password"
               render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  className={`bg-white/10 rounded-xl px-4 py-3 text-white text-base border ${
-                    errors.password ? 'border-brand-rose' : 'border-white/20'
-                  }`}
-                  placeholder="Min. 8 characters"
-                  placeholderTextColor="#6b7280"
+                <Input
+                  label="Password"
+                  value={value}
+                  onChangeText={(text) => { onChange(text); setLivePassword(text); }}
+                  onBlur={onBlur}
                   secureTextEntry
                   autoCapitalize="none"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
+                  placeholder="Min. 8 characters"
+                  error={errors.password?.message}
                 />
               )}
             />
-            {errors.password ? (
-              <Text className="text-brand-rose text-xs mt-1">{errors.password.message}</Text>
-            ) : null}
+            {/* Live password requirements checklist */}
+            {livePassword.length > 0 && (
+              <View className="mt-2 gap-1">
+                <Text className={`text-xs ${livePassword.length >= 8 ? 'text-green-400' : 'text-gray-500'}`}>
+                  ✓ At least 8 characters
+                </Text>
+                <Text className={`text-xs ${/[A-Z]/.test(livePassword) ? 'text-green-400' : 'text-gray-500'}`}>
+                  ✓ One uppercase letter
+                </Text>
+                <Text className={`text-xs ${/[0-9]/.test(livePassword) ? 'text-green-400' : 'text-gray-500'}`}>
+                  ✓ One number
+                </Text>
+              </View>
+            )}
           </View>
 
           {/* Confirm password field */}
           <View className="mb-6">
-            <Text className="text-gray-300 text-sm mb-2 font-medium">Confirm Password</Text>
             <Controller
               control={control}
               name="confirmPassword"
               render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  className={`bg-white/10 rounded-xl px-4 py-3 text-white text-base border ${
-                    errors.confirmPassword ? 'border-brand-rose' : 'border-white/20'
-                  }`}
-                  placeholder="Re-enter your password"
-                  placeholderTextColor="#6b7280"
+                <Input
+                  label="Confirm Password"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
                   secureTextEntry
                   autoCapitalize="none"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
+                  placeholder="Re-enter your password"
+                  error={errors.confirmPassword?.message}
                 />
               )}
             />
-            {errors.confirmPassword ? (
-              <Text className="text-brand-rose text-xs mt-1">
-                {errors.confirmPassword.message}
-              </Text>
-            ) : null}
           </View>
 
           {/* Submit button */}

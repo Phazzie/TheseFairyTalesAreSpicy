@@ -17,13 +17,13 @@ import { Button } from '../../components/ui/Button.js';
 import { WIZARD_TOTAL_STEPS } from '../../lib/constants.js';
 
 type AtmosphereArchetype =
-  | 'gothic_manor'
-  | 'enchanted_forest'
-  | 'urban_underground'
-  | 'ancient_court'
-  | 'coastal_mist'
-  | 'desert_ruins'
-  | 'mountain_citadel';
+  | 'gothic_estate'
+  | 'contemporary_urban'
+  | 'dark_academia'
+  | 'historical'
+  | 'high_fantasy_court'
+  | 'small_town_secret'
+  | 'coastal_isolation';
 
 interface ArchetypeOption {
   id: AtmosphereArchetype;
@@ -34,46 +34,46 @@ interface ArchetypeOption {
 
 const ARCHETYPES: ArchetypeOption[] = [
   {
-    id: 'gothic_manor',
+    id: 'gothic_estate',
     emoji: '🏚️',
-    label: 'Gothic Manor',
-    description: 'Crumbling opulence, secret passages, ancestral curses.',
+    label: 'Gothic Estate',
+    description: 'Candlelight, stone corridors, moonlit gardens.',
   },
   {
-    id: 'enchanted_forest',
-    emoji: '🌲',
-    label: 'Enchanted Forest',
-    description: 'Ancient magic, wild rules, creatures older than memory.',
-  },
-  {
-    id: 'urban_underground',
+    id: 'contemporary_urban',
     emoji: '🌃',
-    label: 'Urban Underground',
-    description: 'Neon shadows, hidden courts beneath the city, mortal blind spots.',
+    label: 'Contemporary Urban',
+    description: 'City apartments, midnight streets, neon signs.',
   },
   {
-    id: 'ancient_court',
+    id: 'dark_academia',
+    emoji: '📚',
+    label: 'Dark Academia',
+    description: 'Library stacks, ivy halls, candlelit studies.',
+  },
+  {
+    id: 'historical',
     emoji: '🏛️',
-    label: 'Ancient Court',
-    description: 'Immortal politics, ritual etiquette, power dressed in silk.',
+    label: 'Historical',
+    description: 'Period manor houses, gaslit streets, formal gardens.',
   },
   {
-    id: 'coastal_mist',
+    id: 'high_fantasy_court',
+    emoji: '✨',
+    label: 'High Fantasy Court',
+    description: 'Throne rooms, enchanted forests, ancient magic.',
+  },
+  {
+    id: 'small_town_secret',
+    emoji: '🕍',
+    label: 'Small Town Secret',
+    description: 'Quiet streets hiding darkness, old diners, church bells.',
+  },
+  {
+    id: 'coastal_isolation',
     emoji: '🌊',
-    label: 'Coastal Mist',
-    description: 'Fog-soaked harbor towns, shipwrecks, sirens off the rocks.',
-  },
-  {
-    id: 'desert_ruins',
-    emoji: '🏜️',
-    label: 'Desert Ruins',
-    description: 'Scorching days, cold nights, forgotten civilizations still breathing.',
-  },
-  {
-    id: 'mountain_citadel',
-    emoji: '⛰️',
-    label: 'Mountain Citadel',
-    description: 'Isolation above the clouds, ancient stone, storms that last months.',
+    label: 'Coastal Isolation',
+    description: 'Cliffs above the sea, lighthouse, fog and salt air.',
   },
 ];
 

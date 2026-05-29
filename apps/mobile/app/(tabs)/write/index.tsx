@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
   ActivityIndicator,
   ScrollView,
   SafeAreaView,
+  RefreshControl,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useArcs } from '../../../hooks/useArcs.js';
@@ -18,6 +19,12 @@ export default function WriteIndexScreen() {
   const router = useRouter();
   const { data: arcs, isLoading, error, refetch } = useArcs();
   const { currentArcId, setCurrentArcId, currentArc, isGenerating } = useArcStore();
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  }, [refetch]);
 
   // Resolve currently displayed arc
   const arc =
@@ -102,6 +109,7 @@ export default function WriteIndexScreen() {
         className="flex-1"
         contentContainerStyle={{ padding: 20, gap: 20 }}
         showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#7c3aed" />}
       >
         {/* Header */}
         <View className="gap-1">

@@ -23,9 +23,11 @@ export default function GenerateScreen() {
   const isGenerating = useArcStore((s) => s.isGenerating);
   const streamingText = useArcStore((s) => s.streamingText);
 
-  const { generate } = useGeneration();
+  const { generate, cancel } = useGeneration();
   const [generationComplete, setGenerationComplete] = useState(false);
   const [generateError, setGenerateError] = useState<string | null>(null);
+  // showForm controls whether the GenerationPanel is visible; persists across generation
+  const [showForm, setShowForm] = useState(true);
 
   const arcTitle = (currentArc as Record<string, unknown> | null)?.title as
     | string
@@ -39,11 +41,14 @@ export default function GenerateScreen() {
   }) => {
     setGenerateError(null);
     setGenerationComplete(false);
+    setShowForm(false);
     try {
       await generate(params);
       setGenerationComplete(true);
     } catch (err) {
       setGenerateError(err instanceof Error ? err.message : 'Generation failed');
+      // Show form again on error so user can retry
+      setShowForm(true);
     }
   };
 
@@ -74,8 +79,8 @@ export default function GenerateScreen() {
         contentContainerStyle={{ paddingBottom: 32, gap: 16 }}
         keyboardShouldPersistTaps="handled"
       >
-        {/* Generation panel (hidden while streaming) */}
-        {!isGenerating && !streamingText ? (
+        {/* Generation panel — hidden while generating or streaming, shown when showForm=true */}
+        {showForm && !isGenerating && !streamingText ? (
           <GenerationPanel
             arcId={arcId}
             chapterNumber={chapterNumber}
@@ -105,6 +110,16 @@ export default function GenerateScreen() {
           </View>
         ) : null}
 
+        {/* Cancel button — shown while generation is in progress */}
+        {isGenerating && (
+          <TouchableOpacity
+            onPress={() => { cancel(); }}
+            className="mt-4 items-center py-3"
+          >
+            <Text className="text-gray-400 text-sm">Cancel generation</Text>
+          </TouchableOpacity>
+        )}
+
         {/* Post-generation CTA */}
         {generationComplete && !isGenerating ? (
           <View className="bg-green-900/30 border border-green-700/50 rounded-xl p-4 gap-3">
@@ -122,7 +137,7 @@ export default function GenerateScreen() {
           </View>
         ) : null}
 
-        {/* Regenerate button (only shown after complete) */}
+        {/* Adjust Settings button (only shown after complete) */}
         {generationComplete && !isGenerating ? (
           <Button
             variant="ghost"
@@ -130,9 +145,10 @@ export default function GenerateScreen() {
             className="w-full"
             onPress={() => {
               setGenerationComplete(false);
+              setShowForm(true);
             }}
           >
-            Adjust & Regenerate
+            Adjust Settings
           </Button>
         ) : null}
       </ScrollView>

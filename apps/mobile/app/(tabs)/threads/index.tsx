@@ -9,7 +9,7 @@ import {
   Modal,
 } from 'react-native';
 import { useArcStore } from '../../../stores/arcStore.js';
-import { useOpenThreads, useResolveThread } from '../../../hooks/usePlotThreads.js';
+import { useOpenThreads, useResolveThread, useAbandonThread } from '../../../hooks/usePlotThreads.js';
 import { Button } from '../../../components/ui/Button.js';
 import { Badge } from '../../../components/ui/Badge.js';
 
@@ -101,14 +101,20 @@ interface ThreadDetailModalProps {
   thread: PlotThread | null;
   onClose: () => void;
   onResolve: (threadId: string) => void;
+  onAbandon: (threadId: string) => void;
   resolving: boolean;
+  abandoning: boolean;
+  abandonError: string | null;
 }
 
 function ThreadDetailModal({
   thread,
   onClose,
   onResolve,
+  onAbandon,
   resolving,
+  abandoning,
+  abandonError,
 }: ThreadDetailModalProps) {
   if (!thread) return null;
 
@@ -144,6 +150,10 @@ function ThreadDetailModal({
             ) : null}
           </View>
 
+          {abandonError ? (
+            <Text className="text-red-400 text-sm text-center mb-3">{abandonError}</Text>
+          ) : null}
+
           {thread.status === 'open' ? (
             <View className="gap-3">
               <Button
@@ -155,7 +165,13 @@ function ThreadDetailModal({
               >
                 Mark Resolved
               </Button>
-              <Button variant="destructive" size="md" className="w-full" onPress={onClose}>
+              <Button
+                variant="destructive"
+                size="md"
+                className="w-full"
+                loading={abandoning}
+                onPress={() => onAbandon(thread.id)}
+              >
                 Abandon Thread
               </Button>
             </View>
@@ -179,7 +195,9 @@ export default function ThreadsScreen() {
   const currentArcId = useArcStore((s) => s.currentArcId);
   const { data: openThreads, isLoading, error, refetch } = useOpenThreads(currentArcId);
   const resolveThread = useResolveThread();
+  const abandonThread = useAbandonThread();
   const [selectedThread, setSelectedThread] = useState<PlotThread | null>(null);
+  const [abandonError, setAbandonError] = useState<string | null>(null);
 
   if (isLoading) {
     return (
@@ -267,8 +285,13 @@ export default function ThreadsScreen() {
 
       <ThreadDetailModal
         thread={selectedThread}
-        onClose={() => setSelectedThread(null)}
+        onClose={() => {
+          setSelectedThread(null);
+          setAbandonError(null);
+        }}
         resolving={resolveThread.isPending}
+        abandoning={abandonThread.isPending}
+        abandonError={abandonError}
         onResolve={(threadId) => {
           if (!currentArcId) return;
           resolveThread.mutate(
@@ -277,6 +300,23 @@ export default function ThreadsScreen() {
               onSuccess: () => {
                 setSelectedThread(null);
                 refetch();
+              },
+            },
+          );
+        }}
+        onAbandon={(threadId) => {
+          if (!currentArcId) return;
+          setAbandonError(null);
+          abandonThread.mutate(
+            { threadId, arcId: currentArcId },
+            {
+              onSuccess: () => {
+                setSelectedThread(null);
+                setAbandonError(null);
+                refetch();
+              },
+              onError: (err) => {
+                setAbandonError(err instanceof Error ? err.message : 'Failed to abandon thread.');
               },
             },
           );

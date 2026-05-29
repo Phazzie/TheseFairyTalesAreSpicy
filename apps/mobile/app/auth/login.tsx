@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
@@ -14,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Link, router } from 'expo-router';
 import { supabase } from '../../lib/supabase.js';
+import { Input } from '../../components/ui/Input.js';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -41,10 +41,12 @@ function getAuthErrorMessage(error: unknown): string {
 
 export default function LoginScreen() {
   const [authError, setAuthError] = useState<string | null>(null);
+  const [resetMessage, setResetMessage] = useState<string | null>(null);
 
   const {
     control,
     handleSubmit,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -56,6 +58,7 @@ export default function LoginScreen() {
 
   const onSubmit = async (formData: LoginFormData) => {
     setAuthError(null);
+    setResetMessage(null);
     const { error } = await supabase.auth.signInWithPassword({
       email: formData.email,
       password: formData.password,
@@ -64,6 +67,22 @@ export default function LoginScreen() {
       setAuthError(getAuthErrorMessage(error));
     } else {
       router.replace('/(tabs)/write');
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    setAuthError(null);
+    setResetMessage(null);
+    const email = getValues('email');
+    if (!email) {
+      setAuthError('Please enter your email address above, then tap "Forgot password?".');
+      return;
+    }
+    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    if (error) {
+      setAuthError(getAuthErrorMessage(error));
+    } else {
+      setResetMessage('Check your email for a reset link.');
     }
   };
 
@@ -91,58 +110,58 @@ export default function LoginScreen() {
             </View>
           ) : null}
 
+          {/* Reset password success */}
+          {resetMessage ? (
+            <View className="mb-4 rounded-lg bg-green-500/20 border border-green-500/40 px-4 py-3">
+              <Text className="text-green-400 text-sm">{resetMessage}</Text>
+            </View>
+          ) : null}
+
           {/* Email field */}
           <View className="mb-4">
-            <Text className="text-gray-300 text-sm mb-2 font-medium">Email</Text>
             <Controller
               control={control}
               name="email"
               render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  className={`bg-white/10 rounded-xl px-4 py-3 text-white text-base border ${
-                    errors.email ? 'border-brand-rose' : 'border-white/20'
-                  }`}
-                  placeholder="you@example.com"
-                  placeholderTextColor="#6b7280"
+                <Input
+                  label="Email"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
                   keyboardType="email-address"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
+                  placeholder="you@example.com"
+                  error={errors.email?.message}
                 />
               )}
             />
-            {errors.email ? (
-              <Text className="text-brand-rose text-xs mt-1">{errors.email.message}</Text>
-            ) : null}
           </View>
 
           {/* Password field */}
-          <View className="mb-6">
-            <Text className="text-gray-300 text-sm mb-2 font-medium">Password</Text>
+          <View className="mb-1">
             <Controller
               control={control}
               name="password"
               render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  className={`bg-white/10 rounded-xl px-4 py-3 text-white text-base border ${
-                    errors.password ? 'border-brand-rose' : 'border-white/20'
-                  }`}
-                  placeholder="Your password"
-                  placeholderTextColor="#6b7280"
+                <Input
+                  label="Password"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
                   secureTextEntry
                   autoCapitalize="none"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
+                  placeholder="Your password"
+                  error={errors.password?.message}
                 />
               )}
             />
-            {errors.password ? (
-              <Text className="text-brand-rose text-xs mt-1">{errors.password.message}</Text>
-            ) : null}
           </View>
+
+          {/* Forgot password link */}
+          <TouchableOpacity onPress={handleForgotPassword} className="self-end mt-1 mb-4">
+            <Text className="text-brand-purple text-sm">Forgot password?</Text>
+          </TouchableOpacity>
 
           {/* Submit button */}
           <TouchableOpacity

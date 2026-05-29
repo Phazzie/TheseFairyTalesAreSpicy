@@ -5,6 +5,18 @@ import { Card } from '../ui/Card.js';
 import { Badge } from '../ui/Badge.js';
 import { SPICE_LEVEL_LABELS } from '../../lib/constants.js';
 
+const CLIFFHANGER_LABELS: Record<string, string> = {
+  revelation: 'Revelation',
+  interruption: 'Interruption',
+  physical_peril: 'Peril',
+  emotional_severance: 'Severance',
+  temptation_offered: 'Temptation',
+  identity_destabilized: 'Identity',
+  time_bomb: 'Time Bomb',
+  mirror_reveal: 'Mirror',
+  none: '',
+};
+
 interface ChapterCardProps {
   id: string;
   chapterNumber: number;
@@ -47,8 +59,11 @@ export function ChapterCard({
           </View>
 
           <View className="flex-row flex-wrap gap-2 mt-2">
-            {cliffhangerType ? (
-              <Badge label={cliffhangerType} variant="theme" />
+            {cliffhangerType && cliffhangerType !== 'none' && CLIFFHANGER_LABELS[cliffhangerType] !== '' ? (
+              <Badge
+                label={CLIFFHANGER_LABELS[cliffhangerType] ?? cliffhangerType}
+                variant="theme"
+              />
             ) : null}
             {spiceLevel != null ? (
               <Badge

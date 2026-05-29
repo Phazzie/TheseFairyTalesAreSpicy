@@ -1,4 +1,6 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type CreatureType = 'vampire' | 'werewolf' | 'fairy';
 type SpiceLevel = 1 | 2 | 3 | 4 | 5;
@@ -96,7 +98,9 @@ const DEFAULT_STATE = {
   creatureAbilities: '',
 };
 
-export const useWizardStore = create<WizardState>((set, get) => ({
+export const useWizardStore = create<WizardState>()(
+  persist(
+    (set, get) => ({
   ...DEFAULT_STATE,
 
   setField: (key, value) => set({ [key]: value } as Partial<WizardState>),
@@ -126,7 +130,7 @@ export const useWizardStore = create<WizardState>((set, get) => ({
       tense: s.tense,
       narrative_distance: s.narrativeDistance,
       pacing_rhythm: s.pacingRhythm,
-      atmosphere_archetype: s.atmosphereArchetype ?? 'contemporary_urban',
+      atmosphere_archetype: s.atmosphereArchetype,
       default_sense_primary: s.sensoryPrimary,
       default_sense_secondary: s.sensoryPrimary === 'visual' ? 'tactile' : 'visual',
       recurring_motif: s.recurringMotif || undefined,
@@ -156,4 +160,10 @@ export const useWizardStore = create<WizardState>((set, get) => ({
       } : undefined,
     };
   },
-}));
+    }),
+    {
+      name: 'wizard-store',
+      storage: createJSONStorage(() => AsyncStorage),
+    },
+  ),
+);

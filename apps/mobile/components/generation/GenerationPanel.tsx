@@ -21,7 +21,7 @@ export function GenerationPanel({ arcId, chapterNumber, onGenerate }: Generation
   const isGenerating = useArcStore((s) => s.isGenerating);
   const currentArc = useArcStore((s) => s.currentArc);
 
-  const defaultSpice = (currentArc as Record<string, unknown> | null)?.spice_level as number ?? 3;
+  const defaultSpice = (currentArc as Record<string, unknown> | null)?.default_spice_level as number ?? 3;
   const [spiceOverride, setSpiceOverride] = useState<number>(defaultSpice);
   const [creativeDirection, setCreativeDirection] = useState('');
 

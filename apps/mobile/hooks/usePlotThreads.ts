@@ -83,3 +83,27 @@ export function useResolveThread() {
     },
   });
 }
+
+interface AbandonThreadInput {
+  threadId: string;
+  arcId: string;
+}
+
+export function useAbandonThread() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ threadId, arcId }: AbandonThreadInput) => {
+      const { data, error } = await supabase
+        .from('plot_threads')
+        .update({ status: 'abandoned' })
+        .eq('id', threadId)
+        .select()
+        .single();
+      if (error) throw new Error(error.message);
+      return { data: data as PlotThread, arcId };
+    },
+    onSuccess: ({ arcId }) => {
+      queryClient.invalidateQueries({ queryKey: ['plot-threads', arcId] });
+    },
+  });
+}
