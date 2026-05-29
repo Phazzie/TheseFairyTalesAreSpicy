@@ -8,6 +8,8 @@ import { plotThreadsApp } from './handlers/plotThreads.js';
 import { chaptersApp } from './handlers/chapters.js';
 import { stripeWebhookApp } from './handlers/webhooks/stripe.js';
 
+export const config = { runtime: 'edge' };
+
 const app = new Hono();
 
 // Global middleware

@@ -1,5 +1,5 @@
-import type { CreatureType, PlotThread } from '../types/index.js';
-import chekhovData from '../data/chekhovElements.json' assert { type: 'json' };
+import type { CreatureType, PlotThread, ChapterMetadata } from '../types/index.js';
+import chekhovData from '../data/chekhovElements.json';
 
 interface ChekhovElement {
   id: string;
@@ -29,10 +29,11 @@ function shuffleArray<T>(arr: T[]): T[] {
 }
 
 // Picks 2 unseeded Chekhov elements for this chapter
-// Avoids elements already in the plot thread tracker
+// Avoids elements already seeded in prior chapters (from chekhovSeeded in ChapterMetadata)
 export function selectChekhovElements(
   creatureType: CreatureType,
   existingThreads: PlotThread[],
+  recentChapterMetadata?: ChapterMetadata[],
 ): { id: string; element: string; payoffSuggestion: string }[] {
   const creatureElements: ChekhovElement[] = chekhov[creatureType] ?? [];
   const universalElements: ChekhovElement[] = chekhov['universal'] ?? [];
@@ -40,23 +41,13 @@ export function selectChekhovElements(
   // Combine creature-specific and universal elements
   const allElements = [...creatureElements, ...universalElements];
 
-  // Get IDs of elements already planted (from existingThreads where type='chekhov')
-  const alreadyPlantedIds = new Set(
-    existingThreads
-      .filter((t) => t.threadType === 'chekhov')
-      .map((t) => t.description)
-      // description may contain the element id — we also check if the id is a substring
+  // Build set of already-planted IDs from recentChapterMetadata.chekhovSeeded
+  const alreadyPlantedIds = new Set<string>(
+    (recentChapterMetadata ?? []).flatMap((m) => m.chekhovSeeded ?? [])
   );
-
-  // More robust: check element ids against thread descriptions
-  const plantedDescriptions = existingThreads
-    .filter((t) => t.threadType === 'chekhov')
-    .map((t) => t.description.toLowerCase());
 
   const available = allElements.filter((el) => {
     if (alreadyPlantedIds.has(el.id)) return false;
-    // Also skip if the element id appears in any thread description
-    if (plantedDescriptions.some((desc) => desc.includes(el.id.toLowerCase()))) return false;
     return true;
   });
 

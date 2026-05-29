@@ -1,5 +1,5 @@
 import type { ArcContext, GenerationInput, CharacterProfile } from '../types/index.js';
-import voiceData from '../data/voiceLibrary.json' assert { type: 'json' };
+import voiceData from '../data/voiceLibrary.json';
 
 interface VoiceEmotionState {
   id: string;

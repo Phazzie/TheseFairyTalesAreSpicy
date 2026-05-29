@@ -1,5 +1,5 @@
 import type { ArcType, ChapterMetadata } from '../types/index.js';
-import beatStructuresData from '../data/beatStructures.json' assert { type: 'json' };
+import beatStructuresData from '../data/beatStructures.json';
 
 interface BeatStructure {
   code: string;
@@ -51,10 +51,10 @@ export function selectBeat(
       });
 
       let leastRecentCode: string | undefined;
-      let leastRecentIndex = -1;
+      let leastRecentIndex = Infinity;
 
       for (const [code, index] of usageOrder.entries()) {
-        if (index > leastRecentIndex) {
+        if (index < leastRecentIndex) {
           leastRecentIndex = index;
           leastRecentCode = code;
         }

@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '../lib/supabase.js';
+import { createArc } from '../lib/api.js';
 
 export function useArcs() {
   return useQuery({
@@ -36,9 +37,7 @@ export function useCreateArc() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (input: Record<string, unknown>) => {
-      const { data, error } = await supabase.from('arcs').insert(input).select().single();
-      if (error) throw new Error(error.message);
-      return data;
+      return createArc(input);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['arcs'] }),
   });

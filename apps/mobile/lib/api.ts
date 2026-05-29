@@ -27,7 +27,12 @@ async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
     headers: { ...headers, ...options?.headers },
   });
   if (!response.ok) {
-    const error = (await response.json()) as ApiError;
+    let error: ApiError;
+    try {
+      error = (await response.json()) as ApiError;
+    } catch {
+      error = { error: 'request_failed', message: `HTTP ${response.status}` };
+    }
     if (response.status === 429) {
       useUIStore.getState().openUpgradeSheet();
     }
@@ -37,20 +42,25 @@ async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
 }
 
 // Generate a chapter (returns an async iterator of SSE events)
-export async function* generateChapter(body: {
-  arcId: string;
-  chapterNumber: number;
-  spiceLevelOverride?: number;
-  userCreativeDirection?: string;
-}): AsyncGenerator<
+export async function* generateChapter(
+  body: {
+    arcId: string;
+    chapterNumber: number;
+    spiceLevelOverride?: number;
+    userCreativeDirection?: string;
+  },
+  signal?: AbortSignal,
+): AsyncGenerator<
   | { type: 'token'; content: string }
   | { type: 'complete'; chapterId: string; title: string }
+  | { type: 'error'; message: string }
 > {
   const headers = await getAuthHeaders();
   const response = await fetch(`${API_BASE}/api/generate`, {
     method: 'POST',
     headers,
     body: JSON.stringify(body),
+    signal,
   });
   if (!response.ok || !response.body) {
     const error = (await response.json()) as ApiError;
@@ -72,7 +82,8 @@ export async function* generateChapter(body: {
         try {
           yield JSON.parse(data) as
             | { type: 'token'; content: string }
-            | { type: 'complete'; chapterId: string; title: string };
+            | { type: 'complete'; chapterId: string; title: string }
+            | { type: 'error'; message: string };
         } catch {
           // Skip malformed events
         }

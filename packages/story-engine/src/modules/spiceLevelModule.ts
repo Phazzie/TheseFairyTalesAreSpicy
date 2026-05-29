@@ -1,5 +1,5 @@
 import type { ArcContext, GenerationInput, SpiceLevel } from '../types/index.js';
-import spiceLevelsData from '../data/spiceLevels.json' assert { type: 'json' };
+import spiceLevelsData from '../data/spiceLevels.json';
 
 interface SpiceLevelData {
   level: number;

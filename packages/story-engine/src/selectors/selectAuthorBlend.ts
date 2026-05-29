@@ -1,5 +1,5 @@
 import type { CreatureType, ChapterMetadata } from '../types/index.js';
-import authorPoolsData from '../data/authorPools.json' assert { type: 'json' };
+import authorPoolsData from '../data/authorPools.json';
 
 interface AuthorEntry {
   name: string;
@@ -35,11 +35,10 @@ function getRecentlyUsedAuthors(recentMetadata?: ChapterMetadata[]): Set<string>
     return new Set<string>();
   }
 
-  // We track author blends via systemPromptUsed if available, but we do not have a direct
-  // field for authors used per chapter in ChapterMetadata. We use the last 3 chapters only.
-  // Since authors are not stored in metadata directly, we return an empty set.
-  // If a caller adds author tracking to ChapterMetadata in future, this can be extended.
-  return new Set<string>();
+  // Look at last 3 chapters and collect all authors used
+  const lastThree = recentMetadata.slice(-3);
+  const usedAuthors = lastThree.flatMap((m) => m.authorsUsed ?? []);
+  return new Set<string>(usedAuthors);
 }
 
 // 2+1 algorithm: 2 from creature-matched pool + 1 from cross_creature pool

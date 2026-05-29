@@ -13,19 +13,38 @@ import {
   type UpdateArcInput,
 } from '../db/arcs.js';
 import { getProfile } from '../db/profiles.js';
+import { createCharacter } from '../db/characters.js';
+import { adminClient } from '../db/supabase.js';
 
 // ============================================================
 // SCHEMAS
 // ============================================================
 
-const createArcSchema = z.object({
+const characterSchema = z.object({
+  displayName: z.string(),
+  species: z.enum(['human', 'vampire', 'werewolf', 'fairy']).default('human'),
+  statedDesire: z.string().optional(),
+  hiddenNeed: z.string().optional(),
+  wound: z.string().optional(),
+  flaw: z.string().optional(),
+  lie: z.string().optional(),
+});
+
+const creatureLoreSchema = z.object({
+  rules: z.array(z.string()).optional(),
+  weaknesses: z.array(z.string()).optional(),
+  abilities: z.array(z.string()).optional(),
+  societyNotes: z.string().optional(),
+});
+
+const arcBaseSchema = z.object({
   title: z.string().max(200).optional(),
-  creatureType: z.string(),
+  creatureType: z.enum(['vampire', 'werewolf', 'fairy']),
   arcType: z.string(),
   themes: z.array(z.string()).min(1).max(10),
   defaultSpiceLevel: z.number().int().min(1).max(5),
-  povMode: z.string(),
-  tense: z.string(),
+  povMode: z.enum(['first_person', 'third_limited', 'third_omniscient', 'rotating']),
+  tense: z.enum(['past', 'present']),
   narrativeDistance: z.string(),
   readingLevel: z.string(),
   dialogueRatioPct: z.number().min(0).max(100),
@@ -44,7 +63,13 @@ const createArcSchema = z.object({
   coverImageUrl: z.string().url().optional(),
 });
 
-const updateArcSchema = createArcSchema.partial();
+const createArcSchema = arcBaseSchema.extend({
+  protagonist: characterSchema.optional(),
+  loveInterest: characterSchema.optional(),
+  creatureLore: creatureLoreSchema.optional(),
+});
+
+const updateArcSchema = arcBaseSchema.partial().strict();
 
 // ============================================================
 // APP
@@ -117,6 +142,64 @@ arcsApp.post('/', authMiddleware, validate(createArcSchema), async (c) => {
     };
 
     const arc = await createArc(input, user.id);
+
+    // Insert optional protagonist, love interest, and creature lore
+    const insertPromises: Promise<unknown>[] = [];
+
+    if (body.protagonist) {
+      insertPromises.push(createCharacter({
+        arcId: arc.id,
+        slug: 'PROTAGONIST',
+        displayName: body.protagonist.displayName,
+        species: body.protagonist.species ?? 'human',
+        isProtagonist: true,
+        statedDesire: body.protagonist.statedDesire,
+        hiddenNeed: body.protagonist.hiddenNeed,
+        wound: body.protagonist.wound,
+        flaw: body.protagonist.flaw,
+        lie: body.protagonist.lie,
+        bio: '',
+        appearance: '',
+        vocabRegister: 'neutral',
+      }));
+    }
+
+    if (body.loveInterest) {
+      insertPromises.push(createCharacter({
+        arcId: arc.id,
+        slug: 'LOVE_INTEREST',
+        displayName: body.loveInterest.displayName,
+        species: body.loveInterest.species ?? 'human',
+        isProtagonist: false,
+        statedDesire: body.loveInterest.statedDesire,
+        hiddenNeed: body.loveInterest.hiddenNeed,
+        wound: body.loveInterest.wound,
+        flaw: body.loveInterest.flaw,
+        lie: body.loveInterest.lie,
+        bio: '',
+        appearance: '',
+        vocabRegister: 'neutral',
+      }));
+    }
+
+    if (body.creatureLore) {
+      insertPromises.push(
+        adminClient.from('creature_lore').insert({
+          arc_id: arc.id,
+          creature_type: body.creatureType as 'vampire' | 'werewolf' | 'fairy',
+          rules: body.creatureLore.rules ?? [],
+          weaknesses: body.creatureLore.weaknesses ?? [],
+          abilities: body.creatureLore.abilities ?? [],
+          society_notes: body.creatureLore.societyNotes ?? '',
+          custom_fields: {},
+        }).then(({ error }) => {
+          if (error) throw new Error(`Failed to insert creature lore: ${error.message}`);
+        }),
+      );
+    }
+
+    await Promise.all(insertPromises);
+
     return c.json({ arc }, 201);
   } catch (err) {
     console.error('[arcs] POST / error:', err);

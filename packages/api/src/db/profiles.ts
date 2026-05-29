@@ -57,6 +57,21 @@ export async function incrementGenerationCount(
   return data === true;
 }
 
+function getNextMonthStart(): string {
+  const now = new Date();
+  return new Date(now.getFullYear(), now.getMonth() + 1, 1).toISOString();
+}
+
+export async function resetGenerationCountIfExpired(userId: string): Promise<void> {
+  const now = new Date().toISOString();
+  const { error } = await adminClient
+    .from('profiles')
+    .update({ monthly_generation_count: 0, monthly_reset_date: getNextMonthStart() })
+    .eq('id', userId)
+    .lt('monthly_reset_date', now);
+  if (error) throw new Error(`Failed to reset generation count: ${error.message}`);
+}
+
 export async function updateSubscriptionTier(
   userId: string,
   tier: 'free' | 'pro',

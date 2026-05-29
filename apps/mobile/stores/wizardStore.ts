@@ -117,52 +117,43 @@ export const useWizardStore = create<WizardState>((set, get) => ({
     const s = get();
     return {
       creature_type: s.creatureType,
+      arc_type: 'single_couple',
       themes: s.themes,
-      spice_level: s.spiceLevel,
+      default_spice_level: s.spiceLevel,
       reading_level: s.readingLevel,
       genre_blend_primary: s.genreBlendPrimary,
-      genre_blend_secondary: s.genreBlendSecondary || null,
-      genre_blend_ratio: s.genreBlendSecondary ? s.genreBlendRatio : null,
       pov_mode: s.povMode,
       tense: s.tense,
       narrative_distance: s.narrativeDistance,
       pacing_rhythm: s.pacingRhythm,
-      atmosphere_archetype: s.atmosphereArchetype,
-      sensory_primary: s.sensoryPrimary,
-      recurring_motif: s.recurringMotif || null,
-      protagonist: {
-        name: s.protagonistName,
-        species: s.protagonistSpecies,
-        stated_desire: s.protagonistDesire,
-        hidden_need: s.protagonistNeed,
-        wound: s.protagonistWound,
-        flaw: s.protagonistFlaw,
-        lie: s.protagonistLie,
-      },
-      love_interest: {
-        name: s.loveInterestName,
-        species: s.loveInterestSpecies,
-        stated_desire: s.loveInterestDesire,
-        hidden_need: s.loveInterestNeed,
-        wound: s.loveInterestWound,
-        flaw: s.loveInterestFlaw,
-        lie: s.loveInterestLie,
-      },
-      creature_lore: {
-        rules: s.creatureRules
-          .split('\n')
-          .map((l) => l.trim())
-          .filter(Boolean),
-        weaknesses: s.creatureWeaknesses
-          .split('\n')
-          .map((l) => l.trim())
-          .filter(Boolean),
-        abilities: s.creatureAbilities
-          .split('\n')
-          .map((l) => l.trim())
-          .filter(Boolean),
-      },
+      atmosphere_archetype: s.atmosphereArchetype ?? 'contemporary_urban',
+      default_sense_primary: s.sensoryPrimary,
+      default_sense_secondary: s.sensoryPrimary === 'visual' ? 'tactile' : 'visual',
+      recurring_motif: s.recurringMotif || undefined,
       is_quick_start: false,
+      protagonist: s.protagonistName ? {
+        displayName: s.protagonistName,
+        species: s.protagonistSpecies || 'human',
+        statedDesire: s.protagonistDesire || undefined,
+        hiddenNeed: s.protagonistNeed || undefined,
+        wound: s.protagonistWound || undefined,
+        flaw: s.protagonistFlaw || undefined,
+        lie: s.protagonistLie || undefined,
+      } : undefined,
+      loveInterest: s.loveInterestName ? {
+        displayName: s.loveInterestName,
+        species: s.loveInterestSpecies || 'human',
+        statedDesire: s.loveInterestDesire || undefined,
+        hiddenNeed: s.loveInterestNeed || undefined,
+        wound: s.loveInterestWound || undefined,
+        flaw: s.loveInterestFlaw || undefined,
+        lie: s.loveInterestLie || undefined,
+      } : undefined,
+      creatureLore: (s.creatureRules || s.creatureWeaknesses || s.creatureAbilities) ? {
+        rules: s.creatureRules ? s.creatureRules.split('\n').filter(Boolean) : [],
+        weaknesses: s.creatureWeaknesses ? s.creatureWeaknesses.split('\n').filter(Boolean) : [],
+        abilities: s.creatureAbilities ? s.creatureAbilities.split('\n').filter(Boolean) : [],
+      } : undefined,
     };
   },
 }));

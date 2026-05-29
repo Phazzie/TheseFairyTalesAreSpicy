@@ -1,5 +1,5 @@
 import type { ArcContext, GenerationInput, SpiceLevel } from '../types/index.js';
-import bannedWordsData from '../data/bannedWords.json' assert { type: 'json' };
+import bannedWordsData from '../data/bannedWords.json';
 
 interface BannedWordsData {
   global: string[];

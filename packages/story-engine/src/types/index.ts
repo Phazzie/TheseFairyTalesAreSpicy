@@ -195,6 +195,7 @@ export interface ChapterMetadata {
   parentChapterId?: string;
   droppedModules: string[];
   systemPromptUsed?: string;
+  authorsUsed?: string[];
 }
 
 // ============================================================
@@ -274,4 +275,5 @@ export interface AssembledPrompt {
   prompt: string;
   engineVersion: string;
   droppedModules: string[];
+  beatUsed: string;
 }

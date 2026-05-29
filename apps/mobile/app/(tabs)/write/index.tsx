@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useArcs } from '../../../hooks/useArcs.js';
+import { useChapters } from '../../../hooks/useChapters.js';
 import { useArcStore } from '../../../stores/arcStore.js';
 import { Button } from '../../../components/ui/Button.js';
 import { Badge } from '../../../components/ui/Badge.js';
@@ -24,6 +25,9 @@ export default function WriteIndexScreen() {
     (arcs && arcs.length > 0 ? (arcs[0] as Record<string, unknown>) : null);
 
   const arcId = (arc as Record<string, unknown> | null)?.id as string | undefined;
+
+  // Fetch chapters for the current arc
+  const { data: chaptersData } = useChapters(arcId ?? null);
 
   // Sync store if needed
   React.useEffect(() => {
@@ -86,8 +90,8 @@ export default function WriteIndexScreen() {
   // ── Arc data helpers ─────────────────────────────────────────────────────
   const arcRecord = arc as Record<string, unknown>;
   const creatureType = arcRecord?.creature_type as string | undefined;
-  const spiceLevel = arcRecord?.spice_level as number | undefined;
-  const chapters = (arcRecord?.chapters as Record<string, unknown>[] | undefined) ?? [];
+  const spiceLevel = arcRecord?.default_spice_level as number | undefined;
+  const chapters = (chaptersData as Record<string, unknown>[] | undefined) ?? [];
   const lastChapter =
     chapters.length > 0 ? chapters[chapters.length - 1] : null;
   const nextChapterNumber = chapters.length + 1;

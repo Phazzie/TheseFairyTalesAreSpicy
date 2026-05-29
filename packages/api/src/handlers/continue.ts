@@ -14,7 +14,7 @@ import {
   type ContinuationInput,
 } from '@story/engine';
 import { assembleArcContext } from '../db/continuityInjector.js';
-import { getProfile, incrementGenerationCount } from '../db/profiles.js';
+import { getProfile, incrementGenerationCount, resetGenerationCountIfExpired } from '../db/profiles.js';
 import { getChapter, saveChapter, getChaptersByArc } from '../db/chapters.js';
 import { createThread } from '../db/plotThreads.js';
 import { saveSummary } from '../db/arcSummaries.js';
@@ -40,11 +40,12 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
   const user = c.get('user');
   const body = c.req.valid('json');
 
-  // 1. Check subscription tier and generation limit
+  // 1. Check subscription tier and generation limit (count only, do NOT increment yet)
+  await resetGenerationCountIfExpired(user.id);
   const profile = await getProfile(user.id);
   const limit = profile.subscriptionTier === 'pro' ? -1 : 10; // -1 = unlimited
-  const canGenerate = await incrementGenerationCount(user.id, limit);
-  if (!canGenerate) {
+  // Pre-check: if limit is not unlimited, verify the user has remaining quota without incrementing
+  if (limit !== -1 && profile.monthlyGenerationCount >= limit) {
     return c.json(
       {
         error: 'generation_limit_reached',
@@ -181,6 +182,9 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
             }),
           ),
         );
+
+        // Increment generation count only after successful chapter save
+        await incrementGenerationCount(user.id, limit);
 
         // Send completion event with metadata
         const completionEvent = `data: ${JSON.stringify({

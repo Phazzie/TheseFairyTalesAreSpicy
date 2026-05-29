@@ -1,5 +1,5 @@
 import type { ArcContext, GenerationInput } from '../types/index.js';
-import openingTypesData from '../data/openingTypes.json' assert { type: 'json' };
+import openingTypesData from '../data/openingTypes.json';
 
 interface OpeningTypeData {
   code: string;

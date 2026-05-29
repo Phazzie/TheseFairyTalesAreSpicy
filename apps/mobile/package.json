@@ -33,7 +33,8 @@
     "react-hook-form": "^7.54.1",
     "zod": "^3.24.1",
     "@react-native-async-storage/async-storage": "1.23.1",
-    "@story/engine": "workspace:*"
+    "@story/engine": "workspace:*",
+    "@hookform/resolvers": "^3.9.1"
   },
   "devDependencies": {
     "typescript": "^5.7.2",

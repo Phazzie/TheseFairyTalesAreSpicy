@@ -37,7 +37,7 @@ export default function ArcSettingsScreen() {
   useEffect(() => {
     if (arc) {
       const r = arc as Record<string, unknown>;
-      if (r.spice_level) setSpiceLevel(r.spice_level as number);
+      if (r.default_spice_level) setSpiceLevel(r.default_spice_level as number);
       if (r.pov_mode) setPovMode(r.pov_mode as string);
       if (r.tense) setTense(r.tense as string);
       if (r.narrative_distance) setNarrativeDistance(r.narrative_distance as string);
@@ -75,7 +75,7 @@ export default function ArcSettingsScreen() {
       const { error: updateError } = await supabase
         .from('arcs')
         .update({
-          spice_level: spiceLevel,
+          default_spice_level: spiceLevel,
           pov_mode: povMode,
           tense,
           narrative_distance: narrativeDistance,

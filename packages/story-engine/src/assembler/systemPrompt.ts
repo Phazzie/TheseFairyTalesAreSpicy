@@ -12,6 +12,7 @@ import { voiceModule } from '../modules/voiceModule.js';
 import { authorModule } from '../modules/authorModule.js';
 import { perspectiveModule } from '../modules/perspectiveModule.js';
 import { beatModule } from '../modules/beatModule.js';
+import { selectBeat } from '../selectors/selectBeat.js';
 import { pacingModule } from '../modules/pacingModule.js';
 import { proseConstraintsModule } from '../modules/proseConstraintsModule.js';
 import { spiceLevelModule } from '../modules/spiceLevelModule.js';
@@ -21,7 +22,7 @@ import { readingLevelModule } from '../modules/readingLevelModule.js';
 import { genreBlendModule } from '../modules/genreBlendModule.js';
 
 // Read the package version from package.json for engineVersion
-import packageJson from '../../package.json' assert { type: 'json' };
+import packageJson from '../../package.json';
 
 const ENGINE_VERSION: string = (packageJson as { version: string }).version;
 
@@ -32,20 +33,6 @@ function estimateTokens(text: string): number {
 
 const DEFAULT_MAX_BUDGET = 32000;
 
-// Module priority for context overflow dropping
-// These modules are NEVER dropped
-const NEVER_DROP = new Set([
-  'creatureModule',
-  'beatModule',
-  'spiceLevelModule',
-  'perspectiveModule',
-  'characterModule',
-  'relationshipModule',
-  'consentChemistryModule',
-  'proseConstraintsModule',
-  'speakerTagModule',
-  'readingLevelModule',
-]);
 
 export function assembleSystemPrompt(
   input: GenerationInput,
@@ -54,6 +41,9 @@ export function assembleSystemPrompt(
 ): AssembledPrompt {
   const maxBudget = opts?.maxTokenBudget ?? input.maxTokenBudget ?? DEFAULT_MAX_BUDGET;
   const droppedModules: string[] = [];
+
+  // Select the beat before building module outputs so we can capture it for the return value
+  const selectedBeat = selectBeat(context.arc.arcType, context.recentChapterMetadata, input.pilotMode);
 
   // Run all modules in canonical order
   // The order matters — modules build on each other conceptually
@@ -69,7 +59,7 @@ export function assembleSystemPrompt(
     { name: 'voiceModule', content: voiceModule(input, context), canDrop: false },
     { name: 'authorModule', content: authorModule(input, context), canDrop: false },
     { name: 'perspectiveModule', content: perspectiveModule(input, context), canDrop: false },
-    { name: 'beatModule', content: beatModule(input, context), canDrop: false },
+    { name: 'beatModule', content: beatModule(input, context, selectedBeat), canDrop: false },
     { name: 'pacingModule', content: pacingModule(input, context), canDrop: false },
     { name: 'proseConstraintsModule', content: proseConstraintsModule(input, context), canDrop: false },
     { name: 'spiceLevelModule', content: spiceLevelModule(input, context), canDrop: false },
@@ -78,9 +68,6 @@ export function assembleSystemPrompt(
     { name: 'readingLevelModule', content: readingLevelModule(input, context), canDrop: false },
     { name: 'genreBlendModule', content: genreBlendModule(input, context), canDrop: true },
   ];
-
-  // Suppress unused variable warning — NEVER_DROP is intentional documentation
-  void NEVER_DROP;
 
   // Filter empty outputs
   let active = moduleOutputs.filter((m) => m.content.trim().length > 0);
@@ -108,7 +95,7 @@ export function assembleSystemPrompt(
         ...context,
         rollingSummary: {
           ...context.rollingSummary,
-          summaryText: context.rollingSummary.summaryText.split(' ').slice(-75).join(' '),
+          summaryText: context.rollingSummary.summaryText.split(' ').slice(0, 75).join(' '),
         },
       };
       // Rebuild arcContextModule with truncated summary
@@ -140,5 +127,6 @@ export function assembleSystemPrompt(
     prompt,
     engineVersion: ENGINE_VERSION,
     droppedModules,
+    beatUsed: selectedBeat.code,
   };
 }

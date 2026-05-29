@@ -1,8 +1,16 @@
 import type { ArcContext, GenerationInput } from '../types/index.js';
 import { selectBeat } from '../selectors/selectBeat.js';
 
-export function beatModule(input: GenerationInput, context: ArcContext): string {
-  const beat = selectBeat(
+interface BeatStructure {
+  code: string;
+  name: string;
+  progression: string[];
+  spiceNote: string;
+  antiPatterns: string[];
+}
+
+export function beatModule(input: GenerationInput, context: ArcContext, preSelectedBeat?: BeatStructure): string {
+  const beat = preSelectedBeat ?? selectBeat(
     context.arc.arcType,
     context.recentChapterMetadata,
     input.pilotMode,

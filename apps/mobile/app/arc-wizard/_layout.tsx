@@ -1,8 +1,9 @@
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { useUIStore } from '../../stores/uiStore.js';
 
 export default function ArcWizardLayout() {
   const { wizardStep, prevWizardStep } = useUIStore();
+  const router = useRouter();
 
   return (
     <Stack
@@ -21,6 +22,7 @@ export default function ArcWizardLayout() {
             if (wizardStep <= 1) return;
             e.preventDefault();
             prevWizardStep();
+            router.back();
           },
         }}
       />

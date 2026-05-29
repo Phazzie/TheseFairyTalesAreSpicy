@@ -1,5 +1,5 @@
 import type { ArcContext, GenerationInput } from '../types/index.js';
-import archetypesData from '../data/atmosphereArchetypes.json' assert { type: 'json' };
+import archetypesData from '../data/atmosphereArchetypes.json';
 
 interface AtmosphereArchetypeData {
   id: string;
