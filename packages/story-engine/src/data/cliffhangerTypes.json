@@ -1,0 +1,66 @@
+[
+  {
+    "code": "revelation",
+    "label": "Revelation",
+    "exampleSentence": "The letter fell from her hands as she read the final line: he had known all along.",
+    "intensity": 4,
+    "craftNote": "The revelation must recontextualize something the reader already witnessed. Drop it in the last sentence without commentary — the white space after does the work.",
+    "commonMistake": "Telegraphing the revelation two paragraphs early or having a character explain its significance"
+  },
+  {
+    "code": "interruption",
+    "label": "Interruption",
+    "exampleSentence": "She rose onto her toes, his mouth a breath away, and then the door splintered inward.",
+    "intensity": 3,
+    "craftNote": "The interruption works because what was about to happen is more powerful than what did. Cut before impact. The reader's imagination outperforms any scene you write.",
+    "commonMistake": "Interrupting too early before sufficient tension is built, or too late after the moment has already crested"
+  },
+  {
+    "code": "physical_peril",
+    "label": "Physical Peril",
+    "exampleSentence": "The howls weren't coming from outside. They were in the walls.",
+    "intensity": 4,
+    "craftNote": "The threat must feel immediate and inescapable. Avoid generic danger — the most effective peril is specific, sensory, and arrives from a direction the protagonist believed was safe.",
+    "commonMistake": "Danger that is abstract rather than physically present, or a threat the reader suspects can be easily escaped"
+  },
+  {
+    "code": "emotional_severance",
+    "label": "Emotional Severance",
+    "exampleSentence": "She watched him walk out and understood, with the flat certainty of someone who has made this mistake before, that she had just lost the only thing she would not recover from losing.",
+    "intensity": 5,
+    "craftNote": "More devastating than physical danger. The severance must be active — the character making a choice, not a victim of circumstance. The reader must feel the door close.",
+    "commonMistake": "Framing the severance as something that might be undone, or having the character express hope when despair is the honest beat"
+  },
+  {
+    "code": "temptation_offered",
+    "label": "Temptation Offered",
+    "exampleSentence": "He set the vial on the table between them. 'One drop,' he said, 'and you'll never have to be afraid again.'",
+    "intensity": 3,
+    "craftNote": "The temptation must be something the reader genuinely wants the character to accept. If the reader isn't tempted alongside the character, the cliffhanger has no pull.",
+    "commonMistake": "Temptation that is obviously wrong, a villain offer with no appeal, or a temptation the reader doesn't believe the protagonist would actually consider"
+  },
+  {
+    "code": "identity_destabilized",
+    "label": "Identity Destabilized",
+    "exampleSentence": "The prophecy didn't mean her enemy. It meant her.",
+    "intensity": 5,
+    "craftNote": "Everything the protagonist believed about themselves must be suddenly in question. The destabilization must be specific — not 'who am I?' but 'the specific thing I was certain of is wrong.'",
+    "commonMistake": "Vague identity crisis without a specific piece of knowledge upended, or destabilization that the reader saw coming long before the character did"
+  },
+  {
+    "code": "time_bomb",
+    "label": "Time Bomb",
+    "exampleSentence": "The moon reached its peak. The curse was permanent now.",
+    "intensity": 4,
+    "craftNote": "The deadline must have been established earlier as a real constraint, not introduced at the last sentence. The bomb landing means the window is already closed — the next chapter opens on consequences, not a race.",
+    "commonMistake": "Introducing the deadline in the same beat it expires, or a time bomb that the narrative allows to be defused too easily in the next chapter"
+  },
+  {
+    "code": "mirror_reveal",
+    "label": "Mirror Reveal",
+    "exampleSentence": "She turned the mirror toward him, and he did not look away fast enough — she saw what looked back.",
+    "intensity": 5,
+    "craftNote": "The mirror is literal or figurative: the character sees something true about themselves or another that cannot be unseen. The power is in the witness — someone saw, and now both parties know they saw.",
+    "commonMistake": "What is revealed being something the character (and reader) already suspected, or the witnessed truth being trivial relative to the setup's weight"
+  }
+]

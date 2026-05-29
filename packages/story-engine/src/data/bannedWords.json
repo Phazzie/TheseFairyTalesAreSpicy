@@ -1,0 +1,89 @@
+{
+  "global": [
+    "suddenly",
+    "very",
+    "just",
+    "really",
+    "that (as filler)",
+    "quite",
+    "rather",
+    "somewhat",
+    "smiled",
+    "grinned",
+    "nodded",
+    "sighed",
+    "gasped",
+    "chuckled",
+    "shrugged",
+    "winced",
+    "electricity between them",
+    "sparks flew",
+    "heart raced",
+    "her breath caught",
+    "his breath caught",
+    "he was so handsome",
+    "she was beautiful",
+    "he felt",
+    "she felt",
+    "it was [emotion]",
+    "began to",
+    "started to",
+    "there was",
+    "there were",
+    "seemed to",
+    "appeared to",
+    "she could feel",
+    "he could feel",
+    "she couldn't help but",
+    "he couldn't help but",
+    "butterflies in her stomach",
+    "a shiver ran down her spine",
+    "time stood still",
+    "their eyes met across the room",
+    "she had never felt this way before",
+    "he had never wanted anyone like this"
+  ],
+  "rationale": "These words and phrases represent lazy prose shortcuts. Each banned entry has a better alternative: 'smiled' → describe what the smile means and looks like; 'suddenly' → reorder events so the surprise is structural; 'heart raced' → describe the physical sensation with specificity; 'she felt' → show what the feeling produces in behavior or thought. The ban forces specificity. Exceptions apply only when a character uses a banned phrase deliberately in dialogue as characterization.",
+  "perLevel": {
+    "1": [
+      "arousal",
+      "desire (used plainly)",
+      "hunger (sexual context)",
+      "want (stated directly about physical attraction)",
+      "need (stated directly about physical attraction)",
+      "attraction",
+      "longing (stated; must be shown)"
+    ],
+    "2": [
+      "throbbing",
+      "pulsing (sexual context)",
+      "aching need",
+      "burning desire",
+      "she wanted him so badly"
+    ],
+    "3": [
+      "throbbing (anatomical context)",
+      "he was huge",
+      "she was so wet",
+      "he was so hard",
+      "she was dripping"
+    ],
+    "4": [
+      "crude slang for anatomical parts (unless in-character voice requires it)",
+      "clinical medical terms used without intention",
+      "he ravaged her",
+      "he took her",
+      "she surrendered completely (passive framing without interiority)"
+    ],
+    "5": [
+      "pornographic cliche phrases that belong to genre template rather than character voice",
+      "any description that removes both characters' interiority simultaneously",
+      "mechanical act description with no sensation or psychology attached"
+    ]
+  },
+  "allowedExceptions": [
+    "A banned word may appear in dialogue if it reveals character — a character who would actually say 'suddenly' is characterized by that word choice",
+    "Level-specific bans may be suspended if the banned phrase is used ironically or is being subverted narratively",
+    "The word 'sighed' may appear in non-romantic contexts where its meaning is unambiguous and un-romanticized"
+  ]
+}

@@ -1,0 +1,41 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Environment secrets
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist
+.turbo
+.expo
+android
+ios
+*.apk
+*.aab
+
+# Supabase local
+supabase/.branches
+supabase/.temp
+
+# Generated types (re-run: supabase gen types typescript --local)
+packages/api/src/db/database.types.ts
+
+# Test coverage
+coverage
+.nyc_output
+
+# Editor
+.vscode/settings.json
+.idea
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

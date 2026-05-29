@@ -1,0 +1,142 @@
+[
+  {
+    "code": "forbidden_threshold",
+    "name": "Forbidden Threshold",
+    "progression": ["curiosity", "transgression", "intoxication", "guilt", "denial", "cliffhanger"],
+    "spiceNote": "Natural escalation point at intoxication — spice level 3+ appropriate here. The guilt beat must land before any physical resolution or the tension deflates.",
+    "antiPatterns": ["rushed resolution", "stating feelings directly instead of showing", "forgetting the guilt beat", "resolution before consequence"]
+  },
+  {
+    "code": "slow_burn_awakening",
+    "name": "Slow Burn Awakening",
+    "progression": ["indifference", "awareness", "friction", "involuntary_longing", "suppression", "fracture", "cliffhanger"],
+    "spiceNote": "Spice level 1-2 can sustain this entire arc through sheer tension. The fracture is where suppression cracks — even a touch of a hand can carry enormous weight if the prior beats are earned.",
+    "antiPatterns": ["resolving tension too early", "characters discussing their feelings before showing them", "skipping the suppression beat", "love confession without stakes"]
+  },
+  {
+    "code": "power_exchange",
+    "name": "Power Exchange",
+    "progression": ["challenge_issued", "resistance_tested", "control_shifts", "surrender_moment", "aftermath_reckoning", "cliffhanger"],
+    "spiceNote": "The surrender moment is the spice peak — level 3-5 depending on what surrenders: body, will, or secret. The aftermath reckoning is non-negotiable; without it the power dynamic reads as abuse.",
+    "antiPatterns": ["non-consensual framing without narrative critique", "one-sided dominance with no vulnerability", "surrender without agency", "skipping the reckoning"]
+  },
+  {
+    "code": "forced_proximity",
+    "name": "Forced Proximity",
+    "progression": ["unwilling_confinement", "grudging_cooperation", "accidental_intimacy", "lowered_defenses", "charged_moment", "external_rupture", "cliffhanger"],
+    "spiceNote": "The accidental intimacy beat (shared warmth, tending a wound, sleeping in one bed) is where spice 2-3 content lives naturally. The external rupture should threaten the tentative connection just as it forms.",
+    "antiPatterns": ["too-convenient situation", "characters becoming friendly too quickly", "forgetting hostility established in beat one", "no real cost to the rupture"]
+  },
+  {
+    "code": "rivals_to_lovers",
+    "name": "Rivals to Lovers",
+    "progression": ["competing_aims", "mutual_grudging_respect", "shared_enemy_reveals", "forced_alliance", "desire_disguised_as_anger", "capitulation", "cliffhanger"],
+    "spiceNote": "The desire-disguised-as-anger beat is the spice engine. Level 2-4 appropriate depending on how physical the argument becomes. Capitulation must feel earned by five prior beats or reads as unconvincing.",
+    "antiPatterns": ["rivalry without real stakes", "skipping mutual respect beat", "anger-to-desire with no transition logic", "instant forgiveness of genuine harm"]
+  },
+  {
+    "code": "second_chance",
+    "name": "Second Chance",
+    "progression": ["painful_reunion", "old_wound_reopened", "reason_for_original_rupture_revealed", "tentative_rebuilding", "trust_test", "choice_to_try_again", "cliffhanger"],
+    "spiceNote": "Past intimacy colors every touch with history. Spice level 2-4 — bodies remember what minds try to forget. The trust test must be genuine; if the character passes too easily, the reunion feels unearned.",
+    "antiPatterns": ["ignoring the reason for the original break", "too-easy forgiveness", "reunion without confrontation", "skipping the trust test entirely"]
+  },
+  {
+    "code": "secret_revealed",
+    "name": "Secret Revealed",
+    "progression": ["careful_concealment", "mounting_clues", "near_discovery", "false_sense_of_safety", "revelation_detonates", "fallout", "cliffhanger"],
+    "spiceNote": "The revelation should arrive at maximum intimacy — the more trust built before, the harder it breaks. Spice 1-5 all serve this structure; the secret determines the register.",
+    "antiPatterns": ["revealing the secret too early", "no real consequences from fallout", "protagonist conveniently absent during mounting clues", "villain-explains-everything delivery"]
+  },
+  {
+    "code": "danger_bonds",
+    "name": "Danger Bonds",
+    "progression": ["shared_threat_surfaces", "forced_interdependence", "survival_intimacy", "barrier_dissolves_under_pressure", "vulnerability_exchanged", "safety_complicates_everything", "cliffhanger"],
+    "spiceNote": "Survival strips social armor — spice 2-4 emerges naturally at vulnerability-exchanged beat. The complication when safety returns is critical; what felt necessary under threat must now be chosen.",
+    "antiPatterns": ["danger resolved before intimacy can form", "characters bonding without real shared risk", "safety beat missing entirely", "returning to status quo once danger passes"]
+  },
+  {
+    "code": "creature_hunger",
+    "name": "Creature Hunger",
+    "progression": ["appetite_surfaces", "target_recognized", "control_maintained_barely", "hunger_weaponized_against_itself", "controlled_feeding", "hunger_transforms_into_something_else", "cliffhanger"],
+    "spiceNote": "The hunger metaphor carries all spice levels — level 1 is almost feeding, level 5 is everything. The transformation of hunger into something beyond appetite is the emotional payoff; do not skip it.",
+    "antiPatterns": ["hunger without complexity", "feeding scene without consent negotiation", "protagonist as passive prey only", "no emotional cost to the feeding"]
+  },
+  {
+    "code": "blood_oath",
+    "name": "Blood Oath",
+    "progression": ["desperate_bargain_struck", "terms_agreed_without_full_understanding", "oath_begins_to_bind", "loophole_sought", "price_revealed", "oath_kept_or_broken_with_cost", "cliffhanger"],
+    "spiceNote": "The binding itself can be spice level 2-4 depending on what the oath requires. The price revealed beat should land like a gut-punch; the reader must feel the protagonist had no good options.",
+    "antiPatterns": ["convenient loophole that negates the cost", "oath forgotten mid-story", "price that requires no sacrifice", "oath accepted without internal conflict"]
+  },
+  {
+    "code": "full_moon_fever",
+    "name": "Full Moon Fever",
+    "progression": ["moon_rises", "instinct_overrides_reason", "primal_self_takes_charge", "partner_responds_to_the_beast", "human_self_returns_to_devastation_or_wonder", "choice_made_in_the_aftermath", "cliffhanger"],
+    "spiceNote": "The primal self beat is spice level 3-5 territory. The human return must carry genuine weight — either shame, wonder, or grief. What the partner felt during the beast's dominance is the emotional question the chapter leaves open.",
+    "antiPatterns": ["beast with no distinct personality from the human", "aftermath with no complexity", "partner as passive recipient only", "convenient full moon timing with no narrative setup"]
+  },
+  {
+    "code": "fae_bargain",
+    "name": "Fae Bargain",
+    "progression": ["need_stated_carelessly", "fae_offers_a_solution", "terms_feel_reasonable", "true_cost_embedded_in_language", "payment_comes_due_at_worst_moment", "bargain_inverted_or_fulfilled", "cliffhanger"],
+    "spiceNote": "Fae bargains live by language — the most devastating price should be hidden in a word the protagonist glossed over. Spice 1-5 all work; the bargain's intimacy requirement sets the register.",
+    "antiPatterns": ["obvious trick the reader sees coming before the character", "price that arrives conveniently", "no consequence for clever escape", "fae who explains the trick instead of letting it land"]
+  },
+  {
+    "code": "dark_temptation",
+    "name": "Dark Temptation",
+    "progression": ["virtue_established", "temptation_introduced", "rationalization_builds", "first_compromise", "point_of_no_return_crossed", "consequence_arrives", "cliffhanger"],
+    "spiceNote": "The rationalization beat is where voice must be precise — the protagonist must be convincing to themselves and to the reader. Spice 2-5 escalates with each compromise. The consequence cannot be deferred past the chapter.",
+    "antiPatterns": ["thin virtue at start makes temptation meaningless", "temptation with no real cost", "consequence that arrives too easily", "protagonist who feels nothing about crossing the line"]
+  },
+  {
+    "code": "forbidden_feast",
+    "name": "Forbidden Feast",
+    "progression": ["hunger_denied", "feast_glimpsed", "one_taste_permitted", "appetite_becomes_impossible_to_contain", "feast_consumed", "satiation_reveals_new_hunger", "cliffhanger"],
+    "spiceNote": "A sensory arc — every beat should engage a different sense. One taste permitted is spice 2-3; feast consumed is 4-5. The new hunger revealed at the end should be emotionally deeper than the physical one satisfied.",
+    "antiPatterns": ["skipping the hunger-denied setup", "feast without sensory specificity", "satiation that reads as resolution rather than deepening", "new hunger that feels like a tacked-on twist"]
+  },
+  {
+    "code": "ancient_claim",
+    "name": "Ancient Claim",
+    "progression": ["marking_discovered", "history_surfaces", "protagonist_resists_the_claim", "claim_demonstrated_not_argued", "resistance_costs_something_real", "claim_acknowledged", "cliffhanger"],
+    "spiceNote": "The claim demonstrated beat is where spice 3-4 lives — showing what the bond means physically is more powerful than explaining it. Resistance must cost the protagonist genuinely or the acknowledgment feels passive.",
+    "antiPatterns": ["claim accepted without real resistance", "history delivered as exposition dump", "claim that feels coercive without narrative critique", "protagonist who changes position without sufficient story logic"]
+  },
+  {
+    "code": "reluctant_protector",
+    "name": "Reluctant Protector",
+    "progression": ["unwanted_duty_assigned", "charge_proves_unexpectedly_complicated", "protector_begins_to_care_despite_self", "protecting_requires_intimacy", "care_acknowledged_privately", "protection_fails_or_deepens", "cliffhanger"],
+    "spiceNote": "Protecting requires intimacy — this is the spice engine, level 1-3. The private acknowledgment beat should be internal monologue at its sharpest; what the protector admits to themselves is what they cannot yet say aloud.",
+    "antiPatterns": ["instant softening toward the charge", "protection with no personal cost", "intimacy required without plausible story logic", "charge as purely passive recipient"]
+  },
+  {
+    "code": "unraveling_control",
+    "name": "Unraveling Control",
+    "progression": ["iron_control_established", "first_crack_appears", "crack_is_willfully_sealed", "external_pressure_multiplies", "control_shatters", "what_was_being_controlled_is_revealed", "cliffhanger"],
+    "spiceNote": "The shattering is the spice event — level 3-5. But the reveal of what was being controlled is the emotional climax; the shattering is merely its vehicle. Both beats require equal page time.",
+    "antiPatterns": ["control that shatters too easily", "revealed content that feels anticlimactic", "no consequences from the collapse", "protagonist who reassembles control too quickly"]
+  },
+  {
+    "code": "moonlit_surrender",
+    "name": "Moonlit Surrender",
+    "progression": ["resistance_maintained_through_daylight", "night_strips_defenses", "moon_transforms_the_scene", "what_was_refused_is_offered_freely", "surrender_witnessed_by_both_parties", "dawn_forces_reckoning", "cliffhanger"],
+    "spiceNote": "The moon as structural device: what cannot happen in daylight becomes possible under it. Surrender witnessed by both parties — both characters must recognize what occurred. Dawn's reckoning cannot be soft.",
+    "antiPatterns": ["surrender that reads as conquest", "moonlit magic as convenient excuse", "dawn reckoning skipped or minimized", "no real difference between the character who resisted and who surrendered"]
+  },
+  {
+    "code": "venomous_affection",
+    "name": "Venomous Affection",
+    "progression": ["affection_expressed_through_cruelty", "target_recognizes_the_pattern", "deliberate_softness_wielded_as_weapon", "venom_and_care_become_indistinguishable", "one_genuine_moment_of_tenderness", "venom_returns_amplified", "cliffhanger"],
+    "spiceNote": "The one genuine moment of tenderness is the pivot on which the entire structure turns — it must be brief, unguarded, and immediately followed by retreat. Spice 2-4 lives in the indistinguishable beat.",
+    "antiPatterns": ["cruelty without psychological texture", "target who does not recognize the pattern", "genuine tenderness that lasts too long", "venom that reads as simple cruelty rather than complex feeling"]
+  },
+  {
+    "code": "eternal_game",
+    "name": "Eternal Game",
+    "progression": ["game_established_with_rules", "rules_tested_early", "stakes_escalated_beyond_original_terms", "player_realizes_they_care_about_more_than_winning", "game_used_against_its_inventor", "rules_broken_with_full_consequence", "cliffhanger"],
+    "spiceNote": "The game's rules are the story's architecture — they must be established clearly enough that breaking them has weight. Level 2-4 spice lives in the moment the player uses the game against its inventor. The consequence of breaking the rules is non-negotiable.",
+    "antiPatterns": ["rules too vague to create meaningful stakes", "stakes that never exceed the original terms", "game forgotten when plot demands", "consequence for broken rules that arrives conveniently or is avoided"]
+  }
+]

@@ -1,0 +1,111 @@
+[
+  {
+    "level": 1,
+    "label": "Slow Burn",
+    "description": "Tension, longing, no physical contact beyond glances and brief accidental touches. Desire exists entirely in what is withheld.",
+    "allowedActs": [
+      "intense eye contact held a beat too long",
+      "accidental touch of hands",
+      "near-kiss that doesn't land",
+      "charged conversation with layered subtext",
+      "noticing specific physical details (hands, throat, mouth) without commentary",
+      "deliberate distance maintained at effort",
+      "breath awareness in close proximity",
+      "a single held gaze that functions as a declaration"
+    ],
+    "forbiddenLanguage": [
+      "any explicit anatomical terms",
+      "any direct description of arousal",
+      "desire or want stated plainly — only shown",
+      "hunger used in a sexual context",
+      "any description of imagined physical acts"
+    ],
+    "explicitInstruction": "Build tension through restraint. The most intimate act permitted is a hand brushing a wrist — and it should feel like a threshold crossed. Every sentence that approaches physical contact should cost the character something. Leave everything to imagination. The reader's mind is the most powerful tool at this level — give it precise sensory input and let it extrapolate.",
+    "paceNote": "Slow burns earn their eventual release by refusing it for as long as possible. Chapters at this level should end leaving the reader more tense than they began, not satisfied."
+  },
+  {
+    "level": 2,
+    "label": "Heated",
+    "description": "First kisses, heated arguments that slide toward physical awareness, sensual tension with contained expression. Contact happens; it is not pursued past a threshold.",
+    "allowedActs": [
+      "kissing — from brief to drawn-out, but clothing remains",
+      "hands on face, hair, waist — purposeful, not exploratory",
+      "bodies against each other in conflict or desire without explicit intent",
+      "whispered words against skin",
+      "biting that does not draw blood in explicit context",
+      "being held against a wall or surface with clear tension",
+      "describing the feeling of a kiss in sensory detail"
+    ],
+    "forbiddenLanguage": [
+      "explicit anatomical names for genitalia",
+      "descriptions of sexual arousal states",
+      "explicit sexual acts",
+      "crude or clinical language for physical response"
+    ],
+    "explicitInstruction": "The heat exists in what is barely contained. Two characters who want each other badly but stop at the edge — or who fail to stop but fade before anything explicit — belong at level 2. The emotional content must be as present as the physical. A kiss without subtext is just choreography.",
+    "paceNote": "The interruption (internal or external) is this level's primary tool. What would happen next is the question the chapter leaves open."
+  },
+  {
+    "level": 3,
+    "label": "Steamy",
+    "description": "Clothes stay on, or come partly off. Hands move with intent. Fade to black before full explicitness. Implied rather than shown — but the implication is specific.",
+    "allowedActs": [
+      "clothing removed partially or fully suggested",
+      "hands moving over clothed or briefly described unclothed bodies",
+      "kissing down a neck, a collarbone, a shoulder",
+      "pressure and weight of bodies described without clinical detail",
+      "dialogue that makes explicit intent clear without explicit language",
+      "pre-fade descriptions of sensation and desire",
+      "the moment before the line crossed, rendered fully"
+    ],
+    "forbiddenLanguage": [
+      "graphic anatomical description of genitalia",
+      "explicit play-by-play of penetration or manual stimulation",
+      "crude slang",
+      "clinical pornographic language"
+    ],
+    "explicitInstruction": "Level 3 is the fade to black executed at its most skilled. The reader knows exactly what happens — the writing simply does not follow them through the door. The moment before the door closes should be the most charged, most specific, most sensory sentence in the scene. What is left to imagination should be so well set up that imagination has no work to do.",
+    "paceNote": "The fade is a technique, not a failure of nerve. Execute it with intent."
+  },
+  {
+    "level": 4,
+    "label": "Explicit",
+    "description": "Detailed physical intimacy, named anatomically with deliberate language. Emotional grounding required — the physical acts must carry psychological weight.",
+    "allowedActs": [
+      "explicit sexual acts described with sensory detail",
+      "anatomical terms used with intentionality (not crudely, not clinically)",
+      "prolonged intimate scenes with multiple acts",
+      "explicit description of arousal and physical response",
+      "dialogue that is explicit in both language and intent",
+      "supernatural elements (feeding, transformation, magic) woven into intimacy"
+    ],
+    "forbiddenLanguage": [
+      "crude slang for anatomy that reads as degrading without character-specific justification",
+      "clinical detachment — physical acts that carry no emotional charge",
+      "descriptions that objectify without interiority from at least one party"
+    ],
+    "explicitInstruction": "Level 4 demands that the body and the self are both present. Every physical act should carry psychological meaning. What a character does in this scene should reveal character — desire, fear, need, grief, power, love, any of these — or the explicitness serves nothing. The language should be precise, not euphemistic, not crude by default — chosen for what it reveals, not for shock.",
+    "paceNote": "The scene must earn its explicitness through what preceded it. A level 4 scene arriving without established emotional stakes reads as gratuitous. Emotional context is not optional decoration — it is the load-bearing structure."
+  },
+  {
+    "level": 5,
+    "label": "Unrestrained",
+    "description": "Nothing withheld. Graphic, sophisticated, and psychologically complex. Complete scenes with full sensory immersion. The emotional and physical rendered without compression.",
+    "allowedActs": [
+      "complete, uncompressed sexual scenes",
+      "extended intimacy with full physical and emotional detail",
+      "explicit acts of any kind between consenting adult characters",
+      "power dynamics, kink, supernatural feeding, transformation-adjacent intimacy",
+      "multi-act scenes without fade or ellipsis",
+      "explicit language at full register — crude where it serves character, precise where it serves scene"
+    ],
+    "forbiddenLanguage": [
+      "non-consensual acts framed positively without narrative critique",
+      "content involving minors",
+      "content designed to degrade without mutual consent and narrative framing",
+      "purely mechanical description with no psychological or emotional content"
+    ],
+    "explicitInstruction": "Level 5 is not the absence of craft — it is craft applied without restriction. The most common failure at this level is losing the characters inside the explicit content. The bodies matter; the people inside the bodies matter more. Every explicit scene at level 5 should reveal something about who these characters are that could not have been revealed any other way. If the scene could be removed without losing character knowledge, it has not done its job.",
+    "paceNote": "Pacing at level 5 is a deliberate oscillation — intensity built, released, and rebuilt. Flat-out explicit content without rhythm exhausts the reader and numbs the scene. Use the level's freedom to go further than you could before — then pull back to interiority, to sensation, to small specific detail — before pushing forward again."
+  }
+]

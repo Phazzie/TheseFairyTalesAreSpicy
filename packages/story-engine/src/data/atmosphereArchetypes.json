@@ -1,0 +1,135 @@
+[
+  {
+    "id": "gothic_estate",
+    "label": "Gothic Estate",
+    "imageryPalette": [
+      "candlelight that pools rather than spreads",
+      "stone corridors where footsteps echo differently depending on the hour",
+      "moonlit gardens with paths that end without explanation",
+      "heavy drapery that moves without wind",
+      "portraits with eyes positioned to follow",
+      "dust that settles in patterns",
+      "doors that open to rooms not on any floor plan",
+      "stained glass that casts colored shadows in sunless rooms",
+      "iron fixtures oxidized to the color of old blood",
+      "staircases that creak on specific steps regardless of weight"
+    ],
+    "atmosphericInstruction": "Every setting detail should carry weight and menace. The house is a character. Shadows are not decorative — they hide things. Rooms have histories that the walls have absorbed. The estate knows more than its current inhabitant, and sometimes the building acts on that knowledge. Temperature should be used as emotional signal: warmth where the supernatural entity has spent time, cold where something happened that cannot be undone.",
+    "sensoryPriorities": ["sound (echoes, silence, the wrong creak)", "temperature (localized warmth, inexplicable cold)", "smell (age, stone, something floral masking something else)", "peripheral vision (things that resolve incorrectly when looked at directly)"],
+    "tonalTarget": "Dread that is also beautiful. The reader should want to be in this space while understanding that wanting to be here is exactly the danger."
+  },
+  {
+    "id": "contemporary_urban",
+    "label": "Contemporary Urban",
+    "imageryPalette": [
+      "neon that bleeds into wet pavement",
+      "alleyways where the ambient sound of the city goes quiet",
+      "high-rise apartments where light pollution means darkness is never complete",
+      "underground clubs where bass is felt before heard",
+      "parking structures at 3 AM",
+      "corner stores open past logic",
+      "transit systems that run between ordinary stops and somewhere else",
+      "rooftops above the visible city",
+      "the particular silence of someone standing in a crowd being watched",
+      "the city's smell at different hours — exhaust, food, rain, iron"
+    ],
+    "atmosphericInstruction": "The supernatural in urban settings works through contrast and concealment. Monsters are most frightening in familiar spaces. A subway car is the right setting for the moment before the hunt begins. The city's noise is both camouflage and heightener — it gives the supernatural cover, and it makes the silence when it stops significant. Density should create danger: too many people, too close, no escape route.",
+    "sensoryPriorities": ["sound (the city's ambient noise and its sudden absence)", "light (artificial, layered, unreliable)", "crowd-feel (bodies as cover and as threat)", "smell (ozone, food, the wrongness of something very old in a very new space)"],
+    "tonalTarget": "The uncanny inside the familiar. The reader knows this city, or recognizes it — and that recognition is exactly what the threat exploits."
+  },
+  {
+    "id": "dark_academia",
+    "label": "Dark Academia",
+    "imageryPalette": [
+      "libraries where the oldest section is not catalogued",
+      "reading rooms at midnight with one lamp per desk",
+      "oak paneling that absorbs sound",
+      "staircases with student names carved into banisters across generations",
+      "lecture halls empty except for the right person",
+      "archives where the archivist is always already leaving",
+      "quadrangles in the wrong season, empty and too still",
+      "offices where every flat surface holds a dead language",
+      "the smell of old paper and something older",
+      "clocks that run on academic rather than real time"
+    ],
+    "atmosphericInstruction": "Knowledge is the currency and the danger. The setting itself is a repository of things that should not have been written down. The supernatural presence here is ancient and educated — it has had centuries to read everything this institution contains, and its patience is a form of power. Beauty and intellect are the seduction; what they conceal is what the story is actually about.",
+    "sensoryPriorities": ["sight (text, light on text, the way someone else is reading)", "sound (the quality of silence in spaces built for thinking)", "touch (paper, bindings, the specific texture of something very old)", "smell (the particular smell of accumulated knowledge)"],
+    "tonalTarget": "Seduction through learning. The academy makes danger feel like education, and the reader should share the protagonist's confusion about whether they want to escape or go further in."
+  },
+  {
+    "id": "historical",
+    "label": "Historical",
+    "imageryPalette": [
+      "candlelight as the only available warmth",
+      "letters whose ink has bled through the page",
+      "carriages as sealed spaces",
+      "ballrooms where the music sets the pace of everything",
+      "gardens as the only acceptable space for unchaperoned conversation",
+      "dressing rooms and their particular intimacies",
+      "inns at crossroads where anything is possible",
+      "battlefields that have not yet been given their names",
+      "ports where the old world ends and something else begins",
+      "courts where everything is performance and survival"
+    ],
+    "atmosphericInstruction": "Historical settings make constraint the engine. What cannot be said openly is said in other registers — the angle of a glance, a hand held in a dance, a letter that violates correspondence etiquette by being too honest. The supernatural in historical settings often wears the mantle of the period's own folklore, making it difficult to separate the story's monster from what the characters' world already believed in. Class and gender constraints should function as additional architectural pressure on desire.",
+    "sensoryPriorities": ["sound (music, the absence of certain sounds, the specific noise of the period)", "touch (everything more charged because touch is so restricted)", "sight (what can and cannot be looked at directly)", "smell (the period-specific smells before sanitation, before electricity, before the modern world)"],
+    "tonalTarget": "Constraint as erotic force. Every limitation the period imposes on the characters should make their desire more intense, not less."
+  },
+  {
+    "id": "high_fantasy_court",
+    "label": "High Fantasy Court",
+    "imageryPalette": [
+      "throne rooms where the light source is wrong in ways that take time to identify",
+      "courts where every color worn is a statement",
+      "feasts where not all the food is what it appears to be",
+      "gardens that exist outside normal geography",
+      "tournament grounds that double as stages for political theater",
+      "audiences that watch everything and record everything",
+      "libraries in towers where the lower floors are older than the tower",
+      "private chambers that are never truly private",
+      "magic that is also simply power, political and physical",
+      "seasons as court-controlled experience, not weather"
+    ],
+    "atmosphericInstruction": "The court is a machine for watching and being watched. Every interaction is performance; every performance conceals the real interaction happening underneath. Beauty is functional — it is armor, currency, and camouflage simultaneously. The supernatural elements should be so woven into the fabric of this world that extracting them would cause the setting to collapse — magic here is not an addition to politics, it is politics by another name.",
+    "sensoryPriorities": ["sight (display, observation, being seen)", "sound (court music, the specific silence when someone important stops speaking, whispers that carry)", "taste (food and drink as politics and potential poison)", "the specific sensation of being watched"],
+    "tonalTarget": "Power as sensory experience. The beauty of the court should be real and the danger of the court should be equally real, and the reader should not be certain which is which."
+  },
+  {
+    "id": "small_town_secret",
+    "label": "Small Town Secret",
+    "imageryPalette": [
+      "main streets empty after nine PM for reasons no one explains",
+      "church records that stop at a specific year",
+      "houses that have been in the same family longer than any family should live anywhere",
+      "festivals with roots that predate the town's official founding",
+      "the particular quality of small-town hospitality that means something else",
+      "sheriff departments where the sheriff has held the position longer than seems possible",
+      "diners at 6 AM where everyone knows what everyone else had for dinner",
+      "graveyards that are tended better than the town itself",
+      "the edge of town where the road goes somewhere that doesn't appear on maps",
+      "local legends told with too much detail to be fiction"
+    ],
+    "atmosphericInstruction": "The horror and romance of small-town supernatural settings come from the community's knowledge — everyone knows, and no one says. The protagonist's outsider status is both vulnerability and advantage: they cannot read the silences correctly, which means they walk through warnings without recognizing them. The supernatural creature in this setting is part of the community in ways that make extraction impossible and complicity unavoidable.",
+    "sensoryPriorities": ["social texture (who looks, who doesn't look, who leaves when you enter)", "sound (what the town doesn't talk about is louder than what it does)", "the quality of daylight and what it looks like when the town is afraid)", "familiarity weaponized — the wrongness of recognizing something that should not be familiar"],
+    "tonalTarget": "The uncanny that wears community clothing. The scariest thing about a small town secret is how normal everyone makes it look."
+  },
+  {
+    "id": "coastal_isolation",
+    "label": "Coastal Isolation",
+    "imageryPalette": [
+      "lighthouses whose light serves more than ships",
+      "the specific color of water that has no bottom you can verify",
+      "fog that arrives with intent",
+      "tides that recede and reveal what should stay covered",
+      "boats that don't come back when they say they will",
+      "fishermen who know better than to name what they've seen",
+      "islands accessible only at specific tides",
+      "the sound of the ocean as constant presence — sometimes closer than physics explains",
+      "salt as a flavor and a smell that clings",
+      "the particular quality of storm light before the storm arrives"
+    ],
+    "atmosphericInstruction": "Coastal isolation combines the romance of remoteness with the threat of the ocean's absolute indifference. The sea is not a backdrop — it is an actor. It removes escape routes, makes sound behave differently, and normalizes the inexplicable (the fisherman who stops asking what happened to his nets). The supernatural creature in this setting often has a relationship with the water that the protagonist cannot fully understand — it knows things the ocean told it, and the ocean is older than any story.",
+    "sensoryPriorities": ["sound (the ocean's constancy and its changes)", "smell (salt, fish, iodine, the smell of deep water)", "the feel of constant moisture and wind", "sight (the horizon as edge, the fog as curtain, what appears and disappears)"],
+    "tonalTarget": "Isolation as intimacy. When escape is geographically impossible, the only available response is depth — deeper into the relationship, deeper into the danger, deeper into whatever the water is keeping."
+  }
+]

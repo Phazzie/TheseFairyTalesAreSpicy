@@ -1,0 +1,130 @@
+{
+  "vampire": [
+    {
+      "name": "Anne Rice",
+      "style": "Gothic, sensual, philosophical, first-person intimacy — centuries of loneliness made eloquent",
+      "register": "elevated",
+      "voiceTags": ["lyrical", "brooding", "verbose", "introspective", "philosophical"]
+    },
+    {
+      "name": "Jeaniene Frost",
+      "style": "Razor-sharp wit that cuts before you feel the blade — vampire power dynamics with modern irreverence",
+      "register": "sharp",
+      "voiceTags": ["witty", "fierce", "fast-paced", "banter-heavy", "action-forward"]
+    },
+    {
+      "name": "J.R. Ward",
+      "style": "Brooding protectiveness bordering on obsession — Black Dagger Brotherhood intensity with visceral world-building",
+      "register": "intense",
+      "voiceTags": ["possessive", "dark", "brotherhood-coded", "emotionally-raw", "heavy-atmosphere"]
+    },
+    {
+      "name": "Laurell K. Hamilton",
+      "style": "Dark eroticism blending vampire power dynamics with necromancy — moral ambiguity weaponized",
+      "register": "explicit",
+      "voiceTags": ["erotic", "morally-complex", "power-obsessed", "gothic-urban", "psychological"]
+    },
+    {
+      "name": "Richelle Mead",
+      "style": "Forbidden romance under institutional rules — dhampir and vampire tension with academy world-building",
+      "register": "tense",
+      "voiceTags": ["forbidden", "slow-burn", "rule-breaking", "class-conscious", "yearning"]
+    }
+  ],
+  "werewolf": [
+    {
+      "name": "Patricia Briggs",
+      "style": "Grounded pragmatism with fierce loyalty — Mercy Thompson's world where pack bonds have genuine cost",
+      "register": "grounded",
+      "voiceTags": ["pragmatic", "loyal", "matter-of-fact", "pack-driven", "rural-gothic"]
+    },
+    {
+      "name": "Nalini Singh",
+      "style": "Primal sensuality overwhelming rational thought — Psy-Changeling pack bonds as physical and emotional necessity",
+      "register": "sensual",
+      "voiceTags": ["primal", "sensory-rich", "instinct-forward", "protective", "fate-driven"]
+    },
+    {
+      "name": "Ilona Andrews",
+      "style": "Urban grit balanced with unexpected humor — Kate Daniels world where werewolf politics are personal and petty",
+      "register": "sharp",
+      "voiceTags": ["sardonic", "competent-protagonist", "world-builder", "political", "deadpan"]
+    },
+    {
+      "name": "Kelley Armstrong",
+      "style": "Suspenseful tension building like a storm — Women of the Otherworld werewolves with psychological depth",
+      "register": "suspenseful",
+      "voiceTags": ["atmospheric", "psychological", "slow-burn", "female-wolf-protagonist", "earned-tension"]
+    },
+    {
+      "name": "Suzanne Wright",
+      "style": "Possessive alpha wolves with pack mentality — primal claiming scenes grounded in genuine emotion",
+      "register": "explicit",
+      "voiceTags": ["possessive", "explicit", "alpha-driven", "pack-bonded", "instinct-vs-reason"]
+    }
+  ],
+  "fairy": [
+    {
+      "name": "Holly Black",
+      "style": "Court intrigue where every smile hides daggers — Folk of the Air's fae as genuinely dangerous and politically vicious",
+      "register": "sharp",
+      "voiceTags": ["scheming", "court-political", "morally-ambiguous", "bargain-driven", "dark-beautiful"]
+    },
+    {
+      "name": "Sarah J. Maas",
+      "style": "Epic romance with world-shattering consequences — ACOTAR's fae as ancient powers wrapped in devastating desire",
+      "register": "elevated",
+      "voiceTags": ["epic-scale", "slow-burn", "power-awakening", "fate-driven", "explicit-at-peak"]
+    },
+    {
+      "name": "Karen Marie Moning",
+      "style": "Dublin Unseelie darkness — MacKayla Lane's world where fae are predators wearing beauty as camouflage",
+      "register": "dark",
+      "voiceTags": ["predatory", "Dublin-gothic", "obsessive", "Unseelie-dangerous", "gritty"]
+    },
+    {
+      "name": "Grace Draven",
+      "style": "Slow-burn intimacy across cultural impossibilities — Wraith Kings' impossible love made utterly convincing",
+      "register": "intimate",
+      "voiceTags": ["slow-burn", "cross-cultural", "alien-beauty", "earned-desire", "lyrical"]
+    },
+    {
+      "name": "Melissa Marr",
+      "style": "Wicked Lovely's glamour as seduction and danger — mortals drawn to fae like moths who know the flame will kill them",
+      "register": "atmospheric",
+      "voiceTags": ["glamour-heavy", "dangerous-beauty", "mortal-fragility", "inevitable-pull", "lyrical-dark"]
+    }
+  ],
+  "cross_creature": [
+    {
+      "name": "Kresley Cole",
+      "style": "Immortals After Dark — all creature types collide in a world of fated mates, wild reckless passion, and irreverent humor",
+      "register": "playful-explicit",
+      "voiceTags": ["witty", "explicit", "fated-mates", "multi-creature", "chaotic-passion"]
+    },
+    {
+      "name": "Sherrilyn Kenyon",
+      "style": "Dark-Hunter mythology spanning vampires, weres, and ancients — tortured immortal warriors finding unexpected grace",
+      "register": "mythological",
+      "voiceTags": ["mythological", "ancient-grief", "chosen-warrior", "cross-pantheon", "emotionally-heavy"]
+    },
+    {
+      "name": "Kim Harrison",
+      "style": "The Hollows — vampire, witch, and werewolf Cincinnati where supernatural politics are as petty as human ones",
+      "register": "urban-sharp",
+      "voiceTags": ["urban-fantasy", "bounty-hunter-voice", "multi-species", "political", "darkly-comedic"]
+    },
+    {
+      "name": "Ilona Andrews",
+      "style": "Magic Bites universe — vampires, shape-shifters, and mages in post-Shift Atlanta where power is everything",
+      "register": "grounded-sharp",
+      "voiceTags": ["competent", "world-builder", "multi-creature-politics", "sardonic", "found-family"]
+    },
+    {
+      "name": "Gena Showalter",
+      "style": "Lords of the Underworld — demon-possessed immortals, vampires, and immortal hunters where mythology bleeds into desire",
+      "register": "playful-dark",
+      "voiceTags": ["banter-heavy", "demon-mythology", "possessed-immortals", "explicit", "darkly-comedic"]
+    }
+  ]
+}

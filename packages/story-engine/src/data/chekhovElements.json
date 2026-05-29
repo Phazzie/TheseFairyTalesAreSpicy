@@ -1,0 +1,285 @@
+{
+  "vampire": [
+    {
+      "id": "vamp_silver_ring",
+      "element": "A silver ring that leaves a burn mark on the vampire's skin, worn deliberately",
+      "payoffSuggestion": "The burn is self-inflicted penance for a feeding that killed someone the vampire loved — reveal transforms the villain into a grieving figure"
+    },
+    {
+      "id": "vamp_portrait_wrong",
+      "element": "A centuries-old portrait in the manor that looks almost exactly like the protagonist — but not quite",
+      "payoffSuggestion": "The portrait is of the person the vampire originally turned; the protagonist is their descendant and carries the same blood-scent, the same fatal appeal"
+    },
+    {
+      "id": "vamp_sealed_room",
+      "element": "One room in the estate is never opened, the door warm to the touch",
+      "payoffSuggestion": "The room contains a human kept alive and sleeping for decades — someone the vampire cannot kill and cannot free"
+    },
+    {
+      "id": "vamp_blood_vial",
+      "element": "A small glass vial of dark liquid worn on a chain around the vampire's neck",
+      "payoffSuggestion": "The vial contains the last blood of someone the vampire killed by accident; carrying it is the only form of apology available to an immortal"
+    },
+    {
+      "id": "vamp_music_box",
+      "element": "A music box that plays one specific waltz the vampire refuses to name",
+      "payoffSuggestion": "The waltz was composed for the vampire's mortal wedding night, before they were turned — hearing it breaks the vampire's control completely"
+    },
+    {
+      "id": "vamp_unmarked_grave",
+      "element": "A grave in the estate garden with no name, tended obsessively",
+      "payoffSuggestion": "The grave holds the vampire's maker, whom they killed to earn freedom; the tending is guilt, not love"
+    },
+    {
+      "id": "vamp_daylight_mirror",
+      "element": "The vampire keeps a single mirror, covered at all times except at noon",
+      "payoffSuggestion": "At noon, the mirror reflects the vampire as they appeared on the day they were turned — a reminder of who they were, used as a ritual of self-control before each feeding"
+    },
+    {
+      "id": "vamp_ink_contract",
+      "element": "An ancient contract written in fading ink on human skin, framed and displayed",
+      "payoffSuggestion": "The contract bound the vampire to a coven for three centuries; one clause is still active and obligates them to surrender the person they love most"
+    },
+    {
+      "id": "vamp_crow_familiar",
+      "element": "A crow that appears at every scene of violence, watches, and departs without noise",
+      "payoffSuggestion": "The crow is the vampire's maker, reduced to this form by a curse the vampire triggered — only the vampire's death or freely given love can restore them"
+    },
+    {
+      "id": "vamp_white_gloves",
+      "element": "The vampire always wears white gloves indoors, and removes them only when alone",
+      "payoffSuggestion": "The hands beneath are marked with feeding lines from a century of blood-drinking from unwilling victims; the gloves are shame made cloth"
+    },
+    {
+      "id": "vamp_forbidden_book",
+      "element": "A library book the vampire has checked out continuously for sixty years and never returned",
+      "payoffSuggestion": "The book contains a ritual that could make the vampire mortal — something they've been unable to commit to for six decades"
+    },
+    {
+      "id": "vamp_threshold_rule",
+      "element": "The vampire invites everyone across the threshold except one person, always finding a reason",
+      "payoffSuggestion": "They cannot invite that person in because ancient binding law states if they do, they must offer protection for life — and they fear what that protection would cost them"
+    },
+    {
+      "id": "vamp_recurring_dream",
+      "element": "The vampire speaks of a recurring dream they've had for three hundred years but refuses to describe it",
+      "payoffSuggestion": "The dream is a prophecy — they recognize the protagonist as its figure and have been both seeking and avoiding them for centuries"
+    },
+    {
+      "id": "vamp_bloodless_wound",
+      "element": "A scar on the vampire's chest that never healed, over their heart",
+      "payoffSuggestion": "Vampire wounds heal unless inflicted by someone they love — the scar was left by the one person who ever mattered, who survived by driving them back"
+    },
+    {
+      "id": "vamp_named_blade",
+      "element": "A blade displayed in the foyer with a name engraved on it — not the vampire's name",
+      "payoffSuggestion": "The blade belongs to the vampire's greatest enemy, taken as a trophy; the enemy is the protagonist's ancestor, and the protagonist carries the same hunting gift"
+    }
+  ],
+  "werewolf": [
+    {
+      "id": "wolf_old_scar",
+      "element": "A pack scar — deliberate marking from a trial — on the wolf's left forearm, partially hidden",
+      "payoffSuggestion": "The scar is from a failed alpha challenge the wolf threw deliberately to protect a packmate; only that packmate knows the truth"
+    },
+    {
+      "id": "wolf_compass",
+      "element": "An old compass the wolf checks compulsively, even indoors",
+      "payoffSuggestion": "The compass doesn't point north — it points toward the wolf's mate, and always has; they've been running from that direction for years"
+    },
+    {
+      "id": "wolf_territorial_boundary",
+      "element": "One specific tree at the edge of their territory marked with claw grooves going back decades",
+      "payoffSuggestion": "The markings record pack deaths — the wolf etches a line for each one they couldn't prevent; the protagonist finds it and counts"
+    },
+    {
+      "id": "wolf_forbidden_howl",
+      "element": "A howl pattern the wolf teaches no one and has never used in front of the pack",
+      "payoffSuggestion": "It's the distress signal of a long-dead pack they were born into before the massacre; using it would identify them as a survivor others want silenced"
+    },
+    {
+      "id": "wolf_moon_record",
+      "element": "A journal that records every full moon night in controlled, sparse sentences",
+      "payoffSuggestion": "Three entries are blank — those moons, the wolf lost complete control; what happened on those nights is what they can never forgive in themselves"
+    },
+    {
+      "id": "wolf_silver_object",
+      "element": "A silver locket worn against bare skin, painful but never removed",
+      "payoffSuggestion": "The locket contains a photo of someone they accidentally harmed during transformation; the pain is chosen punishment"
+    },
+    {
+      "id": "wolf_unclaimed_territory",
+      "element": "One stretch of woods the pack avoids without explanation, the wolf most of all",
+      "payoffSuggestion": "The wolf made a territorial bargain with a fae creature decades ago — the woods are the payment zone, and something there waits to collect"
+    },
+    {
+      "id": "wolf_half_shifted_mirror",
+      "element": "An unfinished shift — the wolf's eyes remain wolf-gold even in full human form under emotional pressure",
+      "payoffSuggestion": "The incomplete control began the day someone told them they were unlovable in wolf form; the gold eyes are grief the body can't release"
+    },
+    {
+      "id": "wolf_pack_tattoo",
+      "element": "A pack tattoo that has faded to near-invisible on the wolf's shoulder",
+      "payoffSuggestion": "The tattoo fades when a packmate dies; the wolf's is almost gone — they are the last of their birth pack and the fading is literal grief made visible"
+    },
+    {
+      "id": "wolf_buried_object",
+      "element": "The wolf buries something at the start of every full moon and digs it up after",
+      "payoffSuggestion": "It's a name stone for each person they love — a ritual of temporary burial to protect them symbolically during the moon; discovered by the protagonist, it reads as a threat before it reads as love"
+    },
+    {
+      "id": "wolf_unfamiliar_scent",
+      "element": "The wolf can scent every person in a room except one — the protagonist — which is impossible",
+      "payoffSuggestion": "The protagonist carries a bloodline warded against supernatural tracking; they are the descendant of the hunter who nearly wiped out the wolf's pack"
+    },
+    {
+      "id": "wolf_abandoned_den",
+      "element": "An old den in the woods that the wolf maintains but never uses, always freshly cleaned",
+      "payoffSuggestion": "The den was prepared for a mate who never arrived; the wolf has kept it ready for forty years without admitting why"
+    },
+    {
+      "id": "wolf_wrong_howl_response",
+      "element": "When the pack howls together, the wolf always adds one extra note, a dissonant grace note",
+      "payoffSuggestion": "The extra note is for the dead — a death-howl tradition from their birth pack that no living wolf around them knows how to hear correctly"
+    },
+    {
+      "id": "wolf_winter_limp",
+      "element": "A limp that appears only in winter, never explained",
+      "payoffSuggestion": "The injury was inflicted in a winter attack the wolf survived alone; it healed wrong because there was no pack to run with during recovery, and cold weather recalls what isolation feels like in the body"
+    },
+    {
+      "id": "wolf_named_enemy",
+      "element": "A name the wolf will not speak aloud, written on a list kept inside a book spine",
+      "payoffSuggestion": "The name belongs to the wolf who betrayed their pack; the protagonist discovers the list contains their family name"
+    }
+  ],
+  "fairy": [
+    {
+      "id": "fairy_wilting_garden",
+      "element": "The fae's private garden, lush everywhere except one dead patch no magic can restore",
+      "payoffSuggestion": "The dead patch marks where they broke a vow — the land remembers what they cannot undo"
+    },
+    {
+      "id": "fairy_unnamed_debt",
+      "element": "The fae refers obliquely to a debt owed to them by a mortal family, generation after generation",
+      "payoffSuggestion": "The protagonist's family owes the debt; the fae has been waiting for the right descendant to collect it in the right form"
+    },
+    {
+      "id": "fairy_true_name_vessel",
+      "element": "A sealed vessel of fired clay worn as a pendant — the fae will never let it out of their possession",
+      "payoffSuggestion": "The vessel contains their true name spoken aloud by the only mortal they ever loved; whoever breaks the vessel gains power over them completely"
+    },
+    {
+      "id": "fairy_reflected_court",
+      "element": "Every reflective surface near the fae shows a different court scene — never the room they're in",
+      "payoffSuggestion": "The reflections are live windows into the court that exiled them; someone in those scenes has been watching back the entire time"
+    },
+    {
+      "id": "fairy_seasonal_mark",
+      "element": "A mark on the fae's skin that changes with seasons — visible in summer, invisible in winter",
+      "payoffSuggestion": "The mark is a tracking brand placed by an enemy court; it becomes visible when they are in love, which is how the enemy intends to locate them"
+    },
+    {
+      "id": "fairy_mortal_keepsake",
+      "element": "The fae keeps one human object of no obvious value — a bus ticket, a cracked button — in a silk-lined box",
+      "payoffSuggestion": "The object belonged to the last mortal they allowed themselves to love, who died of old age in their arms; the fae has carried it for two centuries"
+    },
+    {
+      "id": "fairy_bargain_scar",
+      "element": "A knot-scar across the fae's palm that tightens when certain words are spoken",
+      "payoffSuggestion": "The scar is a binding from a bargain they made at their weakest point; the words that tighten it are spoken casually by the protagonist in an unrelated conversation"
+    },
+    {
+      "id": "fairy_hungry_light",
+      "element": "The fae's shadow moves independently — and sometimes reaches toward the protagonist before the fae does",
+      "payoffSuggestion": "The shadow is the fae's desire, given independent form by old court magic; it cannot lie and cannot be controlled"
+    },
+    {
+      "id": "fairy_borrowed_name",
+      "element": "The name the fae uses is not their own; they offer it too easily, too quickly",
+      "payoffSuggestion": "The real name was surrendered as payment for a power they used once and have regretted since; learning the true name from another source destroys the fae's careful distance"
+    },
+    {
+      "id": "fairy_counting_ritual",
+      "element": "The fae counts exits before entering any room and will not sit with their back to a door",
+      "payoffSuggestion": "A trauma response from the night they were trapped by their own court for a century — the counting is not caution, it is the memory of walls closing"
+    },
+    {
+      "id": "fairy_dying_flower",
+      "element": "A single flower the fae tends obsessively — it should be dead, but isn't quite",
+      "payoffSuggestion": "The flower is linked to a mortal whose life the fae is sustaining at great personal cost; when it finally dies, so does the mortal — and the fae can finally move on or be destroyed by guilt"
+    },
+    {
+      "id": "fairy_language_slip",
+      "element": "Occasionally the fae slips into a language no one present should know, then catches themselves",
+      "payoffSuggestion": "The language is the tongue of their conquered court, officially dead for five hundred years; someone recognizes a word and asks the right question"
+    },
+    {
+      "id": "fairy_cold_spot",
+      "element": "A cold spot that follows the fae — not around them, but behind them, slightly to the left",
+      "payoffSuggestion": "The cold spot is a bound spirit the fae promised to free when they found a way; they have not yet found the way, and the spirit is growing impatient"
+    },
+    {
+      "id": "fairy_uncrossable_line",
+      "element": "The fae will not cross running water under any circumstances, even when it would cost them everything",
+      "payoffSuggestion": "Running water would temporarily strip their glamour — and beneath the glamour is a form they have never allowed another living creature to see"
+    },
+    {
+      "id": "fairy_missing_hour",
+      "element": "Every night at a specific hour, the fae becomes unreachable — not asleep, not gone, simply absent",
+      "payoffSuggestion": "The missing hour is a court summons they cannot refuse; they appear at court in chains for one hour nightly as the price for their apparent freedom"
+    }
+  ],
+  "universal": [
+    {
+      "id": "univ_recurring_number",
+      "element": "A number that appears repeatedly in unconnected contexts throughout the story — addresses, dates, counts",
+      "payoffSuggestion": "The number marks the years until a supernatural cycle completes; the protagonist realizes they are in the final year"
+    },
+    {
+      "id": "univ_locked_letter",
+      "element": "A letter the supernatural creature has written but never sent, visible in an early scene",
+      "payoffSuggestion": "The letter is addressed to the protagonist, written before they met — the creature knew they were coming and prepared words for a moment they hoped would never arrive"
+    },
+    {
+      "id": "univ_wrong_reflection",
+      "element": "Once, the protagonist's reflection moves a half-second behind — and no one else notices",
+      "payoffSuggestion": "The delay marks the moment the protagonist's supernatural blood activates; everything that follows is them becoming something they did not know they were"
+    },
+    {
+      "id": "univ_old_photograph",
+      "element": "A photograph from decades past in which the supernatural creature appears unchanged",
+      "payoffSuggestion": "The human figure beside them in the photograph is the protagonist's grandparent; the creature recognized the protagonist the moment they met and said nothing"
+    },
+    {
+      "id": "univ_recurring_song",
+      "element": "A melody the protagonist hums without knowing where they learned it",
+      "payoffSuggestion": "The melody is a binding song used to summon or calm the specific creature type — the protagonist was taught it by a family member who survived an encounter with the creature generations ago"
+    },
+    {
+      "id": "univ_wrong_weather",
+      "element": "Weather around the supernatural creature does not match the forecast — a local anomaly that follows them",
+      "payoffSuggestion": "The weather reflects the creature's emotional state with perfect accuracy; the protagonist learns to read it before the creature speaks"
+    },
+    {
+      "id": "univ_named_wound",
+      "element": "The supernatural creature refers to a wound or event by a specific name, as if it is a proper noun",
+      "payoffSuggestion": "The named event was caused by the protagonist's bloodline, and the creature does not yet know who the protagonist is"
+    },
+    {
+      "id": "univ_empty_chair",
+      "element": "In every meeting space the creature uses, one chair is always left conspicuously empty",
+      "payoffSuggestion": "The chair is for the dead — a kept seat for someone they lost; when the protagonist sits in it accidentally, the creature's reaction reveals everything"
+    },
+    {
+      "id": "univ_clock_deviation",
+      "element": "Every clock near the supernatural creature loses exactly three minutes per day",
+      "payoffSuggestion": "The time theft is supernatural leakage from an unresolved binding; the three minutes represent what the creature owes and cannot pay — find the debt, find the vulnerability"
+    },
+    {
+      "id": "univ_threshold_hesitation",
+      "element": "The supernatural creature pauses on every threshold for exactly three breaths before entering",
+      "payoffSuggestion": "The pause is a warding habit from a century of entering spaces that might be trapped; when the protagonist's home is the only threshold where they don't pause, the significance is enormous"
+    }
+  ]
+}

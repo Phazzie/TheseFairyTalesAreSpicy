@@ -1,0 +1,34 @@
+[
+  {
+    "code": "in_medias_res",
+    "label": "In Medias Res",
+    "firstParaInstruction": "Begin mid-action or mid-tension. No scene-setting preamble. Drop the reader directly into the scene's most charged moment. The first sentence assumes the reader is already there. Introduce context through action and specific sensory detail, never through explanation. The opening question should not be 'where are we?' but 'what happens next?'",
+    "exampleOpener": "The blood on her hands was not hers, and the vampire across the room knew it.",
+    "strengthsFor": ["tension chapters", "sequel chapters that continue previous momentum", "creature-hunger beats", "any scene where the tension is already established and exposition would dilute it"],
+    "pitfalls": ["Dropping the reader so deep that the scene has no legible stakes for two paragraphs", "substituting confusion for tension — disorientation is not the same as urgency", "front-loading action without embedding the emotional register"]
+  },
+  {
+    "code": "scene_setting",
+    "label": "Scene Setting",
+    "firstParaInstruction": "Establish setting as character. The first paragraph describes the physical space in enough specific detail that the reader inhabits it — but every detail must do double work: atmosphere and foreshadowing, or atmosphere and characterization, never atmosphere alone. Avoid the generic. Name the specific: not 'an old estate' but 'a house where the mirrors had been turned to face the walls for so long the plaster behind them had faded to a different white.' The setting should feel inevitable for the story that follows.",
+    "exampleOpener": "The library at Vanthorn Hall smelled of three centuries of accumulated secrets — paper, wax, and something faintly metallic that the servants insisted was only the pipes.",
+    "strengthsFor": ["opening chapters of new stories", "location-shift chapters where setting determines mood", "gothic estate or historical atmospheres", "any beat where environment is the primary pressure on the scene"],
+    "pitfalls": ["Setting description as pure description — every sentence should imply something beyond the surface", "beginning with weather as the only setting element", "taking more than one paragraph to establish where we are and why this place matters"]
+  },
+  {
+    "code": "cold_dialogue",
+    "label": "Cold Dialogue",
+    "firstParaInstruction": "Begin with a line of dialogue — no attribution, no scene-setting, no action tag. The first words spoken should be so specific to character that the reader immediately has a personality without a description. The second or third line may add minimal attribution. Resist the urge to explain who is speaking before the line; the line itself should create the speaker. The exchange should be already in progress — whatever was said before this is more interesting as implication than exposition.",
+    "exampleOpener": "\"You knew I was coming.\" \n\n\"I knew someone was. I hoped it wasn't you.\"",
+    "strengthsFor": ["character-introduction chapters", "rivals-to-lovers beats", "fae-bargain or power-exchange structures", "any scene where the relationship between two characters is the primary subject"],
+    "pitfalls": ["Dialogue that requires immediate explanation to be legible", "starting with a line that could belong to any character rather than one specific voice", "attribution that undercuts the momentum of the exchange — no 'he said, crossing his arms' before the reader has heard what was said"]
+  },
+  {
+    "code": "internal_monologue",
+    "label": "Internal Monologue",
+    "firstParaInstruction": "Begin inside the point-of-view character's consciousness. The internal voice must be distinctive, with its own rhythm, vocabulary, and relationship to the external world. This is not summary of what the character thinks — it is the character thinking, in real time, with the texture of their actual mind. The monologue should be mid-thought: not 'She thought about the vampire' but arriving at the thought in progress, already formed and pressing. By the end of the first paragraph, the reader should know this person's voice well enough to hear them.",
+    "exampleOpener": "The problem with accepting gifts from creatures who did not die was that eventually you had to explain why you still had them three hundred years later. She hadn't worked that part out yet.",
+    "strengthsFor": ["slow-burn awakening beats", "secret-revealed structures where the character is managing what they know", "any chapter where the interior cost of the situation is the primary subject", "protagonist-introduction chapters where voice is the first thing the reader needs to trust"],
+    "pitfalls": ["Internal monologue that summarizes rather than thinks — narrating the character's feeling rather than being in it", "a voice that could belong to any protagonist (generic self-awareness, generic wit)", "using internal monologue to deliver exposition the character would not actually be thinking in this moment"]
+  }
+]

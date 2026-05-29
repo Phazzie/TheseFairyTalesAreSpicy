@@ -1,0 +1,262 @@
+[
+  {
+    "accentId": "british_aristocratic",
+    "region": "British Aristocratic",
+    "voiceNote": "Received Pronunciation with upper-class register — control is the primary instrument",
+    "emotionStates": [
+      {"id": "cold_fury", "label": "Cold Fury", "prosodyNote": "Clipped consonants, measured pace, minimal inflection — the quieter the voice, the more dangerous"},
+      {"id": "dark_desire", "label": "Dark Desire", "prosodyNote": "Slower pace, lower pitch, slight breathiness on vowels — control applied to want"},
+      {"id": "contempt", "label": "Contempt", "prosodyNote": "Precise diction, rising inflection on declarative statements as if correcting a child, no acceleration"},
+      {"id": "rare_tenderness", "label": "Rare Tenderness", "prosodyNote": "Measured pace softened at edges, consonants lose their clip — this voice is unfamiliar in their own mouth"},
+      {"id": "command", "label": "Command", "prosodyNote": "Flat affect, no question inflection on any sentence regardless of phrasing — assumes compliance"},
+      {"id": "suppressed_grief", "label": "Suppressed Grief", "prosodyNote": "Overly controlled, too-precise diction, barely perceptible pause before proper nouns that carry weight"}
+    ]
+  },
+  {
+    "accentId": "irish_west_coast",
+    "region": "Irish West Coast",
+    "voiceNote": "Connaught lilt, melodic and unhurried — emotion moves through the music of the sentence",
+    "emotionStates": [
+      {"id": "dark_desire", "label": "Dark Desire", "prosodyNote": "Lilt deepens, sentences trail into warmth — the music of the accent becomes the seduction itself"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "Melodic pattern flattens, rhythm slows until each word lands separately"},
+      {"id": "fierce_loyalty", "label": "Fierce Loyalty", "prosodyNote": "Rising cadence, emphasis on relational words — 'mine,' 'ours,' 'yours' — with no softening"},
+      {"id": "dark_humor", "label": "Dark Humor", "prosodyNote": "Quick pace, the punch delivered in a falling tone as if it's simply obvious"},
+      {"id": "warning", "label": "Warning", "prosodyNote": "Lilt goes flat and still — the music stops entirely, the words come out plain and absolute"},
+      {"id": "tenderness", "label": "Tenderness", "prosodyNote": "Pace drops to conversational minimum, the lilt at full warmth, soft on the final syllable of key words"}
+    ]
+  },
+  {
+    "accentId": "scottish_highlands",
+    "region": "Scottish Highlands",
+    "voiceNote": "Highland Scots, rolling R's and open vowels — a voice shaped by difficult terrain and difficult silence",
+    "emotionStates": [
+      {"id": "controlled_rage", "label": "Controlled Rage", "prosodyNote": "Rolling R's on threat words, jaw-set vowels, clipped endings — the burr becomes a growl"},
+      {"id": "reluctant_desire", "label": "Reluctant Desire", "prosodyNote": "Slower pace, open vowels held longer, the R's soften on words that matter most"},
+      {"id": "dry_wit", "label": "Dry Wit", "prosodyNote": "Deadpan delivery, flat affect until the final word which carries the whole weight of the joke"},
+      {"id": "protectiveness", "label": "Protectiveness", "prosodyNote": "Low, unhurried, steady — the voice of a person who does not need to raise it to be certain"},
+      {"id": "ancient_grief", "label": "Ancient Grief", "prosodyNote": "Pace drops, the rolling R's become rarer, pauses between phrases where the words run dry"},
+      {"id": "battle_readiness", "label": "Battle Readiness", "prosodyNote": "Clipped, efficient, all softness stripped — every word a tool, nothing decorative"}
+    ]
+  },
+  {
+    "accentId": "french_parisian",
+    "region": "French Parisian",
+    "voiceNote": "Standard Parisian French accent in English — precision weaponized as seduction",
+    "emotionStates": [
+      {"id": "seduction", "label": "Seduction", "prosodyNote": "Gliding vowels, precise consonants that make every word feel chosen — the accent itself does most of the work"},
+      {"id": "intellectual_contempt", "label": "Intellectual Contempt", "prosodyNote": "Formal diction, sentences completed fully even when they wound — the courtesy is the cruelty"},
+      {"id": "boredom", "label": "Boredom", "prosodyNote": "Rising intonation on declaratives, as if nothing merits full attention — until it does"},
+      {"id": "possessive_fury", "label": "Possessive Fury", "prosodyNote": "Precision increases, not decreases — anger makes the diction more correct, not less"},
+      {"id": "unexpected_vulnerability", "label": "Unexpected Vulnerability", "prosodyNote": "English idioms used imperfectly in moments of genuine feeling — the language slips when the armor does"},
+      {"id": "pleasure", "label": "Pleasure", "prosodyNote": "Pace slows luxuriously, each sense-word given space — nothing rushed, everything tasted"}
+    ]
+  },
+  {
+    "accentId": "eastern_european_aristocratic",
+    "region": "Eastern European Aristocratic",
+    "voiceNote": "Ambiguous Slavic origin — the accent implies centuries and distance from anything mortal",
+    "emotionStates": [
+      {"id": "ancient_authority", "label": "Ancient Authority", "prosodyNote": "Formal grammar, archaic word choices, deliberate pace — someone for whom English is merely the current language, not the native one"},
+      {"id": "dark_desire", "label": "Dark Desire", "prosodyNote": "Slightly sibilant on desire-words, vowels opened and held — the accent becomes otherworldly in hunger"},
+      {"id": "cold_calculation", "label": "Cold Calculation", "prosodyNote": "Precise enunciation, no contractions, each sentence structured as if for a legal document"},
+      {"id": "rare_warmth", "label": "Rare Warmth", "prosodyNote": "Formality drops partially — contractions appear, word order softens, as if the person beneath the centuries is briefly visible"},
+      {"id": "threat", "label": "Threat", "prosodyNote": "Volume drops, pace drops, the accent thickens as if ancestral memory is asserting itself"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "Language becomes more formal under grief, not less — retreating into older syntax as armor"}
+    ]
+  },
+  {
+    "accentId": "american_deep_south",
+    "region": "American Deep South",
+    "voiceNote": "Mississippi or Alabama — sweetness as camouflage for edges that cut deeper for being unexpected",
+    "emotionStates": [
+      {"id": "dangerous_charm", "label": "Dangerous Charm", "prosodyNote": "Slow drawl, warmth on the surface, emphasis on courtesy words that function as warning — 'bless your heart' with intent"},
+      {"id": "fury", "label": "Fury", "prosodyNote": "Drawl accelerates, vowels sharpen, the sweetness stripped away to reveal what it was covering"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "The drawl slows further, words given more space, the warmth becomes something older — a lament register"},
+      {"id": "stubborn_refusal", "label": "Stubborn Refusal", "prosodyNote": "Voice takes on a polite firmness that will not shift — sweetness maintained while communicating absolute immovability"},
+      {"id": "desire", "label": "Desire", "prosodyNote": "Drawl deepens, pace drops to a crawl on certain words — the politeness is exactly what makes it devastating"},
+      {"id": "threat", "label": "Threat", "prosodyNote": "The most dangerous register: sweet, unhurried, very specific about consequences, never raised above a conversational tone"}
+    ]
+  },
+  {
+    "accentId": "american_appalachian",
+    "region": "American Appalachian",
+    "voiceNote": "Mountain Scots-Irish inheritance — direct, imagistic, with a relationship to old speech patterns",
+    "emotionStates": [
+      {"id": "earned_trust", "label": "Earned Trust", "prosodyNote": "Fewer words than needed, each one chosen — the accent at its most plainspoken and thereby most sincere"},
+      {"id": "warning", "label": "Warning", "prosodyNote": "Rhythm becomes biblical, old patterns surfacing — cadence of someone who has seen enough to know"},
+      {"id": "rage", "label": "Rage", "prosodyNote": "Short sentences, hard stops, no figurative language — stripped to the essential"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "Imagistic language, indirect approach — grief named by its surroundings rather than its feeling"},
+      {"id": "desire", "label": "Desire", "prosodyNote": "The directness becomes a different kind of honesty — plain speech about wanting is more intimate than ornamentation"},
+      {"id": "stubbornness", "label": "Stubbornness", "prosodyNote": "Silence used as complete sentences, followed by one declarative that ends all discussion"}
+    ]
+  },
+  {
+    "accentId": "new_york_urban",
+    "region": "New York Urban",
+    "voiceNote": "Working-class New York — speed as defense, wit as weapon, vulnerability the thing most carefully concealed",
+    "emotionStates": [
+      {"id": "defensive_wit", "label": "Defensive Wit", "prosodyNote": "Fast pace, punchy rhythm, the joke landing before the listener has finished parsing the setup"},
+      {"id": "genuine_anger", "label": "Genuine Anger", "prosodyNote": "Pace accelerates, volume drops — the most serious anger speaks quietly and quickly"},
+      {"id": "unexpected_sincerity", "label": "Unexpected Sincerity", "prosodyNote": "Pace slows abruptly, pace unlike the rest of the character's speech — sincerity announced by its own awkwardness"},
+      {"id": "dark_desire", "label": "Dark Desire", "prosodyNote": "The wit goes quiet, the pace slows — the accent stripped of performance, something raw underneath"},
+      {"id": "protectiveness", "label": "Protectiveness", "prosodyNote": "Short, declarative, no qualifiers — the city instinct to handle things directly, applied to care"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "The words come out wrong at first — the speed that usually serves as armor is unavailable, and what's left is unguarded"}
+    ]
+  },
+  {
+    "accentId": "scandinavian",
+    "region": "Scandinavian",
+    "voiceNote": "Swedish or Norwegian cadence — melodic sentence music, precision, and a relationship with silence as meaning",
+    "emotionStates": [
+      {"id": "clinical_desire", "label": "Clinical Desire", "prosodyNote": "Precise word choices for feeling, the sentence music making clinical words sensual against their intent"},
+      {"id": "ancient_calm", "label": "Ancient Calm", "prosodyNote": "Even cadence, no acceleration, silence between statements as deliberate punctuation"},
+      {"id": "rare_fury", "label": "Rare Fury", "prosodyNote": "Cadence breaks — sentences shorten, the music goes flat, the precision increases dangerously"},
+      {"id": "loneliness", "label": "Loneliness", "prosodyNote": "Sentences trail at their ends, the characteristic rise-fall of the cadence flattens, replies shorter than usual"},
+      {"id": "dark_desire", "label": "Dark Desire", "prosodyNote": "The sentence music slows, vowels open — the precision of word choice makes the desire more acute, not less"},
+      {"id": "dark_humor", "label": "Dark Humor", "prosodyNote": "Deadpan, delivered with full cadence as if it were an ordinary observation — the humor arrives in retrospect"}
+    ]
+  },
+  {
+    "accentId": "russian",
+    "region": "Russian",
+    "voiceNote": "Moscow educated Russian — formal grammar, the consonants carrying weight, emotions compressed into precise vocabulary",
+    "emotionStates": [
+      {"id": "cold_authority", "label": "Cold Authority", "prosodyNote": "Hard consonants, formal grammar — commands phrased as statements, no softening"},
+      {"id": "suppressed_desire", "label": "Suppressed Desire", "prosodyNote": "The formal register maintained while word choices become more specific, more sensory — control's effort is visible"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "Russian has words for grief with no English equivalent; the character reaches for them and fails, leaving gaps"},
+      {"id": "dark_humor", "label": "Dark Humor", "prosodyNote": "Delivered as pure fact, without inflection — the darkness is the joke, and the straightfaced delivery is the punchline"},
+      {"id": "loyalty", "label": "Loyalty", "prosodyNote": "Few words, absolutely certain — the restraint of the language is the measure of the feeling"},
+      {"id": "threat", "label": "Threat", "prosodyNote": "Extremely quiet, very formal, no contractions, no idiom — the threat is the precision itself"}
+    ]
+  },
+  {
+    "accentId": "caribbean_anglophone",
+    "region": "Caribbean Anglophone",
+    "voiceNote": "Barbadian or Jamaican educated — rhythm as emotional register, language that moves like water or cuts like coral",
+    "emotionStates": [
+      {"id": "joyful_menace", "label": "Joyful Menace", "prosodyNote": "The rhythm carries both warmth and edge simultaneously — the music of the accent is exactly the point"},
+      {"id": "wisdom", "label": "Wisdom", "prosodyNote": "Slower cadence, imagistic — the sentence finds its destination by a different path than expected"},
+      {"id": "fury", "label": "Fury", "prosodyNote": "Rhythm tightens, creole constructions surface even in careful speakers — the native pattern emerging under pressure"},
+      {"id": "desire", "label": "Desire", "prosodyNote": "The rhythm deepens and slows — the language at full musicality is the most intimate register"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "Rhythm becomes sparse, the characteristic music gone — grief is when the pattern breaks"},
+      {"id": "warning", "label": "Warning", "prosodyNote": "Cadence becomes measured and absolutely clear — no idiom, no warmth, the information delivered like a gift the recipient will regret"}
+    ]
+  },
+  {
+    "accentId": "australian",
+    "region": "Australian",
+    "voiceNote": "Australian English — laconic, direct, understatement as primary emotional mode",
+    "emotionStates": [
+      {"id": "deflective_humor", "label": "Deflective Humor", "prosodyNote": "The understatement is the joke — massive things named with tiny words, serious tone maintained throughout"},
+      {"id": "genuine_fury", "label": "Genuine Fury", "prosodyNote": "The understatement drops, sentences lengthen into direct statements — when an Australian stops being laconic, the danger is real"},
+      {"id": "loyalty", "label": "Loyalty", "prosodyNote": "Not named or performed — expressed through action described in the same flat register as everything else"},
+      {"id": "desire", "label": "Desire", "prosodyNote": "The understatement becomes almost painful — enormous feeling described in one plain sentence"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "The laconic register maintained even here — which makes it more devastating, not less"},
+      {"id": "threat", "label": "Threat", "prosodyNote": "Friendly tone, specific detail, complete certainty — the colloquial register is exactly what makes it land"}
+    ]
+  },
+  {
+    "accentId": "south_asian_educated",
+    "region": "South Asian Educated",
+    "voiceNote": "Indian or Pakistani educated English — formal precision, layered meaning, a relationship with respectful indirection",
+    "emotionStates": [
+      {"id": "formal_fury", "label": "Formal Fury", "prosodyNote": "Diction becomes more formal under anger, not less — the courtesy is weaponized, each word placed with care"},
+      {"id": "intellectual_desire", "label": "Intellectual Desire", "prosodyNote": "Ideas and wanting become one register — the formal precision applied to feeling makes it exact and devastating"},
+      {"id": "familial_weight", "label": "Familial Weight", "prosodyNote": "Certain words carry whole histories — names, titles, obligations, spoken with awareness of their weight"},
+      {"id": "controlled_warmth", "label": "Controlled Warmth", "prosodyNote": "Warmth within formal register — expressed through attentiveness and precision, never through sentiment"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "Formal language continues but grows slower, more precise — grief as something that must be named correctly"},
+      {"id": "threat", "label": "Threat", "prosodyNote": "The most formal register, the most careful grammar — the threat expressed as a statement of fact with no emotional inflection"}
+    ]
+  },
+  {
+    "accentId": "german",
+    "region": "German",
+    "voiceNote": "Standard German accent in English — compound thinking, precision as respect, directness not unkindness",
+    "emotionStates": [
+      {"id": "precision_desire", "label": "Precision Desire", "prosodyNote": "Emotion named directly, without metaphor — what the German character says they want, they mean exactly"},
+      {"id": "analytical_fury", "label": "Analytical Fury", "prosodyNote": "Anger expressed as detailed enumeration of specific failures — methodical, complete, devastating"},
+      {"id": "unexpected_tenderness", "label": "Unexpected Tenderness", "prosodyNote": "The direct register applied to care — precise, sincere, no ornamentation, which makes it feel more true than poetry"},
+      {"id": "dark_humor", "label": "Dark Humor", "prosodyNote": "Delivered as a logical observation, the absurdity acknowledged without inflection"},
+      {"id": "loyalty", "label": "Loyalty", "prosodyNote": "Stated as a fact, binding as a contract — not performed, not questioned, not qualified"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "One word, sometimes, used precisely, then silence — or the clinical description of feeling as if naming it accurately is the only respect grief deserves"}
+    ]
+  },
+  {
+    "accentId": "spanish_castilian",
+    "region": "Spanish Castilian",
+    "voiceNote": "Castilian Spanish accent — formality with passion underneath, honor as a living obligation",
+    "emotionStates": [
+      {"id": "formal_passion", "label": "Formal Passion", "prosodyNote": "High emotion expressed within formal register — the passion is present because the speaker chooses to name it, not because they perform it"},
+      {"id": "wounded_pride", "label": "Wounded Pride", "prosodyNote": "Formal diction maintained, volume drops — pride requires that the hurt not be visible, which makes it more visible"},
+      {"id": "dark_desire", "label": "Dark Desire", "prosodyNote": "The formality becomes ceremony — desire named with full gravity, as something the speaker takes responsibility for"},
+      {"id": "fury", "label": "Fury", "prosodyNote": "Pace increases, the Castilian lisp on z/c sounds more pronounced — not performed, simply present under pressure"},
+      {"id": "honor_stated", "label": "Honor Stated", "prosodyNote": "Deliberate, unhurried, the word 'honor' used as if it has weight — because in this register, it does"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "Formal, slow, complete sentences — grief requires courtesy, requires completion, requires the person to be named fully"}
+    ]
+  },
+  {
+    "accentId": "italian",
+    "region": "Italian",
+    "voiceNote": "Northern or Roman Italian — gesture is implied in the speech rhythm, emotion expressed rather than concealed",
+    "emotionStates": [
+      {"id": "theatrical_fury", "label": "Theatrical Fury", "prosodyNote": "Pace and volume, sentences structured for maximum emotional delivery — but the intensity is sincere, not performed"},
+      {"id": "genuine_desire", "label": "Genuine Desire", "prosodyNote": "Pace slows, vowels open — the Italian musicality fully engaged, nothing held back or strategic"},
+      {"id": "family_obligation", "label": "Family Obligation", "prosodyNote": "The warmth of the register drops to something grave and heavy — family is not warm in this mode, it is binding"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "Expansive, named, given full space — grief is not minimized or hidden but given appropriate scale"},
+      {"id": "dark_charm", "label": "Dark Charm", "prosodyNote": "The musicality applied to intent that is not innocent — the charm and the danger arriving simultaneously"},
+      {"id": "warning", "label": "Warning", "prosodyNote": "The warmth of the accent maintained while the words become completely clear — warmth and warning, without contradiction"}
+    ]
+  },
+  {
+    "accentId": "welsh",
+    "region": "Welsh",
+    "voiceNote": "Welsh English — lyrical cadence, music native to the speech pattern, emotion that rises in the rhythm",
+    "emotionStates": [
+      {"id": "bardic_intensity", "label": "Bardic Intensity", "prosodyNote": "The natural musicality of Welsh English cadence at full expression — story told as song"},
+      {"id": "dark_desire", "label": "Dark Desire", "prosodyNote": "The lyrical cadence slowed, the music underlying the words rather than riding over them"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "Welsh has a native relationship with sung grief; the rhythm of lament is in the cadence even in English"},
+      {"id": "communal_fury", "label": "Communal Fury", "prosodyNote": "Anger that is not individual — the cadence carries the weight of 'we' even when 'I' is the word used"},
+      {"id": "dry_wit", "label": "Dry Wit", "prosodyNote": "The lyrical register goes flat and then the joke arrives — the flatness is the windup"},
+      {"id": "pride", "label": "Pride", "prosodyNote": "The musicality rises — pride expressed through the cadence's full register, carrying something larger than the individual"}
+    ]
+  },
+  {
+    "accentId": "chinese_mandarin",
+    "region": "Chinese Mandarin-Accented English",
+    "voiceNote": "Mandarin first-language speaker — tonal instincts in English phrasing, formal grammar, emotion expressed through precision",
+    "emotionStates": [
+      {"id": "controlled_formality", "label": "Controlled Formality", "prosodyNote": "Very precise grammar, minimal contractions — the formality is respect, and its withdrawal is a signal"},
+      {"id": "suppressed_desire", "label": "Suppressed Desire", "prosodyNote": "Word choices become more specific, more literary — the suppression visible in the care of language"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "Chinese literary grief tends toward indirection — feeling named by its surroundings, by weather, by time, not by the feeling word itself"},
+      {"id": "rare_directness", "label": "Rare Directness", "prosodyNote": "When formality drops entirely and a single plain sentence emerges — the rarity of the register signals its importance"},
+      {"id": "fury", "label": "Fury", "prosodyNote": "The grammar becomes more formal, not less — fury addressed with extreme precision is more devastating than raised volume"},
+      {"id": "dark_humor", "label": "Dark Humor", "prosodyNote": "Delivered as an observation about the situation's absurdity — the formality is the joke's best delivery mechanism"}
+    ]
+  },
+  {
+    "accentId": "japanese_accented_english",
+    "region": "Japanese-Accented English",
+    "voiceNote": "Japanese first-language English — politeness as grammar, emotional content carried in what is not said",
+    "emotionStates": [
+      {"id": "polite_intensity", "label": "Polite Intensity", "prosodyNote": "Extreme politeness carrying extreme weight — the register of extreme care applied to something that matters enormously"},
+      {"id": "suppressed_desire", "label": "Suppressed Desire", "prosodyNote": "What is not said is louder than what is — the spaces in speech are as meaningful as the words"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "Silence, then one precise word, then silence — Japanese grief is in the interval, not the expression"},
+      {"id": "rare_fury", "label": "Rare Fury", "prosodyNote": "Anger that breaks the politeness register is frightening precisely because the register has held so long"},
+      {"id": "indirect_warning", "label": "Indirect Warning", "prosodyNote": "Warning delivered as an observation, a gentle concern — its indirection is the register of someone who will not say the threat aloud but is very clear about it"},
+      {"id": "unexpected_directness", "label": "Unexpected Directness", "prosodyNote": "One sentence, completely plain, completely sincere — the abandonment of indirection as the most intimate possible act"}
+    ]
+  },
+  {
+    "accentId": "arabic_accented_english",
+    "region": "Arabic-Accented English",
+    "voiceNote": "Egyptian or Lebanese educated English — poetry native to the language, hospitality as power, emotion that honors its own weight",
+    "emotionStates": [
+      {"id": "formal_hospitality", "label": "Formal Hospitality", "prosodyNote": "Warmth as a formal offering — hospitality with weight and consequence, not casual welcome"},
+      {"id": "poetic_desire", "label": "Poetic Desire", "prosodyNote": "Arabic has a literary tradition of desire-speech — the imagery is not decoration but the primary vehicle"},
+      {"id": "grief", "label": "Grief", "prosodyNote": "Arabic grief has formal registers — the vocabulary of loss is specific and honored, not avoided"},
+      {"id": "fury", "label": "Fury", "prosodyNote": "Volume and cadence, the formal register maintained but pressed at its edges — fury as something that must be expressed completely"},
+      {"id": "dark_authority", "label": "Dark Authority", "prosodyNote": "The hospitality register removed — what remains is older, stricter, with genealogical weight"},
+      {"id": "rare_vulnerability", "label": "Rare Vulnerability", "prosodyNote": "The formality drops and something careful and private is offered — the register of a person choosing to be seen"}
+    ]
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "code": "hope_to_despair",
+    "label": "Hope to Despair",
+    "startState": "cautious optimism, tentative connection — the character allows themselves to believe something good is possible",
+    "endState": "crushed hope, sense of betrayal or loss — not resignation, but the specific pain of having believed and been wrong",
+    "paceNote": "Let the hope build genuinely before the fall — the despair only works if we believed. The reader must feel they were also wrong to hope. Do not undercut the hope early with dramatic irony; the loss should land on the reader with the same timing as the character.",
+    "commonFailure": "Hope that was never fully established, making the despair feel arbitrary rather than earned"
+  },
+  {
+    "code": "despair_to_resolve",
+    "label": "Despair to Resolve",
+    "startState": "genuine hopelessness — the character has already lost something real, is not performing despair, and sees no exit",
+    "endState": "resolve that does not pretend to be hope — determination that holds even when outcome is uncertain",
+    "paceNote": "The pivot from despair to resolve must come from within the character, not from external rescue or information. The reader should witness the moment of decision, not be told it occurred. Resolve that arrives from new information is not arc — it is plot. Resolve that comes from the character is arc.",
+    "commonFailure": "Resolve that arrives too easily, or that is actually disguised hope — despair should be respected as a real state before the arc moves forward"
+  },
+  {
+    "code": "defiance_to_surrender",
+    "label": "Defiance to Surrender",
+    "startState": "active resistance — the character is fighting something real, not performing independence, and has genuine reasons for refusal",
+    "endState": "chosen surrender that does not feel like defeat — the character gives something up freely, and the reader understands why",
+    "paceNote": "The surrender must be chosen, not extracted. A surrender that happens because the character runs out of resistance is not an arc — it is exhaustion. The character must reach a point where surrender is the act of greater courage than continued defiance. This transition is the hardest scene in this arc to write correctly.",
+    "commonFailure": "Defiance that was hollow to begin with, making surrender feel inevitable rather than a genuine change; or surrender framed as defeat when the story needs it to feel like arrival"
+  },
+  {
+    "code": "desire_to_denial",
+    "label": "Desire to Denial",
+    "startState": "open, acknowledged desire — the character knows what they want and is not yet afraid of it",
+    "endState": "active denial of the same desire — the character is now managing and suppressing something they no longer allow themselves to name",
+    "paceNote": "The inciting event that shifts desire to denial must be specific and serious — not a misunderstanding, but a genuine threat. The reader must understand why this desire is now dangerous while simultaneously feeling the cost of its suppression. The denial is painful because the desire was real.",
+    "commonFailure": "Desire that was qualified from the start, making denial feel like a natural continuation rather than a reversal; denial that resolves too quickly in the next chapter without earning the return"
+  },
+  {
+    "code": "chaos_to_false_calm",
+    "label": "Chaos to False Calm",
+    "startState": "genuine upheaval — things are actually wrong, stakes are real, the situation is not controlled",
+    "endState": "surface stability that both the character and the reader know is temporary and fragile — the next chapter's crisis is already assembled",
+    "paceNote": "The false calm must be genuinely seductive — the reader should feel the relief before recognizing it is false. The character's desire for the calm to be real is what makes the coming rupture more painful. The cliffhanger in this arc is the reader's knowledge that the calm is a fiction the character has chosen to believe.",
+    "commonFailure": "False calm that is too obviously false, robbing the reader of the relief they needed before the next hit; or a chapter that skips the calm entirely and goes directly from chaos to new chaos"
+  },
+  {
+    "code": "revelation_to_confusion",
+    "label": "Revelation to Confusion",
+    "startState": "certainty — the character believed they understood their situation, their feelings, their antagonist",
+    "endState": "genuine confusion — the revelation has not yet resolved into new understanding, and the character is navigating without a map",
+    "paceNote": "The confusion must be real, not performative. A character who is confused but has all the necessary information to resolve it quickly is not confused — they are stalling. True arc-level confusion means the character does not know what to want, who to trust, or who they are in relation to the new information. Let this state breathe before resolving it.",
+    "commonFailure": "Revelation that is processed too quickly, resolving into a new certainty before the confusion has had space to do its emotional work"
+  },
+  {
+    "code": "tension_to_release",
+    "label": "Tension to Release",
+    "startState": "established, specific tension — not vague unease but a named, felt pressure between characters or within the situation",
+    "endState": "release that costs something — not pure relief but relief that arrives with its own complexity",
+    "paceNote": "The release must be earned by every beat that preceded it. Release that comes too easily is not arc — it is the absence of arc. The cost of release is what gives this arc its weight: something given, something surrendered, something admitted that cannot be taken back. The reader should feel the release and immediately start worrying about its consequences.",
+    "commonFailure": "Release that is pure positive resolution with no cost, or release that the narrative treats as an endpoint when it is actually a new beginning"
+  },
+  {
+    "code": "yearning_to_touch",
+    "label": "Yearning to Touch",
+    "startState": "yearning at full intensity — the character knows what they want, cannot have it, and is in active physical and emotional pain from the gap",
+    "endState": "contact — physical or emotional, the wall crossed, the touch that was not permitted now happening",
+    "paceNote": "This arc is about the gap — the distance between wanting and having. Every beat should be about the gap, not about the contact. The contact itself should be brief, specific, and followed immediately by the question of what it means. The yearning is the story; the touch is its punctuation. Do not spend more words on the touch than on the yearning that earned it.",
+    "commonFailure": "Yearning that is told rather than shown, making the touch feel unearned; or a touch scene that expands into resolution when it should contract into a new question"
+  },
+  {
+    "code": "trust_to_betrayal",
+    "label": "Trust to Betrayal",
+    "startState": "trust that was earned, not given — the character had reasons to distrust and chose to trust anyway, which is what makes the betrayal devastating",
+    "endState": "betrayal understood — not necessarily forgiven, not necessarily unforgiven, but understood in its full weight and consequence",
+    "paceNote": "The betrayal only works if the trust was genuine. This means spending the first half of the arc demonstrating why the character trusted and why that trust was reasonable. The betrayal should feel wrong even if the reader saw it coming — because the character's trust was right even if their person was wrong. Understanding the betrayal is not the same as forgiving it, and the arc does not require forgiveness.",
+    "commonFailure": "Trust that was qualified or suspicious from the beginning, making the betrayal feel inevitable rather than a genuine rupture; or a betrayal that the narrative resolves too quickly by revealing that it wasn't really a betrayal"
+  }
+]
