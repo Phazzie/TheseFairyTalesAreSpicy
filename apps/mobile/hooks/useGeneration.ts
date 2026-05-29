@@ -1,13 +1,22 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useArcStore } from '../stores/arcStore.js';
 import { generateChapter, continueChapter } from '../lib/api.js';
 import { useQueryClient } from '@tanstack/react-query';
 
 export function useGeneration() {
-  const { setIsGenerating, clearStreamingText, appendStreamingText } = useArcStore();
+  const setIsGenerating = useArcStore((s) => s.setIsGenerating);
+  const clearStreamingText = useArcStore((s) => s.clearStreamingText);
+  const appendStreamingText = useArcStore((s) => s.appendStreamingText);
   const queryClient = useQueryClient();
   const bufferRef = useRef('');
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    return () => {
+      // Abort any in-flight generation when component unmounts
+      abortControllerRef.current?.abort();
+    };
+  }, []); // empty deps — runs cleanup only on unmount
 
   const generate = useCallback(
     async (params: {
@@ -35,8 +44,8 @@ export function useGeneration() {
           if (signal.aborted) break;
           if (event.type === 'token') {
             bufferRef.current += event.content;
-            // Flush to Zustand every 50 chars to avoid excessive re-renders
-            if (bufferRef.current.length >= 50) {
+            // Flush to Zustand every 200 chars to avoid excessive re-renders
+            if (bufferRef.current.length >= 200) {
               appendStreamingText(bufferRef.current);
               bufferRef.current = '';
             }

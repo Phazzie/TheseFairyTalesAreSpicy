@@ -79,6 +79,19 @@ export async function resetGenerationCountIfExpired(userId: string): Promise<voi
   if (error) throw new Error(`Failed to reset generation count: ${error.message}`);
 }
 
+export async function tryReserveGenerationSlot(userId: string, limit: number): Promise<boolean> {
+  const { data, error } = await adminClient.rpc('try_reserve_generation_slot', {
+    p_user_id: userId,
+    p_limit: limit,
+  });
+  if (error) throw new Error(`Failed to reserve generation slot: ${error.message}`);
+  return data as boolean;
+}
+
+export async function refundGenerationSlot(userId: string): Promise<void> {
+  await adminClient.rpc('refund_generation_slot', { p_user_id: userId });
+}
+
 export async function updateSubscriptionTier(
   userId: string,
   tier: 'free' | 'pro',

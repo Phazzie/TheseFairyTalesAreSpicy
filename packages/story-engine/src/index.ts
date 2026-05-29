@@ -63,6 +63,10 @@ export { generateTitleFromResponse } from './processors/generateTitleFromRespons
 export { measureDialogueRatio } from './processors/measureDialogueRatio.js';
 export { formatMarkdown } from './processors/formatMarkdown.js';
 
+// Modules (selective exports for external use)
+export { cliffhangerModule } from './modules/cliffhangerModule.js';
+export { emotionalArcModule } from './modules/emotionalArcModule.js';
+
 // Selectors
 export { selectAuthorBlend } from './selectors/selectAuthorBlend.js';
 export { selectBeat } from './selectors/selectBeat.js';

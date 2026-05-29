@@ -2,7 +2,8 @@ import { Stack, useRouter } from 'expo-router';
 import { useUIStore } from '../../stores/uiStore.js';
 
 export default function ArcWizardLayout() {
-  const { wizardStep, prevWizardStep } = useUIStore();
+  const wizardStep = useUIStore((s) => s.wizardStep);
+  const prevWizardStep = useUIStore((s) => s.prevWizardStep);
   const router = useRouter();
 
   return (

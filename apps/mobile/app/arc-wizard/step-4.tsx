@@ -15,7 +15,8 @@ import { WIZARD_TOTAL_STEPS } from '../../lib/constants.js';
 export default function WizardStep4() {
   const router = useRouter();
   const { povMode, tense, narrativeDistance, pacingRhythm, setField } = useWizardStore();
-  const { nextWizardStep, prevWizardStep } = useUIStore();
+  const nextWizardStep = useUIStore((s) => s.nextWizardStep);
+  const prevWizardStep = useUIStore((s) => s.prevWizardStep);
 
   const handleBack = () => {
     prevWizardStep();

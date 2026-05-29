@@ -72,6 +72,12 @@ const createArcSchema = arcBaseSchema.extend({
 const updateArcSchema = arcBaseSchema.partial().strict();
 
 // ============================================================
+// CONSTANTS
+// ============================================================
+
+const FREE_TIER_ARC_LIMIT = 3;
+
+// ============================================================
 // APP
 // ============================================================
 
@@ -101,7 +107,7 @@ arcsApp.post('/', authMiddleware, validate(createArcSchema), async (c) => {
     const profile = await getProfile(user.id);
     if (profile.subscriptionTier !== 'pro') {
       const count = await getArcCount(user.id);
-      if (count >= 3) {
+      if (count >= FREE_TIER_ARC_LIMIT) {
         return c.json(
           {
             error: 'arc_limit_reached',
@@ -142,6 +148,19 @@ arcsApp.post('/', authMiddleware, validate(createArcSchema), async (c) => {
     };
 
     const arc = await createArc(input, user.id);
+
+    // Post-insert cap enforcement (M5 — handles TOCTOU race condition)
+    // If concurrent requests both passed the pre-check, one will be rolled back here.
+    if (profile.subscriptionTier !== 'pro') {
+      const finalCount = await getArcCount(user.id);
+      if (finalCount > FREE_TIER_ARC_LIMIT) {
+        await deleteArc(arc.id, user.id);
+        return c.json(
+          { error: 'arc_limit_reached', message: 'Arc limit reached. Upgrade to Pro for unlimited arcs.' },
+          429,
+        );
+      }
+    }
 
     // Insert optional protagonist, love interest, and creature lore
     const insertPromises: Promise<unknown>[] = [];

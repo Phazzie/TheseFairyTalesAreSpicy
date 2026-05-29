@@ -143,6 +143,29 @@ export async function saveChapter(data: SaveChapterInput): Promise<{ id: string 
   return { id: created.id };
 }
 
+// Only fetches metadata columns (no content), last N published chapters
+export async function getRecentChapterMetadata(arcId: string, limit = 3): Promise<ChapterRow[]> {
+  const { data, error } = await adminClient
+    .from('chapters')
+    .select([
+      'id', 'arc_id', 'chapter_number', 'title',
+      'beat_used', 'emotional_arc', 'dialogue_ratio_pct',
+      'chekhov_seeded', 'cliffhanger_type', 'word_count',
+      'spice_level_used', 'generated_at', 'engine_version',
+      'status', 'generation_attempt', 'parent_chapter_id',
+      'dropped_modules', 'system_prompt_used',
+      // Notably OMITTING: content (potentially 10KB+)
+    ].join(', '))
+    .eq('arc_id', arcId)
+    .eq('status', 'published')
+    .order('chapter_number', { ascending: false })
+    .limit(limit);
+
+  if (error) throw new Error(`Failed to fetch recent chapter metadata: ${error.message}`);
+
+  return (data ?? []).map(dbRowToChapterRow).reverse(); // reverse to get ascending order
+}
+
 export async function getChaptersByArc(
   arcId: string,
   includeNonPublished = false,
@@ -181,6 +204,25 @@ export async function getChapter(chapterId: string): Promise<ChapterRow> {
   }
 
   return dbRowToChapterRow(data);
+}
+
+// getOwnedChapter — ownership-verified chapter fetch (H3 — IDOR prevention)
+// JOINs through arcs to confirm the chapter belongs to an arc owned by userId.
+// Prefer this over getChapter() for any user-facing read that does not already
+// have a separate arc-ownership check in place.
+export async function getOwnedChapter(chapterId: string, userId: string): Promise<ChapterRow> {
+  const { data, error } = await adminClient
+    .from('chapters')
+    .select('*, arcs!inner(user_id)')
+    .eq('id', chapterId)
+    .eq('arcs.user_id', userId)
+    .single();
+  if (error || !data) {
+    throw new Error(`Chapter ${chapterId} not found or access denied`);
+  }
+  // Strip the joined arcs field before returning
+  const { arcs: _, ...chapter } = data as typeof data & { arcs: unknown };
+  return dbRowToChapterRow(chapter as Parameters<typeof dbRowToChapterRow>[0]);
 }
 
 export async function getLatestPublishedChapter(arcId: string): Promise<ChapterRow | null> {

@@ -45,11 +45,24 @@ export function proseConstraintsModule(input: GenerationInput, context: ArcConte
     '  Never state an emotion directly. Show what it produces: a physical response, a behavior, a thought that circles without landing. The reader should feel the emotion before they name it.',
   );
 
-  lines.push('');
-  lines.push('Moral Dilemma Trigger:');
-  lines.push(
-    '  At approximately the 50% mark of this chapter, introduce a genuine ethical choice. The protagonist must choose between two things they want or two things that conflict with their values.',
-  );
+  const beatsThatSuitMoralDilemma = [
+    'dark_temptation', 'fae_bargain', 'blood_oath', 'forbidden_threshold',
+    'power_exchange', 'unraveling_control', 'reluctant_protector'
+  ];
+
+  const beatUsed = context.recentChapterMetadata?.[context.recentChapterMetadata.length - 1]?.beatUsed ?? '';
+  const includeMoralDilemma =
+    input.emotionalArcOverride?.includes('temptation') ||
+    input.emotionalArcOverride?.includes('despair') ||
+    beatsThatSuitMoralDilemma.some(beat => beatUsed?.includes(beat));
+
+  if (includeMoralDilemma) {
+    lines.push('');
+    lines.push('Moral Dilemma Trigger:');
+    lines.push(
+      '  At approximately the 50% mark of this chapter, the protagonist faces a genuine ethical choice between two things she wants or between action and her values. She must choose — the scene does not let her off the hook.',
+    );
+  }
 
   return `PROSE CONSTRAINTS:\n${lines.join('\n')}`;
 }

@@ -45,7 +45,7 @@ export default function ChapterDetailScreen() {
   const [regenerating, setRegenerating] = useState(false);
   // canRegenerate is determined by the server (429 = limit hit), not a client-side count
   const [canRegenerate, setCanRegenerate] = useState(true);
-  const { openUpgradeSheet } = useUIStore();
+  const openUpgradeSheet = useUIStore((s) => s.openUpgradeSheet);
 
   async function handleRegenerate() {
     if (!chapter) return;

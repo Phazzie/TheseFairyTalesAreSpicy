@@ -17,7 +17,8 @@ export default function WizardStep3() {
   const router = useRouter();
   const { spiceLevel, readingLevel, genreBlendPrimary, genreBlendSecondary, genreBlendRatio, setField } =
     useWizardStore();
-  const { nextWizardStep, prevWizardStep } = useUIStore();
+  const nextWizardStep = useUIStore((s) => s.nextWizardStep);
+  const prevWizardStep = useUIStore((s) => s.prevWizardStep);
 
   const handleBack = () => {
     prevWizardStep();

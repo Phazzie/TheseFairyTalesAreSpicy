@@ -32,8 +32,9 @@ function SummaryRow({ label, value }: { label: string; value?: string }) {
 export default function WizardStep8() {
   const router = useRouter();
   const wizard = useWizardStore();
-  const { prevWizardStep, setWizardStep } = useUIStore();
-  const { setCurrentArcId } = useArcStore();
+  const prevWizardStep = useUIStore((s) => s.prevWizardStep);
+  const setWizardStep = useUIStore((s) => s.setWizardStep);
+  const setCurrentArcId = useArcStore((s) => s.setCurrentArcId);
   const createArc = useCreateArcMutation();
 
   const [arcTitle, setArcTitle] = useState('');

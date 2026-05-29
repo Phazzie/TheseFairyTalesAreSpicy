@@ -14,7 +14,7 @@ import {
   type ContinuationInput,
 } from '@story/engine';
 import { assembleArcContext } from '../db/continuityInjector.js';
-import { getProfile, incrementGenerationCount, resetGenerationCountIfExpired } from '../db/profiles.js';
+import { getProfile, tryReserveGenerationSlot, refundGenerationSlot, resetGenerationCountIfExpired } from '../db/profiles.js';
 import { getChapter, saveChapter, publishChapter, getChaptersByArc } from '../db/chapters.js';
 import { createThread } from '../db/plotThreads.js';
 import { saveSummary } from '../db/arcSummaries.js';
@@ -30,7 +30,7 @@ const continueSchema = z.object({
   emotionalArcOverride: z.string().optional(),
   cliffhangerTypeOverride: z.string().optional(),
   wordCountOverride: z.number().min(200).max(5000).optional(),
-  userCreativeDirection: z.string().max(500).optional(),
+  userCreativeDirection: z.string().max(200).optional(),
   pilotMode: z.boolean().optional(),
 });
 
@@ -40,12 +40,12 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
   const user = c.get('user');
   const body = c.req.valid('json');
 
-  // 1. Check subscription tier and generation limit (count only, do NOT increment yet)
+  // 1. Check subscription tier and atomically reserve a generation slot (M4/M5 — TOCTOU fix)
   await resetGenerationCountIfExpired(user.id);
   const profile = await getProfile(user.id);
   const limit = profile.subscriptionTier === 'pro' ? -1 : 10; // -1 = unlimited
-  // Pre-check: if limit is not unlimited, verify the user has remaining quota without incrementing
-  if (limit !== -1 && profile.monthlyGenerationCount >= limit) {
+  const slotReserved = await tryReserveGenerationSlot(user.id, limit);
+  if (!slotReserved) {
     return c.json(
       {
         error: 'generation_limit_reached',
@@ -199,8 +199,7 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
           ),
         );
 
-        // Increment generation count only after successful chapter save
-        await incrementGenerationCount(user.id, limit);
+        // Slot was already incremented atomically before Grok call — no further increment needed.
 
         // Send completion event with metadata
         const completionEvent = `data: ${JSON.stringify({
@@ -222,6 +221,8 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
         }
       } catch (err) {
         console.error('[continue] Stream processing error:', err);
+        // Refund the reserved slot since generation did not complete successfully
+        void refundGenerationSlot(user.id).catch(e => console.error('[continue] Failed to refund slot:', e));
         const errorEvent = `data: ${JSON.stringify({
           type: 'error',
           message: 'Generation failed mid-stream',

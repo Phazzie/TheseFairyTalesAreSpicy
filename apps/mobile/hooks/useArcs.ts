@@ -20,6 +20,8 @@ export function useArc(arcId: string | null) {
   return useQuery({
     queryKey: ['arcs', arcId],
     enabled: !!arcId,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 30 * 60 * 1000,
     queryFn: async () => {
       if (!arcId) return null;
       const { data, error } = await supabase
@@ -37,6 +39,8 @@ export function useArcWithDetails(arcId: string | null) {
   return useQuery({
     queryKey: ['arc-details', arcId],
     enabled: !!arcId,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 30 * 60 * 1000,
     queryFn: async () => {
       if (!arcId) return null;
       const [arcResult, charsResult, loreResult, notesResult] = await Promise.all([

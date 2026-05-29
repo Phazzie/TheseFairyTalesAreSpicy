@@ -11,7 +11,7 @@ import type {
 } from '@story/engine';
 import { getArc } from './arcs.js';
 import { getCharacters } from './characters.js';
-import { getChaptersByArc, chapterRowToMetadata } from './chapters.js';
+import { getRecentChapterMetadata, chapterRowToMetadata } from './chapters.js';
 import { getOpenThreads } from './plotThreads.js';
 import { getLatestSummary } from './arcSummaries.js';
 import { adminClient } from './supabase.js';
@@ -142,7 +142,7 @@ export async function assembleArcContext(arcId: string, userId: string): Promise
     worldNotes,
     plotThreads,
     rollingSummary,
-    allPublishedChapters,
+    recentChapterRows,
   ] = await Promise.all([
     getCharacters(arcId),
     fetchRelationships(arcId),
@@ -150,12 +150,11 @@ export async function assembleArcContext(arcId: string, userId: string): Promise
     fetchActiveWorldNotes(arcId),
     getOpenThreads(arcId),
     getLatestSummary(arcId),
-    getChaptersByArc(arcId, false), // published only
+    getRecentChapterMetadata(arcId, 3), // published only, metadata columns only
   ]);
 
   // Step 3: Build the last 3 chapters metadata for recent context
-  const recentChapterMetadata: ChapterMetadata[] = allPublishedChapters
-    .slice(-3)
+  const recentChapterMetadata: ChapterMetadata[] = recentChapterRows
     .map(chapterRowToMetadata);
 
   // Step 4: Provide a fallback creature lore if none stored yet

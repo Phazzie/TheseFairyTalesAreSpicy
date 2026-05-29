@@ -15,7 +15,8 @@ import { THEMES, MAX_THEMES, WIZARD_TOTAL_STEPS } from '../../lib/constants.js';
 export default function WizardStep2() {
   const router = useRouter();
   const { themes, addTheme, removeTheme } = useWizardStore();
-  const { nextWizardStep, prevWizardStep } = useUIStore();
+  const nextWizardStep = useUIStore((s) => s.nextWizardStep);
+  const prevWizardStep = useUIStore((s) => s.prevWizardStep);
 
   const toggleTheme = (theme: string) => {
     if (themes.includes(theme)) {

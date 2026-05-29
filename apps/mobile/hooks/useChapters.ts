@@ -5,6 +5,7 @@ export function useChapters(arcId: string | null) {
   return useQuery({
     queryKey: ['chapters', arcId],
     enabled: !!arcId,
+    staleTime: 60 * 1000, // 1 minute
     queryFn: async () => {
       if (!arcId) return [];
       const { data, error } = await supabase
@@ -22,6 +23,7 @@ export function useChapter(chapterId: string | null) {
   return useQuery({
     queryKey: ['chapter', chapterId],
     enabled: !!chapterId,
+    staleTime: 60 * 1000, // 1 minute
     queryFn: async () => {
       if (!chapterId) return null;
       const { data, error } = await supabase

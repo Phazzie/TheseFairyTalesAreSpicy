@@ -48,7 +48,7 @@ const CREATURES: CreatureOption[] = [
 export default function WizardStep1() {
   const router = useRouter();
   const { creatureType, setField } = useWizardStore();
-  const { nextWizardStep } = useUIStore();
+  const nextWizardStep = useUIStore((s) => s.nextWizardStep);
 
   const handleContinue = () => {
     nextWizardStep();
@@ -57,6 +57,19 @@ export default function WizardStep1() {
 
   return (
     <SafeAreaView className="flex-1 bg-brand-deep">
+      {/* Close / exit button */}
+      <TouchableOpacity
+        onPress={() => {
+          useWizardStore.getState().reset();
+          router.back();
+        }}
+        className="absolute top-4 right-4 p-2 z-10"
+        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        accessibilityLabel="Exit wizard"
+      >
+        <Text className="text-gray-500 text-xl">✕</Text>
+      </TouchableOpacity>
+
       <ScrollView
         className="flex-1"
         contentContainerStyle={{ padding: 24, gap: 20 }}

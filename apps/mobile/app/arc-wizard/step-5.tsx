@@ -81,7 +81,8 @@ export default function WizardStep5() {
   const router = useRouter();
   const { atmosphereArchetype, sensoryPrimary, recurringMotif, setField } =
     useWizardStore();
-  const { nextWizardStep, prevWizardStep } = useUIStore();
+  const nextWizardStep = useUIStore((s) => s.nextWizardStep);
+  const prevWizardStep = useUIStore((s) => s.prevWizardStep);
 
   const handleBack = () => {
     prevWizardStep();

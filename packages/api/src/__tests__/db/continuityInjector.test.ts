@@ -14,7 +14,7 @@ vi.mock('../../db/characters.js', () => ({
 }));
 
 vi.mock('../../db/chapters.js', () => ({
-  getChaptersByArc: vi.fn(),
+  getRecentChapterMetadata: vi.fn(), // replaces getChaptersByArc in continuityInjector
   chapterRowToMetadata: vi.fn(),
 }));
 
@@ -60,7 +60,7 @@ vi.mock('../../db/supabase.js', () => ({
 import { assembleArcContext } from '../../db/continuityInjector.js';
 import { getArc } from '../../db/arcs.js';
 import { getCharacters } from '../../db/characters.js';
-import { getChaptersByArc, chapterRowToMetadata } from '../../db/chapters.js';
+import { getRecentChapterMetadata, chapterRowToMetadata } from '../../db/chapters.js';
 import { getOpenThreads } from '../../db/plotThreads.js';
 import { getLatestSummary } from '../../db/arcSummaries.js';
 
@@ -155,7 +155,7 @@ describe('assembleArcContext', () => {
     vi.mocked(getCharacters).mockResolvedValue([mockCharacter]);
     vi.mocked(getOpenThreads).mockResolvedValue([]);
     vi.mocked(getLatestSummary).mockResolvedValue(null);
-    vi.mocked(getChaptersByArc).mockResolvedValue([]);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue([]);
     vi.mocked(chapterRowToMetadata).mockReturnValue({} as any);
 
     const result = await assembleArcContext('arc-1', 'user-1');
@@ -193,7 +193,7 @@ describe('assembleArcContext', () => {
     vi.mocked(getCharacters).mockResolvedValue([]);
     vi.mocked(getOpenThreads).mockResolvedValue([]);
     vi.mocked(getLatestSummary).mockResolvedValue(null);
-    vi.mocked(getChaptersByArc).mockResolvedValue([]);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue([]);
 
     // creature_lore query returns null (no lore stored)
     mockSupabaseFrom.mockImplementation((table: string) => {
@@ -226,7 +226,7 @@ describe('assembleArcContext', () => {
     vi.mocked(getCharacters).mockResolvedValue([]);
     vi.mocked(getOpenThreads).mockResolvedValue([]);
     vi.mocked(getLatestSummary).mockResolvedValue(mockSummary);
-    vi.mocked(getChaptersByArc).mockResolvedValue([]);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue([]);
 
     const result = await assembleArcContext('arc-1', 'user-1');
 
@@ -240,7 +240,7 @@ describe('assembleArcContext', () => {
     vi.mocked(getCharacters).mockResolvedValue([]);
     vi.mocked(getOpenThreads).mockResolvedValue([]);
     vi.mocked(getLatestSummary).mockResolvedValue(null);
-    vi.mocked(getChaptersByArc).mockResolvedValue([]);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue([]);
 
     const result = await assembleArcContext('arc-1', 'user-1');
 
@@ -292,7 +292,7 @@ describe('assembleArcContext', () => {
     vi.mocked(getCharacters).mockResolvedValue([]);
     vi.mocked(getOpenThreads).mockResolvedValue([]);
     vi.mocked(getLatestSummary).mockResolvedValue(null);
-    vi.mocked(getChaptersByArc).mockResolvedValue([mockChapterRow as any]);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue([mockChapterRow as any]);
     vi.mocked(chapterRowToMetadata).mockReturnValue(mockMetadata);
 
     const result = await assembleArcContext('arc-1', 'user-1');
@@ -307,7 +307,7 @@ describe('assembleArcContext', () => {
     vi.mocked(getCharacters).mockResolvedValue([]);
     vi.mocked(getOpenThreads).mockResolvedValue([]);
     vi.mocked(getLatestSummary).mockResolvedValue(null);
-    vi.mocked(getChaptersByArc).mockResolvedValue([]);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue([]);
 
     const result = await assembleArcContext('arc-1', 'user-1');
 
@@ -329,7 +329,7 @@ describe('assembleArcContext', () => {
     vi.mocked(getCharacters).mockResolvedValue([]);
     vi.mocked(getOpenThreads).mockResolvedValue([mockThread]);
     vi.mocked(getLatestSummary).mockResolvedValue(null);
-    vi.mocked(getChaptersByArc).mockResolvedValue([]);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue([]);
 
     const result = await assembleArcContext('arc-1', 'user-1');
 
@@ -338,7 +338,7 @@ describe('assembleArcContext', () => {
   });
 
   it('limits recentChapterMetadata to last 3 chapters when more are available', async () => {
-    const fiveChapterRows = Array.from({ length: 5 }, (_, i) => ({
+    const threeChapterRows = Array.from({ length: 3 }, (_, i) => ({
       id: `ch-${i + 1}`,
       arcId: 'arc-1',
       chapterNumber: i + 1,
@@ -350,7 +350,7 @@ describe('assembleArcContext', () => {
     vi.mocked(getCharacters).mockResolvedValue([]);
     vi.mocked(getOpenThreads).mockResolvedValue([]);
     vi.mocked(getLatestSummary).mockResolvedValue(null);
-    vi.mocked(getChaptersByArc).mockResolvedValue(fiveChapterRows as any);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue(threeChapterRows as any);
     vi.mocked(chapterRowToMetadata).mockImplementation((row: any) => ({
       arcId: row.arcId ?? 'arc-1',
       chapterNumber: row.chapterNumber,
@@ -370,7 +370,7 @@ describe('assembleArcContext', () => {
 
     const result = await assembleArcContext('arc-1', 'user-1');
 
-    // slice(-3) means last 3 of the 5
+    // getRecentChapterMetadata is called with limit=3, so DB returns exactly 3
     expect(result.recentChapterMetadata).toHaveLength(3);
   });
 
@@ -379,7 +379,7 @@ describe('assembleArcContext', () => {
     vi.mocked(getCharacters).mockRejectedValue(new Error('DB connection lost'));
     vi.mocked(getOpenThreads).mockResolvedValue([]);
     vi.mocked(getLatestSummary).mockResolvedValue(null);
-    vi.mocked(getChaptersByArc).mockResolvedValue([]);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue([]);
 
     await expect(assembleArcContext('arc-1', 'user-1')).rejects.toThrow('DB connection lost');
   });
@@ -389,7 +389,7 @@ describe('assembleArcContext', () => {
     vi.mocked(getCharacters).mockResolvedValue([]);
     vi.mocked(getOpenThreads).mockResolvedValue([]);
     vi.mocked(getLatestSummary).mockResolvedValue(null);
-    vi.mocked(getChaptersByArc).mockResolvedValue([]);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue([]);
 
     // Make the relationship_map query return an error
     mockSupabaseFrom.mockImplementation((table: string) => {
@@ -412,7 +412,7 @@ describe('assembleArcContext', () => {
     vi.mocked(getCharacters).mockResolvedValue([]);
     vi.mocked(getOpenThreads).mockResolvedValue([]);
     vi.mocked(getLatestSummary).mockResolvedValue(null);
-    vi.mocked(getChaptersByArc).mockResolvedValue([]);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue([]);
 
     await assembleArcContext('arc-1', 'user-1');
 
@@ -420,17 +420,17 @@ describe('assembleArcContext', () => {
     expect(vi.mocked(getArc)).toHaveBeenCalledTimes(1);
   });
 
-  it('getChaptersByArc is called with published-only flag (false = published only)', async () => {
+  it('getRecentChapterMetadata is called with arcId and limit 3', async () => {
     vi.mocked(getArc).mockResolvedValue(mockArc);
     vi.mocked(getCharacters).mockResolvedValue([]);
     vi.mocked(getOpenThreads).mockResolvedValue([]);
     vi.mocked(getLatestSummary).mockResolvedValue(null);
-    vi.mocked(getChaptersByArc).mockResolvedValue([]);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue([]);
 
     await assembleArcContext('arc-1', 'user-1');
 
     // continuityInjector calls getChaptersByArc(arcId, false) — false = published only
-    expect(vi.mocked(getChaptersByArc)).toHaveBeenCalledWith('arc-1', false);
+    expect(vi.mocked(getRecentChapterMetadata)).toHaveBeenCalledWith('arc-1', 3);
   });
 
   it('returns ArcContext with all required top-level keys', async () => {
@@ -438,7 +438,7 @@ describe('assembleArcContext', () => {
     vi.mocked(getCharacters).mockResolvedValue([]);
     vi.mocked(getOpenThreads).mockResolvedValue([]);
     vi.mocked(getLatestSummary).mockResolvedValue(null);
-    vi.mocked(getChaptersByArc).mockResolvedValue([]);
+    vi.mocked(getRecentChapterMetadata).mockResolvedValue([]);
 
     const result = await assembleArcContext('arc-1', 'user-1');
 

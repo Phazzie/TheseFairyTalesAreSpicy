@@ -26,7 +26,8 @@ function PlanRow({ feature, free, pro }: PlanRowProps) {
 }
 
 export function UpgradeSheet() {
-  const { showUpgradeSheet, closeUpgradeSheet } = useUIStore();
+  const showUpgradeSheet = useUIStore((s) => s.showUpgradeSheet);
+  const closeUpgradeSheet = useUIStore((s) => s.closeUpgradeSheet);
 
   return (
     <Modal

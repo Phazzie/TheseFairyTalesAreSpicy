@@ -16,6 +16,8 @@ import { selectBeat } from '../selectors/selectBeat.js';
 import { pacingModule } from '../modules/pacingModule.js';
 import { proseConstraintsModule } from '../modules/proseConstraintsModule.js';
 import { spiceLevelModule } from '../modules/spiceLevelModule.js';
+import { cliffhangerModule } from '../modules/cliffhangerModule.js';
+import { emotionalArcModule } from '../modules/emotionalArcModule.js';
 import { consentChemistryModule } from '../modules/consentChemistryModule.js';
 import { speakerTagModule } from '../modules/speakerTagModule.js';
 import { readingLevelModule } from '../modules/readingLevelModule.js';
@@ -59,10 +61,12 @@ export function assembleSystemPrompt(
     { name: 'voiceModule', content: voiceModule(input, context), canDrop: false },
     { name: 'authorModule', content: authorModule(input, context), canDrop: false },
     { name: 'perspectiveModule', content: perspectiveModule(input, context), canDrop: false },
+    { name: 'emotionalArcModule', content: emotionalArcModule(input, context), canDrop: true },
     { name: 'beatModule', content: beatModule(input, context, selectedBeat), canDrop: false },
     { name: 'pacingModule', content: pacingModule(input, context), canDrop: false },
     { name: 'proseConstraintsModule', content: proseConstraintsModule(input, context), canDrop: false },
     { name: 'spiceLevelModule', content: spiceLevelModule(input, context), canDrop: false },
+    { name: 'cliffhangerModule', content: cliffhangerModule(input, context), canDrop: true },
     { name: 'consentChemistryModule', content: consentChemistryModule(input, context), canDrop: false },
     { name: 'speakerTagModule', content: speakerTagModule(input, context), canDrop: false },
     { name: 'readingLevelModule', content: readingLevelModule(input, context), canDrop: false },

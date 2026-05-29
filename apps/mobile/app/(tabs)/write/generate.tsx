@@ -23,9 +23,11 @@ export default function GenerateScreen() {
 
   const currentArc = useArcStore((s) => s.currentArc);
   const isGenerating = useArcStore((s) => s.isGenerating);
-  const streamingText = useArcStore((s) => s.streamingText);
-  const { clearStreamingText } = useArcStore();
-  const waitingForFirstToken = isGenerating && streamingText.length === 0;
+  const streamingParagraphs = useArcStore((s) => s.streamingParagraphs);
+  const streamingTail = useArcStore((s) => s.streamingTail);
+  const clearStreamingText = useArcStore((s) => s.clearStreamingText);
+  const hasStreamingContent = streamingParagraphs.length > 0 || streamingTail.length > 0;
+  const waitingForFirstToken = isGenerating && !hasStreamingContent;
 
   const { generate, cancel } = useGeneration();
 
@@ -89,7 +91,7 @@ export default function GenerateScreen() {
         keyboardShouldPersistTaps="handled"
       >
         {/* Generation panel — hidden while generating or streaming, shown when showForm=true */}
-        {showForm && !isGenerating && !streamingText ? (
+        {showForm && !isGenerating && !hasStreamingContent ? (
           <GenerationPanel
             arcId={arcId}
             chapterNumber={chapterNumber}
@@ -123,7 +125,7 @@ export default function GenerateScreen() {
         )}
 
         {/* Streaming output */}
-        {!waitingForFirstToken && (streamingText.length > 0 || isGenerating) ? (
+        {!waitingForFirstToken && (hasStreamingContent || isGenerating) ? (
           <View className="flex-1 min-h-96">
             <StreamingText />
           </View>

@@ -8,20 +8,21 @@ function formatCharacter(char: CharacterProfile): string {
   lines.push(`Apparent Age: ${char.apparentAge}${char.trueAge !== char.apparentAge ? ` (true age: ${char.trueAge})` : ''}`);
 
   if (char.contradiction) {
-    lines.push(`Stated Desire: ${char.contradiction.statedDesire}`);
-    lines.push(`Hidden Need: ${char.contradiction.hiddenNeed}`);
+    lines.push(`${char.displayName} says she wants: ${char.contradiction.statedDesire}`);
+    lines.push(`${char.displayName} actually needs: ${char.contradiction.hiddenNeed}`);
+    lines.push(`CRITICAL: Never let ${char.displayName} state this need directly, and never have another character correctly diagnose it to her face. Show it through behavior, micro-decisions, what she avoids, what she can't help doing.`);
   }
 
   if (char.wound) {
-    lines.push(`Wound: ${char.wound}`);
+    lines.push(`Wound (shapes all behavior — do not state it directly): ${char.wound}`);
   }
 
   if (char.flaw) {
-    lines.push(`Flaw: ${char.flaw}`);
+    lines.push(`Active flaw (creates conflict — show through action, never explain): ${char.flaw}`);
   }
 
   if (char.lie) {
-    lines.push(`Lie They Believe: ${char.lie}`);
+    lines.push(`The lie she believes (drives her wrong choices — the reader sees it, she doesn't): ${char.lie}`);
   }
 
   lines.push(`Appearance: ${char.appearance}`);

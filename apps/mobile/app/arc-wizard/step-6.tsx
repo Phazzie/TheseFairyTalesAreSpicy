@@ -27,7 +27,8 @@ export default function WizardStep6() {
     protagonistLie,
     setField,
   } = useWizardStore();
-  const { nextWizardStep, prevWizardStep } = useUIStore();
+  const nextWizardStep = useUIStore((s) => s.nextWizardStep);
+  const prevWizardStep = useUIStore((s) => s.prevWizardStep);
 
   const handleBack = () => {
     prevWizardStep();

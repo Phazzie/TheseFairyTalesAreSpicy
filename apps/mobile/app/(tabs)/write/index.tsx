@@ -20,7 +20,10 @@ import { CREATURE_LABELS, SPICE_LEVEL_LABELS } from '../../../lib/constants.js';
 export default function WriteIndexScreen() {
   const router = useRouter();
   const { data: arcs, isLoading, error, refetch } = useArcs();
-  const { currentArcId, setCurrentArcId, currentArc, isGenerating } = useArcStore();
+  const currentArcId = useArcStore((s) => s.currentArcId);
+  const setCurrentArcId = useArcStore((s) => s.setCurrentArcId);
+  const currentArc = useArcStore((s) => s.currentArc);
+  const isGenerating = useArcStore((s) => s.isGenerating);
   const [refreshing, setRefreshing] = useState(false);
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -184,6 +187,32 @@ export default function WriteIndexScreen() {
             </Text>
           </View>
         ) : null}
+
+        {/* Arc Switcher */}
+        {arcs && arcs.length > 1 && (
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-4 px-4">
+            <View className="flex-row gap-2">
+              {arcs.map((a) => {
+                const arcItem = a as Record<string, unknown>;
+                return (
+                  <TouchableOpacity
+                    key={arcItem.id as string}
+                    onPress={() => setCurrentArcId(arcItem.id as string)}
+                    className={`px-3 py-1.5 rounded-full border ${
+                      arcItem.id === currentArcId
+                        ? 'bg-brand-purple border-brand-purple'
+                        : 'bg-gray-800 border-gray-700'
+                    }`}
+                  >
+                    <Text className={`text-xs font-medium ${arcItem.id === currentArcId ? 'text-white' : 'text-gray-400'}`}>
+                      {(arcItem.title as string | undefined) ?? (arcItem.creature_type as string | undefined)}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </ScrollView>
+        )}
 
         {/* Continue Story */}
         <Button
