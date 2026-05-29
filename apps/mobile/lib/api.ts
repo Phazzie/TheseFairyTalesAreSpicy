@@ -1,7 +1,10 @@
 import { supabase } from './supabase.js';
 import { useUIStore } from '../stores/uiStore.js';
 
-const API_BASE = process.env['EXPO_PUBLIC_API_URL'] ?? '';
+const API_BASE = process.env['EXPO_PUBLIC_API_URL'] ?? 'http://localhost:3000';
+if (!process.env['EXPO_PUBLIC_API_URL']) {
+  console.warn('[api] EXPO_PUBLIC_API_URL is not set — falling back to http://localhost:3000. Set this in .env.local for production.');
+}
 
 export interface ApiError {
   error: string;

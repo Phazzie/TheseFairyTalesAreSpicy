@@ -137,7 +137,7 @@ generateApp.post('/', authMiddleware, validate(generateSchema), async (c) => {
           title,
           content: displayText,
           wordCount: displayText.split(/\s+/).length,
-          beatUsed: '', // extracted from assembled prompt context
+          beatUsed: assembled.beatUsed,
           emotionalArc: input.emotionalArcOverride ?? 'desire_to_denial',
           dialogueRatioPct: dialogueRatio,
           chekhovSeeded: chekhovElements.map((e) => e.id),

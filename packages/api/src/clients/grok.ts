@@ -88,18 +88,38 @@ export async function generateStoryStreaming(
   // Parse SSE stream and emit text chunks
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
+  // Carry-over buffer: SSE events can be split across network chunks.
+  // Accumulate bytes here and only process complete '\n'-terminated lines.
+  let lineBuffer = '';
 
   return new ReadableStream<string>({
     async pull(controller) {
       const { done, value } = await reader.read();
       if (done) {
+        // Flush any remaining buffered data
+        const remaining = lineBuffer.trim();
+        if (remaining.startsWith('data: ') && remaining !== 'data: [DONE]') {
+          try {
+            const parsed = JSON.parse(remaining.slice(6)) as {
+              choices: Array<{ delta: { content?: string } }>;
+            };
+            const chunk = parsed.choices[0]?.delta?.content;
+            if (chunk) controller.enqueue(chunk);
+          } catch { /* ignore */ }
+        }
         controller.close();
         return;
       }
-      const text = decoder.decode(value, { stream: true });
-      const lines = text.split('\n').filter((l) => l.startsWith('data: '));
+      // Append decoded bytes to buffer, split on newlines
+      lineBuffer += decoder.decode(value, { stream: true });
+      const lines = lineBuffer.split('\n');
+      // Keep the last (possibly incomplete) line in the buffer
+      lineBuffer = lines.pop() ?? '';
+
       for (const line of lines) {
-        const dataStr = line.slice(6);
+        const trimmed = line.trim();
+        if (!trimmed.startsWith('data: ')) continue;
+        const dataStr = trimmed.slice(6);
         if (dataStr === '[DONE]') {
           controller.close();
           return;

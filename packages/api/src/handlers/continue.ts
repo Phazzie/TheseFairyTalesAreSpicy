@@ -158,7 +158,7 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
           title,
           content: displayText,
           wordCount: displayText.split(/\s+/).length,
-          beatUsed: '',
+          beatUsed: assembled.beatUsed,
           emotionalArc: input.emotionalArcOverride ?? 'desire_to_denial',
           dialogueRatioPct: dialogueRatio,
           chekhovSeeded: chekhovElements.map((e) => e.id),

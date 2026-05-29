@@ -215,49 +215,12 @@ export async function archiveChapter(chapterId: string): Promise<void> {
 }
 
 export async function publishChapter(chapterId: string): Promise<void> {
-  // First, fetch the chapter to get its arc_id and chapter_number
-  const chapter = await getChapter(chapterId);
-
-  // Archive any existing published chapters at the same chapter_number in this arc
-  const { data: existingPublished, error: fetchError } = await adminClient
-    .from('chapters')
-    .select('id')
-    .eq('arc_id', chapter.arcId)
-    .eq('chapter_number', chapter.chapterNumber)
-    .eq('status', 'published')
-    .neq('id', chapterId);
-
-  if (fetchError) {
-    throw new Error(
-      `Failed to look up existing published chapters for arc ${chapter.arcId}, chapter ${chapter.chapterNumber}: ${fetchError.message}`,
-    );
-  }
-
-  // Archive all prior published chapters at this number
-  if (existingPublished && existingPublished.length > 0) {
-    const idsToArchive = existingPublished.map((r) => r.id);
-    const { error: archiveError } = await adminClient
-      .from('chapters')
-      .update({
-        status: 'archived',
-        archived_at: new Date().toISOString(),
-      })
-      .in('id', idsToArchive);
-
-    if (archiveError) {
-      throw new Error(
-        `Failed to archive prior published chapters: ${archiveError.message}`,
-      );
-    }
-  }
-
-  // Now publish the target chapter
-  const { error: publishError } = await adminClient
-    .from('chapters')
-    .update({ status: 'published' })
-    .eq('id', chapterId);
-
-  if (publishError) {
-    throw new Error(`Failed to publish chapter ${chapterId}: ${publishError.message}`);
+  // Uses a Postgres function (migration 006) that atomically archives any prior
+  // published chapter at the same (arc_id, chapter_number) and publishes this one.
+  // This prevents the race condition where two concurrent requests could produce
+  // two published chapters at the same chapter number.
+  const { error } = await adminClient.rpc('publish_chapter', { p_chapter_id: chapterId });
+  if (error) {
+    throw new Error(`Failed to publish chapter ${chapterId}: ${error.message}`);
   }
 }
