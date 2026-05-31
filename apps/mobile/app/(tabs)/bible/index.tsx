@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,9 @@ import {
   TouchableOpacity,
   RefreshControl,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import { useArcWithDetails } from '../../../hooks/useArcs.js';
+import { useArcs, useArcWithDetails } from '../../../hooks/useArcs.js';
 import { useArcStore } from '../../../stores/arcStore.js';
 import { Card } from '../../../components/ui/Card.js';
 import { Badge } from '../../../components/ui/Badge.js';
@@ -19,13 +20,27 @@ import { CREATURE_LABELS } from '../../../lib/constants.js';
 export default function BibleIndexScreen() {
   const router = useRouter();
   const currentArcId = useArcStore((s) => s.currentArcId);
+  const setCurrentArcId = useArcStore((s) => s.setCurrentArcId);
+  const { data: arcs } = useArcs();
   const { data, isLoading, error, refetch } = useArcWithDetails(currentArcId);
   const [refreshing, setRefreshing] = useState(false);
+  const [showBibleCard, setShowBibleCard] = useState(false);
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     await refetch();
     setRefreshing(false);
   }, [refetch]);
+
+  useEffect(() => {
+    AsyncStorage.getItem('seen_bible_card').then((val) => {
+      if (!val) setShowBibleCard(true);
+    });
+  }, []);
+
+  function dismissBibleCard() {
+    setShowBibleCard(false);
+    AsyncStorage.setItem('seen_bible_card', '1');
+  }
 
   if (isLoading) {
     return (
@@ -86,6 +101,47 @@ export default function BibleIndexScreen() {
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#7c3aed" />}
       >
+        {/* Arc Switcher */}
+        {arcs && arcs.length > 1 && (
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-2 -mx-5 px-5">
+            <View className="flex-row gap-2">
+              {arcs.map((a) => {
+                const arcItem = a as Record<string, unknown>;
+                return (
+                  <TouchableOpacity
+                    key={arcItem.id as string}
+                    onPress={() => setCurrentArcId(arcItem.id as string)}
+                    className={`px-3 py-1.5 rounded-full border ${
+                      arcItem.id === currentArcId
+                        ? 'bg-brand-purple border-brand-purple'
+                        : 'bg-gray-800 border-gray-700'
+                    }`}
+                  >
+                    <Text className={`text-xs font-medium ${arcItem.id === currentArcId ? 'text-white' : 'text-gray-400'}`}>
+                      {(arcItem.title as string | undefined) ?? (arcItem.creature_type as string | undefined)}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </ScrollView>
+        )}
+
+        {/* First-time Bible explanation card */}
+        {showBibleCard && arcs && arcs.length > 0 && (
+          <View className="mx-0 mb-4 bg-indigo-900/30 border border-indigo-700/40 rounded-xl p-4">
+            <View className="flex-row items-start justify-between">
+              <View className="flex-1 mr-3">
+                <Text className="text-indigo-300 font-semibold mb-1">📖 Story Bible</Text>
+                <Text className="text-gray-400 text-sm">Your characters, world notes, and creature lore live here. The AI reads this before every generation to stay consistent.</Text>
+              </View>
+              <TouchableOpacity onPress={dismissBibleCard} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+                <Text className="text-gray-500 text-lg">✕</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
         {/* Title */}
         <View className="gap-1">
           <Text className="text-gray-400 text-xs uppercase tracking-widest">

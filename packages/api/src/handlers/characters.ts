@@ -19,7 +19,7 @@ import { getArc } from '../db/arcs.js';
 const accentSchema = z.object({
   id: z.string(),
   region: z.string(),
-});
+}).strict();
 
 const createCharacterSchema = z.object({
   slug: z.string().min(1).max(100).regex(/^[a-z0-9_-]+$/),
@@ -41,7 +41,7 @@ const createCharacterSchema = z.object({
   lie: z.string().max(500).optional(),
   bio: z.string().min(1),
   appearance: z.string().min(1),
-});
+}).strict();
 
 const updateCharacterSchema = createCharacterSchema.partial();
 
@@ -146,8 +146,8 @@ charactersApp.get('/:arcId/characters/:id', authMiddleware, async (c) => {
     }
     return c.json({ character });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Character not found';
-    return c.json({ error: 'not_found', message }, 404);
+    console.error('[characters] GET /:arcId/characters/:id error:', err);
+    return c.json({ error: 'not_found', message: 'Character not found' }, 404);
   }
 });
 

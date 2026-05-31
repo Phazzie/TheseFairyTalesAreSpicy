@@ -138,5 +138,26 @@
     "progression": ["game_established_with_rules", "rules_tested_early", "stakes_escalated_beyond_original_terms", "player_realizes_they_care_about_more_than_winning", "game_used_against_its_inventor", "rules_broken_with_full_consequence", "cliffhanger"],
     "spiceNote": "The game's rules are the story's architecture — they must be established clearly enough that breaking them has weight. Level 2-4 spice lives in the moment the player uses the game against its inventor. The consequence of breaking the rules is non-negotiable.",
     "antiPatterns": ["rules too vague to create meaningful stakes", "stakes that never exceed the original terms", "game forgotten when plot demands", "consequence for broken rules that arrives conveniently or is avoided"]
+  },
+  {
+    "code": "afterglow",
+    "name": "Afterglow",
+    "progression": ["a moment of stillness after tension", "unexpected candor surfaces", "one character shows vulnerability they cannot take back", "the other receives it without weaponizing it", "quiet acknowledgment — neither says what it means", "end on a lingering image, not a cut"],
+    "spiceNote": "Natural home for levels 2-4 — this is where intimacy deepens after physical contact, not escalates toward it. The heat here is in what is admitted, not what is done.",
+    "antiPatterns": ["rushing back to plot tension", "using the candor moment as a cliffhanger", "characters who are suddenly articulate about their feelings", "resolution that feels earned when it isn't"]
+  },
+  {
+    "code": "wound_tending",
+    "name": "Wound Tending",
+    "progression": ["physical or emotional injury requires care", "the wounded one must accept help they would normally refuse", "the caretaker sees something usually hidden", "a boundary dissolves — slowly, not dramatically", "a small gesture carries the weight of everything unsaid", "chapter ends on renewed fragility, not resolved tension"],
+    "spiceNote": "The intimacy here is in proximity and permission, not progression. Works at any spice level. The wound metaphor can be literal or emotional — both work.",
+    "antiPatterns": ["using injury as shortcut to intimacy", "wound healing too quickly", "caretaker who uses the moment to extract confession", "ending on plot movement instead of emotional beat"]
+  },
+  {
+    "code": "vulnerable_confession",
+    "name": "Vulnerable Confession",
+    "progression": ["one character is pushed past their usual defenses", "something true escapes — not a planned reveal, an accidental one", "the listener's response matters more than the confession itself", "a silence that is not comfortable but is not hostile", "one small act of acceptance that neither fully acknowledges", "they resume the surface pretense, but something is different"],
+    "spiceNote": "This is the engine of emotional intimacy. Spice level is almost irrelevant — the vulnerability IS the heat. Works for every tier. Do not follow this with a cliffhanger.",
+    "antiPatterns": ["confession that is immediately reciprocated and resolved", "using the confession as a cliffhanger", "the listener overreacting", "the confessor immediately regretting and taking it back in the same chapter"]
   }
 ]

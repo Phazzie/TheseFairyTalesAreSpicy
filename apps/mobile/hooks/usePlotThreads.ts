@@ -46,6 +46,24 @@ export function useOpenThreads(arcId: string | null) {
   });
 }
 
+export function useAllThreads(arcId: string | null) {
+  return useQuery({
+    queryKey: ['plot-threads', arcId, 'all'],
+    enabled: !!arcId,
+    staleTime: 2 * 60 * 1000, // 2 minutes
+    queryFn: async () => {
+      if (!arcId) return [];
+      const { data, error } = await supabase
+        .from('plot_threads')
+        .select('*')
+        .eq('arc_id', arcId)
+        .order('created_at', { ascending: true });
+      if (error) throw new Error(error.message);
+      return data as PlotThreadRecord[];
+    },
+  });
+}
+
 export function useCreateThread() {
   const queryClient = useQueryClient();
   return useMutation({

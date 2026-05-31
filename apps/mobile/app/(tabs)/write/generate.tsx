@@ -43,6 +43,7 @@ export default function GenerateScreen() {
   const arcTitle = (currentArc as Record<string, unknown> | null)?.title as
     | string
     | undefined;
+  const [completedTitle, setCompletedTitle] = useState<string | undefined>(undefined);
 
   const handleGenerate = async (panelParams: {
     arcId: string;
@@ -54,7 +55,10 @@ export default function GenerateScreen() {
     setGenerationComplete(false);
     setShowForm(false);
     try {
-      await generate({ ...panelParams, priorChapterId });
+      const result = await generate({ ...panelParams, priorChapterId });
+      if (result && typeof result === 'object' && 'title' in result) {
+        setCompletedTitle((result as Record<string, unknown>).title as string | undefined);
+      }
       setGenerationComplete(true);
     } catch (err) {
       setGenerateError(err instanceof Error ? err.message : 'Generation failed');
@@ -124,15 +128,15 @@ export default function GenerateScreen() {
           </View>
         )}
 
-        {/* Streaming output */}
-        {!waitingForFirstToken && (hasStreamingContent || isGenerating) ? (
+        {/* Streaming output — hidden once generation is complete */}
+        {!waitingForFirstToken && !generationComplete && (hasStreamingContent || isGenerating) ? (
           <View className="flex-1 min-h-96">
             <StreamingText />
           </View>
         ) : null}
 
         {/* Cancel button — shown while generation is in progress */}
-        {isGenerating && (
+        {isGenerating && !generationComplete && (
           <TouchableOpacity
             onPress={() => { cancel(); }}
             className="mt-4 items-center py-3"
@@ -141,37 +145,55 @@ export default function GenerateScreen() {
           </TouchableOpacity>
         )}
 
-        {/* Post-generation CTA */}
+        {/* Post-generation success state — prominent centered banner */}
         {generationComplete && !isGenerating ? (
-          <View className="bg-green-900/30 border border-green-700/50 rounded-xl p-4 gap-3">
-            <Text className="text-green-300 text-base font-semibold text-center">
-              Chapter saved!
+          <View className="flex-1 items-center justify-center px-8 py-12">
+            <Text className="text-5xl mb-4">✨</Text>
+            <Text className="text-white text-xl font-bold mb-2">
+              {completedTitle ?? 'Chapter saved!'}
+            </Text>
+            <Text className="text-gray-400 text-sm mb-8">
+              Chapter {params.chapterNumber} saved
             </Text>
             <Button
               variant="primary"
-              size="md"
-              className="w-full"
+              size="lg"
+              className="w-full mb-3"
               onPress={() => router.push('/(tabs)/library')}
             >
-              View in Library
+              Read Chapter
+            </Button>
+            <Button
+              variant="ghost"
+              size="md"
+              className="w-full mb-3"
+              onPress={() =>
+                router.push({
+                  pathname: '/(tabs)/write/generate',
+                  params: {
+                    arcId,
+                    chapterNumber: String((parseInt(params.chapterNumber ?? '1', 10)) + 1),
+                    priorChapterId: undefined,
+                  },
+                })
+              }
+            >
+              Continue — Chapter {(parseInt(params.chapterNumber ?? '1', 10)) + 1}
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full"
+              onPress={() => {
+                clearStreamingText();
+                setGenerationComplete(false);
+                setCompletedTitle(undefined);
+                setShowForm(true);
+              }}
+            >
+              Adjust Settings
             </Button>
           </View>
-        ) : null}
-
-        {/* Adjust Settings button (only shown after complete) */}
-        {generationComplete && !isGenerating ? (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full"
-            onPress={() => {
-              clearStreamingText();
-              setGenerationComplete(false);
-              setShowForm(true);
-            }}
-          >
-            Adjust Settings
-          </Button>
         ) : null}
       </ScrollView>
     </SafeAreaView>

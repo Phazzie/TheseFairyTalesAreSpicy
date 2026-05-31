@@ -57,7 +57,7 @@ export async function generateStory(
 export async function generateStoryStreaming(
   systemPrompt: string,
   userPrompt: string,
-  opts?: GrokOptions,
+  opts?: GrokOptions & { signal?: AbortSignal },
 ): Promise<ReadableStream<string>> {
   const apiKey = process.env['XAI_API_KEY'];
   if (!apiKey) throw new Error('XAI_API_KEY env var is required');
@@ -83,7 +83,7 @@ export async function generateStoryStreaming(
       temperature: opts?.temperature ?? 0.85,
       stream: true,
     }),
-    signal: timeoutController.signal,
+    signal: opts?.signal ?? timeoutController.signal,
   });
   clearTimeout(timeoutId);
 

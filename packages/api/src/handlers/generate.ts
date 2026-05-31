@@ -31,7 +31,7 @@ const generateSchema = z.object({
   wordCountOverride: z.number().min(200).max(5000).optional(),
   userCreativeDirection: z.string().max(200).optional(),
   pilotMode: z.boolean().optional(),
-});
+}).strict();
 
 export const generateApp = new Hono<{ Variables: Variables }>();
 
@@ -57,10 +57,10 @@ generateApp.post('/', authMiddleware, validate(generateSchema), async (c) => {
   // 2. Assemble ArcContext (verifies ownership)
   let arcContext;
   try {
-    arcContext = await assembleArcContext(body.arcId, user.id);
+    arcContext = await assembleArcContext(body.arcId, user.id, c.req.header('Authorization')?.slice(7));
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Arc not found';
-    return c.json({ error: 'not_found', message }, 404);
+    console.error('[generate] assembleArcContext failed:', err);
+    return c.json({ error: 'not_found', message: 'Arc not found' }, 404);
   }
 
   // 3. Build generation input
@@ -95,7 +95,9 @@ generateApp.post('/', authMiddleware, validate(generateSchema), async (c) => {
   // 5. Stream from Grok
   let stream: ReadableStream<string>;
   try {
-    stream = await generateStoryStreaming(assembled.prompt, userPrompt);
+    stream = await generateStoryStreaming(assembled.prompt, userPrompt, {
+      signal: c.req.raw.signal,
+    });
   } catch (err) {
     console.error('[generate] Grok streaming failed:', err);
     return c.json({ error: 'internal_error', message: 'Generation failed. Please try again.' }, 500);
@@ -194,10 +196,17 @@ generateApp.post('/', authMiddleware, validate(generateSchema), async (c) => {
         // Non-blocking: generate rolling summary if due
         const shouldSummarize = body.chapterNumber % 5 === 0;
         if (shouldSummarize) {
-          // Fire and forget — errors don't affect the response
-          void generateRollingSummary(body.arcId, body.chapterNumber).catch((err) => {
-            console.error('[generate] Rolling summary failed:', err);
-          });
+          if (c.executionCtx?.waitUntil) {
+            c.executionCtx.waitUntil(
+              generateRollingSummary(body.arcId, body.chapterNumber).catch((err) => {
+                console.error('[generate] Rolling summary failed:', err);
+              })
+            );
+          } else {
+            void generateRollingSummary(body.arcId, body.chapterNumber).catch((err) => {
+              console.error('[generate] Rolling summary failed:', err);
+            });
+          }
         }
       } catch (err) {
         console.error('[generate] Stream processing error:', err);

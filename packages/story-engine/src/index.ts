@@ -66,6 +66,8 @@ export { formatMarkdown } from './processors/formatMarkdown.js';
 // Modules (selective exports for external use)
 export { cliffhangerModule } from './modules/cliffhangerModule.js';
 export { emotionalArcModule } from './modules/emotionalArcModule.js';
+export { characterModule } from './modules/characterModule.js';
+export { authorModule } from './modules/authorModule.js';
 
 // Selectors
 export { selectAuthorBlend } from './selectors/selectAuthorBlend.js';

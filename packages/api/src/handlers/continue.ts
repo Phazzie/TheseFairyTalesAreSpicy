@@ -32,7 +32,7 @@ const continueSchema = z.object({
   wordCountOverride: z.number().min(200).max(5000).optional(),
   userCreativeDirection: z.string().max(200).optional(),
   pilotMode: z.boolean().optional(),
-});
+}).strict();
 
 export const continueApp = new Hono<{ Variables: Variables }>();
 
@@ -55,13 +55,22 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
     );
   }
 
-  // 2. Load prior chapter to extract its engine version and system prompt
+  // 2. Assemble ArcContext (verifies ownership FIRST)
+  let arcContext;
+  try {
+    arcContext = await assembleArcContext(body.arcId, user.id, c.req.header('Authorization')?.slice(7));
+  } catch (err) {
+    console.error('[continue] assembleArcContext failed:', err);
+    return c.json({ error: 'not_found', message: 'Arc not found' }, 404);
+  }
+
+  // 3. Load prior chapter to extract its engine version and system prompt
   let priorChapter;
   try {
     priorChapter = await getChapter(body.priorChapterId);
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Prior chapter not found';
-    return c.json({ error: 'not_found', message }, 404);
+    console.error('[continue] getChapter failed:', err);
+    return c.json({ error: 'not_found', message: 'Prior chapter not found' }, 404);
   }
 
   // Verify prior chapter belongs to the arc being continued
@@ -70,15 +79,6 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
       { error: 'not_found', message: 'Prior chapter does not belong to this arc' },
       404,
     );
-  }
-
-  // 3. Assemble ArcContext (verifies ownership)
-  let arcContext;
-  try {
-    arcContext = await assembleArcContext(body.arcId, user.id);
-  } catch (err) {
-    const message = err instanceof Error ? err.message : 'Arc not found';
-    return c.json({ error: 'not_found', message }, 404);
   }
 
   // 4. Build continuation input (extends GenerationInput with prior chapter data)
@@ -215,9 +215,17 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
         // Non-blocking: generate rolling summary if due
         const shouldSummarize = body.chapterNumber % 5 === 0;
         if (shouldSummarize) {
-          void generateRollingSummary(body.arcId, body.chapterNumber).catch((err) => {
-            console.error('[continue] Rolling summary failed:', err);
-          });
+          if (c.executionCtx?.waitUntil) {
+            c.executionCtx.waitUntil(
+              generateRollingSummary(body.arcId, body.chapterNumber).catch((err) => {
+                console.error('[continue] Rolling summary failed:', err);
+              })
+            );
+          } else {
+            void generateRollingSummary(body.arcId, body.chapterNumber).catch((err) => {
+              console.error('[continue] Rolling summary failed:', err);
+            });
+          }
         }
       } catch (err) {
         console.error('[continue] Stream processing error:', err);

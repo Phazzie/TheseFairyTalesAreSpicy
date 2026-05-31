@@ -55,8 +55,34 @@ export function useGeneration() {
               appendStreamingText(bufferRef.current);
               bufferRef.current = '';
             }
-            // Invalidate chapters cache
-            await queryClient.invalidateQueries({ queryKey: ['chapters', params.arcId] });
+            // Optimistically push new chapter into cache immediately
+            const completeEvent = event as {
+              type: 'complete';
+              chapterId?: string;
+              title?: string;
+              cliffhangerType?: string;
+              wordCount?: number;
+            };
+            queryClient.setQueryData(
+              ['chapters', params.arcId],
+              (old: Record<string, unknown>[] | undefined) => {
+                const newChapter: Record<string, unknown> = {
+                  id: completeEvent.chapterId,
+                  arc_id: params.arcId,
+                  chapter_number: params.chapterNumber,
+                  title: completeEvent.title,
+                  status: 'published',
+                  cliffhanger_type: completeEvent.cliffhangerType,
+                  word_count: completeEvent.wordCount,
+                  generated_at: new Date().toISOString(),
+                };
+                return old ? [...old, newChapter] : [newChapter];
+              },
+            );
+            // Non-urgent full refetch to get complete row data
+            setTimeout(() => {
+              queryClient.invalidateQueries({ queryKey: ['chapters', params.arcId] });
+            }, 2000);
             return event;
           } else if (event.type === 'error') {
             throw new Error(event.message ?? 'Generation failed');

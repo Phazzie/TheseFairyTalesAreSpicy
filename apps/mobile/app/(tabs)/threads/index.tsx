@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   Modal,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useArcStore } from '../../../stores/arcStore.js';
-import { useOpenThreads, useResolveThread, useAbandonThread } from '../../../hooks/usePlotThreads.js';
+import { useArcs } from '../../../hooks/useArcs.js';
+import { useAllThreads, useResolveThread, useAbandonThread } from '../../../hooks/usePlotThreads.js';
 import { Button } from '../../../components/ui/Button.js';
 import { Badge } from '../../../components/ui/Badge.js';
 
@@ -182,11 +184,25 @@ function ThreadDetailModal({
 
 export default function ThreadsScreen() {
   const currentArcId = useArcStore((s) => s.currentArcId);
-  const { data: openThreads, isLoading, error, refetch } = useOpenThreads(currentArcId);
+  const setCurrentArcId = useArcStore((s) => s.setCurrentArcId);
+  const { data: arcs } = useArcs();
+  const { data: allThreads, isLoading, error, refetch } = useAllThreads(currentArcId);
   const resolveThread = useResolveThread();
   const abandonThread = useAbandonThread();
   const [selectedThread, setSelectedThread] = useState<PlotThread | null>(null);
   const [abandonError, setAbandonError] = useState<string | null>(null);
+  const [showThreadsCard, setShowThreadsCard] = useState(false);
+
+  useEffect(() => {
+    AsyncStorage.getItem('seen_threads_card').then((val) => {
+      if (!val) setShowThreadsCard(true);
+    });
+  }, []);
+
+  function dismissThreadsCard() {
+    setShowThreadsCard(false);
+    AsyncStorage.setItem('seen_threads_card', '1');
+  }
 
   if (isLoading) {
     return (
@@ -207,9 +223,10 @@ export default function ThreadsScreen() {
     );
   }
 
-  const threads = (openThreads ?? []) as PlotThread[];
+  const threads = (allThreads ?? []) as PlotThread[];
   const open = threads.filter((t) => t.status === 'open');
   const resolved = threads.filter((t) => t.status === 'resolved');
+  const abandoned = threads.filter((t) => t.status === 'abandoned');
 
   return (
     <SafeAreaView className="flex-1 bg-brand-deep">
@@ -218,6 +235,47 @@ export default function ThreadsScreen() {
         contentContainerStyle={{ padding: 20, paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
+        {/* Arc Switcher */}
+        {arcs && arcs.length > 1 && (
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-4 -mx-5 px-5">
+            <View className="flex-row gap-2">
+              {arcs.map((a) => {
+                const arcItem = a as Record<string, unknown>;
+                return (
+                  <TouchableOpacity
+                    key={arcItem.id as string}
+                    onPress={() => setCurrentArcId(arcItem.id as string)}
+                    className={`px-3 py-1.5 rounded-full border ${
+                      arcItem.id === currentArcId
+                        ? 'bg-brand-purple border-brand-purple'
+                        : 'bg-gray-800 border-gray-700'
+                    }`}
+                  >
+                    <Text className={`text-xs font-medium ${arcItem.id === currentArcId ? 'text-white' : 'text-gray-400'}`}>
+                      {(arcItem.title as string | undefined) ?? (arcItem.creature_type as string | undefined)}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          </ScrollView>
+        )}
+
+        {/* First-time Threads explanation card */}
+        {showThreadsCard && arcs && arcs.length > 0 && (
+          <View className="mb-4 bg-teal-900/30 border border-teal-700/40 rounded-xl p-4">
+            <View className="flex-row items-start justify-between">
+              <View className="flex-1 mr-3">
+                <Text className="text-teal-300 font-semibold mb-1">🧵 Plot Threads</Text>
+                <Text className="text-gray-400 text-sm">Details planted in your story that need to pay off later. The AI seeds two per chapter automatically — track them here.</Text>
+              </View>
+              <TouchableOpacity onPress={dismissThreadsCard} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+                <Text className="text-gray-500 text-lg">✕</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+
         {/* Header */}
         <Text className="text-gray-400 text-xs uppercase tracking-widest mb-1">
           Plot
@@ -257,7 +315,7 @@ export default function ThreadsScreen() {
 
         {/* Resolved */}
         {resolved.length > 0 ? (
-          <View>
+          <View className="mb-6">
             <Text className="text-gray-500 text-sm font-semibold uppercase tracking-wide mb-3">
               Resolved
             </Text>
@@ -267,6 +325,31 @@ export default function ThreadsScreen() {
                 thread={thread}
                 onTap={() => setSelectedThread(thread)}
               />
+            ))}
+          </View>
+        ) : null}
+
+        {/* Abandoned */}
+        {abandoned.length > 0 ? (
+          <View>
+            <Text className="text-gray-600 text-sm font-semibold uppercase tracking-wide mb-3">
+              Abandoned
+            </Text>
+            {abandoned.map((thread) => (
+              <TouchableOpacity
+                key={thread.id}
+                activeOpacity={0.75}
+                className="bg-gray-900/40 rounded-xl p-4 mb-3 border-l-4 border-l-gray-700 opacity-60"
+              >
+                <Text className="text-gray-500 text-base" numberOfLines={2}>
+                  {thread.description}
+                </Text>
+                {thread.planted_in_chapter != null ? (
+                  <Text className="text-gray-700 text-xs mt-1">
+                    Planted ch. {thread.planted_in_chapter}
+                  </Text>
+                ) : null}
+              </TouchableOpacity>
             ))}
           </View>
         ) : null}

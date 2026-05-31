@@ -28,14 +28,14 @@ const characterSchema = z.object({
   wound: z.string().optional(),
   flaw: z.string().optional(),
   lie: z.string().optional(),
-});
+}).strict();
 
 const creatureLoreSchema = z.object({
   rules: z.array(z.string()).optional(),
   weaknesses: z.array(z.string()).optional(),
   abilities: z.array(z.string()).optional(),
   societyNotes: z.string().optional(),
-});
+}).strict();
 
 const arcBaseSchema = z.object({
   title: z.string().max(200).optional(),
@@ -60,14 +60,14 @@ const arcBaseSchema = z.object({
   genreBlendRatio: z.number().int().min(50).max(100).optional().default(80),
   toneAllowance: z.string(),
   isQuickStart: z.boolean().optional(),
-  coverImageUrl: z.string().url().optional(),
+  coverImageUrl: z.string().url().startsWith('https://').optional(),
 });
 
 const createArcSchema = arcBaseSchema.extend({
   protagonist: characterSchema.optional(),
   loveInterest: characterSchema.optional(),
   creatureLore: creatureLoreSchema.optional(),
-});
+}).strict();
 
 const updateArcSchema = arcBaseSchema.partial().strict();
 
@@ -235,8 +235,8 @@ arcsApp.get('/:id', authMiddleware, async (c) => {
     const arc = await getArc(arcId, user.id);
     return c.json({ arc });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Arc not found';
-    return c.json({ error: 'not_found', message }, 404);
+    console.error('[arcs] GET /:id error:', err);
+    return c.json({ error: 'not_found', message: 'Arc not found' }, 404);
   }
 });
 
@@ -278,11 +278,15 @@ arcsApp.patch('/:id', authMiddleware, validate(updateArcSchema), async (c) => {
     const arc = await updateArc(arcId, patch, user.id);
     return c.json({ arc });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Arc not found';
+    console.error('[arcs] PATCH /:id error:', err);
+    const message = err instanceof Error ? err.message : '';
     const isNotFound =
       message.includes('not found') || message.includes('does not belong');
     return c.json(
-      { error: isNotFound ? 'not_found' : 'internal_error', message },
+      {
+        error: isNotFound ? 'not_found' : 'internal_error',
+        message: isNotFound ? 'Arc not found' : 'Something went wrong. Please try again.',
+      },
       isNotFound ? 404 : 500,
     );
   }
@@ -297,7 +301,7 @@ arcsApp.delete('/:id', authMiddleware, async (c) => {
     await deleteArc(arcId, user.id);
     return c.json({ deleted: true });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Failed to delete arc';
-    return c.json({ error: 'internal_error', message }, 500);
+    console.error('[arcs] DELETE /:id error:', err);
+    return c.json({ error: 'internal_error', message: 'Something went wrong. Please try again.' }, 500);
   }
 });

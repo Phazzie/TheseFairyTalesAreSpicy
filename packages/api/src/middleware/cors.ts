@@ -6,5 +6,4 @@ export const corsMiddleware = cors({
   origin: allowedOrigins,
   allowMethods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
 });

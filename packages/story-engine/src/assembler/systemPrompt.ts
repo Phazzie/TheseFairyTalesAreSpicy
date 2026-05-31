@@ -45,7 +45,7 @@ export function assembleSystemPrompt(
   const droppedModules: string[] = [];
 
   // Select the beat before building module outputs so we can capture it for the return value
-  const selectedBeat = selectBeat(context.arc.arcType, context.recentChapterMetadata, input.pilotMode);
+  const selectedBeat = selectBeat(context.arc.arcType, context.recentChapterMetadata, input.pilotMode, input.chapterNumber);
 
   // Run all modules in canonical order
   // The order matters — modules build on each other conceptually

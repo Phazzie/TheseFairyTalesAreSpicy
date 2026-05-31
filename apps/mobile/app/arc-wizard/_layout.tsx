@@ -1,10 +1,26 @@
-import { Stack, useRouter } from 'expo-router';
+import { useCallback } from 'react';
+import { BackHandler } from 'react-native';
+import { Stack, useRouter, useFocusEffect } from 'expo-router';
 import { useUIStore } from '../../stores/uiStore.js';
 
 export default function ArcWizardLayout() {
   const wizardStep = useUIStore((s) => s.wizardStep);
   const prevWizardStep = useUIStore((s) => s.prevWizardStep);
   const router = useRouter();
+
+  useFocusEffect(
+    useCallback(() => {
+      const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+        if (wizardStep > 1) {
+          prevWizardStep();
+          router.back();
+          return true;
+        }
+        return false;
+      });
+      return () => sub.remove();
+    }, [wizardStep, prevWizardStep, router])
+  );
 
   return (
     <Stack

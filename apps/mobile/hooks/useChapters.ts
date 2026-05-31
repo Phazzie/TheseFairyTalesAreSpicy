@@ -37,6 +37,25 @@ export function useChapter(chapterId: string | null) {
   });
 }
 
+export function useDraftChapters(arcId: string | null) {
+  return useQuery({
+    queryKey: ['chapters-drafts', arcId],
+    enabled: !!arcId,
+    staleTime: 30_000,
+    queryFn: async () => {
+      if (!arcId) return [];
+      const { data, error } = await supabase
+        .from('chapters')
+        .select('*')
+        .eq('arc_id', arcId)
+        .eq('status', 'draft')
+        .order('generated_at', { ascending: false });
+      if (error) throw new Error(error.message);
+      return data ?? [];
+    },
+  });
+}
+
 export function useDeleteChapter() {
   const queryClient = useQueryClient();
   return useMutation({

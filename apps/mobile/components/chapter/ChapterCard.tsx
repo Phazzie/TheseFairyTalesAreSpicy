@@ -24,6 +24,7 @@ interface ChapterCardProps {
   wordCount?: number;
   cliffhangerType?: string;
   spiceLevel?: number;
+  isDraft?: boolean;
 }
 
 export function ChapterCard({
@@ -33,24 +34,32 @@ export function ChapterCard({
   wordCount,
   cliffhangerType,
   spiceLevel,
+  isDraft = false,
 }: ChapterCardProps) {
   const router = useRouter();
 
   return (
     <Card
       onPress={() => router.push(`/(tabs)/library/chapter/${id}`)}
-      className="mb-3"
+      className={`mb-3 ${isDraft ? 'opacity-80 border border-dashed border-gray-600' : ''}`}
     >
       <View className="flex-row items-start gap-3">
         {/* Chapter number pill */}
-        <View className="w-10 h-10 rounded-full bg-brand-purple/20 border border-brand-purple/40 items-center justify-center shrink-0">
-          <Text className="text-brand-purple text-xs font-bold">{chapterNumber}</Text>
+        <View className={`w-10 h-10 rounded-full items-center justify-center shrink-0 ${isDraft ? 'bg-gray-700/50 border border-gray-600' : 'bg-brand-purple/20 border border-brand-purple/40'}`}>
+          <Text className={`text-xs font-bold ${isDraft ? 'text-gray-400' : 'text-brand-purple'}`}>{chapterNumber}</Text>
         </View>
 
         <View className="flex-1">
-          <Text className="text-white text-base font-semibold" numberOfLines={2}>
-            {title}
-          </Text>
+          <View className="flex-row items-center gap-2">
+            <Text className="text-white text-base font-semibold flex-1" numberOfLines={2}>
+              {title}
+            </Text>
+            {isDraft && (
+              <View className="bg-gray-700 rounded px-1.5 py-0.5">
+                <Text className="text-gray-400 text-xs font-bold uppercase tracking-wider">DRAFT</Text>
+              </View>
+            )}
+          </View>
 
           <View className="flex-row flex-wrap gap-2 mt-2">
             {wordCount != null && (

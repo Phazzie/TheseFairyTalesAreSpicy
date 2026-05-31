@@ -1,6 +1,29 @@
 import type { ArcContext, GenerationInput } from '../types/index.js';
 import { selectAuthorBlend } from '../selectors/selectAuthorBlend.js';
 
+function getNarrativeFunction(voiceTags: string[]): string {
+  const tags = voiceTags.map((t) => t.toLowerCase());
+
+  const hasAny = (keywords: string[]) => keywords.some((kw) => tags.some((t) => t.includes(kw)));
+
+  if (hasAny(['lyrical', 'brooding', 'introspective', 'poetic'])) {
+    return "protagonist's internal voice and interiority";
+  }
+  if (hasAny(['dialogue', 'banter', 'witty', 'sharp'])) {
+    return 'dialogue and character voice';
+  }
+  if (hasAny(['atmospheric', 'sensory', 'setting'])) {
+    return 'setting description and atmosphere';
+  }
+  if (hasAny(['action', 'pacing', 'propulsive'])) {
+    return 'action sequences and physical tension';
+  }
+  if (hasAny(['political', 'scheming', 'menace'])) {
+    return 'power dynamics and antagonist presence';
+  }
+  return 'prose texture and sentence rhythm';
+}
+
 export function authorModule(input: GenerationInput, context: ArcContext): string {
   const blend = selectAuthorBlend(context.arc.creatureType, context.recentChapterMetadata);
 
@@ -9,17 +32,21 @@ export function authorModule(input: GenerationInput, context: ArcContext): strin
   }
 
   const lines: string[] = [];
-  lines.push('Channel the following author styles in combination for this chapter:');
+  lines.push('For this chapter, draw on the following authors — each for a specific purpose:');
   lines.push('');
 
   blend.forEach((author, index) => {
-    lines.push(`${index + 1}. ${author.name} (register: ${author.register})`);
-    lines.push(`   ${author.style}`);
+    const voiceTags: string[] = (author as { voiceTags?: string[] }).voiceTags ?? [];
+    const narrativeFn = getNarrativeFunction(voiceTags);
+    const signature = voiceTags.length > 0 ? voiceTags.join(', ') : author.register;
+
+    lines.push(`${index + 1}. ${author.name} — ${author.style}: Use for ${narrativeFn}`);
+    lines.push(`   Signature: ${signature}`);
+    lines.push('');
   });
 
-  lines.push('');
   lines.push(
-    'Blend these voices — do not imitate any single one. Let each contribute its strongest quality to the prose.',
+    "Do not blend these voices uniformly. Give each author their lane — the prose should shift register when moving between interior thought, dialogue, and action.",
   );
 
   return `AUTHOR STYLE BLEND:\n${lines.join('\n')}`;
