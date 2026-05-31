@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  SafeAreaView,
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useArcStore } from '../../../stores/arcStore.js';
 import { useGeneration } from '../../../hooks/useGeneration.js';
@@ -173,7 +173,6 @@ export default function GenerateScreen() {
                   params: {
                     arcId,
                     chapterNumber: String((parseInt(params.chapterNumber ?? '1', 10)) + 1),
-                    priorChapterId: undefined,
                   },
                 })
               }

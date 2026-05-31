@@ -208,8 +208,8 @@ describe('assembleSystemPrompt', () => {
 
   it('drops optional modules when over budget but recovers without throwing', () => {
     // Heavy world notes add ~500 tokens (10 × 200 chars / 4 ≈ 500 tokens).
-    // Base prompt without world notes ≈ 1800 tokens. With them ≈ 2300 tokens.
-    // Budget of 2100: over budget with worldNotes (2300 > 2100), under budget without (1800 < 2100).
+    // Base prompt without world notes ≈ 2027 tokens. With them ≈ 2527 tokens.
+    // Budget of 2200: over budget with worldNotes (2527 > 2200), under budget without (2027 < 2200).
     // The assembler should drop worldNotesModule and succeed.
     const heavyContext: ArcContext = {
       ...mockContext,
@@ -222,13 +222,10 @@ describe('assembleSystemPrompt', () => {
         createdAt: new Date().toISOString(),
       })),
     };
-    const result = assembleSystemPrompt(mockInput, heavyContext, { maxTokenBudget: 2100 });
-    // Should succeed (no throw) and droppedModules may be populated
-    expect(result.droppedModules).toBeInstanceOf(Array);
-    // When worldNotes are heavy, worldNotesModule should be dropped
-    if (result.droppedModules.length > 0) {
-      expect(result.droppedModules).toContain('worldNotesModule');
-    }
+    const result = assembleSystemPrompt(mockInput, heavyContext, { maxTokenBudget: 2200 });
+    // Should succeed (no throw) and worldNotesModule must be in droppedModules
+    expect(result.droppedModules).toContain('worldNotesModule');
+    expect(result.prompt).not.toContain('A'.repeat(50)); // world note content not in prompt
   });
 
   it('respects maxTokenBudget from GenerationInput when no opts provided', () => {

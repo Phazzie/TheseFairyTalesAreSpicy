@@ -3,12 +3,11 @@ import {
   View,
   Text,
   ScrollView,
-  FlatList,
-  SafeAreaView,
   TouchableOpacity,
   ActivityIndicator,
   Share,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useChapter } from '../../../../hooks/useChapters.js';
 import { ChapterMetaPanel } from '../../../../components/chapter/ChapterMetaPanel.js';
@@ -72,7 +71,14 @@ export default function ChapterDetailScreen() {
         return;
       }
       if (!res.ok) throw new Error('Regeneration failed');
-      router.push('/(tabs)/write/generate' as never);
+      router.push({
+        pathname: '/(tabs)/write/generate',
+        params: {
+          arcId: chapter.arc_id,
+          chapterNumber: String(chapter.chapter_number),
+          priorChapterId: chapter.id,
+        },
+      } as never);
     } catch {
       // Error shown via alert in a real app — for now just re-enable the button
     } finally {
@@ -255,18 +261,17 @@ export default function ChapterDetailScreen() {
           </View>
         ) : null}
 
-        {/* Chapter content as paragraph FlatList */}
-        <FlatList
-          data={paragraphs}
-          keyExtractor={(_, i) => `p-${i}`}
-          renderItem={({ item }) => (
-            <Text className="text-gray-100 text-base leading-8 mb-4" style={{ fontFamily: 'serif' }}>
-              {item}
-            </Text>
-          )}
-          scrollEnabled={false}
-          removeClippedSubviews
-        />
+        {/* Chapter content as mapped paragraphs — FlatList inside ScrollView crashes React Native */}
+        {paragraphs.map((paragraph, index) => (
+          <Text
+            key={`p-${index}`}
+            className="text-gray-100 text-base leading-8 mb-4"
+            style={{ fontFamily: 'serif' }}
+            selectable
+          >
+            {paragraph}
+          </Text>
+        ))}
 
         {/* Bottom actions */}
         <View className="mt-10 gap-3">
@@ -298,8 +303,8 @@ export default function ChapterDetailScreen() {
                   pathname: '/(tabs)/write/generate',
                   params: {
                     arcId: ch.arc_id,
-                    chapterNumber: (ch.chapter_number ?? 1) + 1,
-                    priorChapterId: ch.id,
+                    chapterNumber: String((ch.chapter_number ?? 1) + 1),
+                    ...(ch.id ? { priorChapterId: ch.id } : {}),
                   },
                 } as never);
               }}

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { ScrollView, Text, Animated } from 'react-native';
+import { ScrollView, View, Text, Animated } from 'react-native';
 import { useArcStore } from '../../stores/arcStore.js';
 
 // Memoized paragraph — only re-renders if text changes (never, once added)
@@ -20,7 +20,7 @@ export function StreamingText() {
   const tailLength = tail.length;
   useEffect(() => {
     scrollRef.current?.scrollToEnd({ animated: false });
-  }, [paragraphs.length, tailLength > 0]);
+  }, [paragraphs.length, tailLength]);
 
   if (!isGenerating && paragraphs.length === 0 && !tail) return null;
 
@@ -35,10 +35,10 @@ export function StreamingText() {
         <Paragraph key={i} text={p} />
       ))}
       {(tail || isGenerating) && (
-        <Text className="text-gray-100 text-base leading-8">
-          {tail}
-          {isGenerating ? <BlinkingCursor /> : null}
-        </Text>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+          <Text className="text-gray-100 text-base leading-8">{tail}</Text>
+          {isGenerating && <BlinkingCursor />}
+        </View>
       )}
     </ScrollView>
   );

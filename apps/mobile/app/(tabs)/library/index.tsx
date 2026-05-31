@@ -3,12 +3,12 @@ import {
   View,
   Text,
   FlatList,
-  SafeAreaView,
   ActivityIndicator,
   RefreshControl,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useArcStore } from '../../../stores/arcStore.js';
 import { useArcs } from '../../../hooks/useArcs.js';
 import { useChapters, useDraftChapters } from '../../../hooks/useChapters.js';

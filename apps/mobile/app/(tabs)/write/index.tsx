@@ -4,10 +4,10 @@ import {
   Text,
   ActivityIndicator,
   ScrollView,
-  SafeAreaView,
   RefreshControl,
   TouchableOpacity,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useArcs } from '../../../hooks/useArcs.js';
 import { useChapters } from '../../../hooks/useChapters.js';

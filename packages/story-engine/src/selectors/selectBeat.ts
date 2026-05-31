@@ -153,6 +153,13 @@ export function selectBeat(
     }
   }
 
+  // Guard against empty weighted candidates pool
+  if (weightedCandidates.length === 0) {
+    // Fallback: pick any beat at random from all available beats
+    const allBeats = beatStructuresData as BeatStructure[];
+    return allBeats[Math.floor(Math.random() * allBeats.length)] ?? allBeats[0]!;
+  }
+
   // Random selection from weighted candidates
   const index = Math.floor(Math.random() * weightedCandidates.length);
   return weightedCandidates[index] as BeatStructure;

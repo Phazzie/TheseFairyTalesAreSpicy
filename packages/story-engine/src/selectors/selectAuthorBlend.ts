@@ -75,11 +75,16 @@ export function selectAuthorBlend(
   const selectedNames = new Set(selected.map((a) => a.name));
   const crossPick = shuffledCross.find((a) => !selectedNames.has(a.name));
 
+  const crossAuthor = shuffledCross[0];
   if (crossPick) {
     selected.push(crossPick);
-  } else if (shuffledCross.length > 0) {
+  } else if (crossAuthor) {
     // Allow repeat if no unique option exists
-    selected.push(shuffledCross[0] as AuthorEntry);
+    selected.push(crossAuthor);
+  } else {
+    // Fallback: pick any available author to fill the third slot
+    const fallback = shuffledCreature[2] ?? shuffledCreature[0]!;
+    selected.push(fallback);
   }
 
   return selected.map((a) => ({

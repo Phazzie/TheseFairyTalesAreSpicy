@@ -11,6 +11,11 @@
       "resizeMode": "contain",
       "backgroundColor": "#1a0a2e"
     },
+    "newArchEnabled": true,
+    "ios": {
+      "bundleIdentifier": "com.phazzie.spicyfairytales",
+      "supportsTablet": false
+    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
@@ -42,6 +47,7 @@
     "plugins": [
       "expo-router",
       "expo-font",
+      "react-native-gesture-handler",
       [
         "expo-splash-screen",
         {

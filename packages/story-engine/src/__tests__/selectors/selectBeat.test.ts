@@ -160,3 +160,44 @@ describe('selectBeat', () => {
     }
   });
 });
+
+// ============================================================
+// ARC-POSITION WEIGHTING
+// ============================================================
+
+describe('arc-position weighting', () => {
+  // These mirror the constants in selectBeat.ts
+  const LATE_BEATS = new Set([
+    'unraveling_control',
+    'moonlit_surrender',
+    'venomous_affection',
+    'eternal_game',
+    'ancient_claim',
+  ]);
+
+  const BREATHING_BEATS = new Set(['afterglow', 'wound_tending', 'vulnerable_confession']);
+
+  it('never returns a late-escalation beat for chapters 1-5 (runs 20 times)', () => {
+    for (let i = 0; i < 20; i++) {
+      const beat = selectBeat('single_couple', undefined, false, 3);
+      expect(LATE_BEATS.has(beat.code)).toBe(false);
+    }
+  });
+
+  it('never returns a decompression beat as the first chapter', () => {
+    for (let i = 0; i < 20; i++) {
+      const beat = selectBeat('single_couple', undefined, false, 1);
+      expect(BREATHING_BEATS.has(beat.code)).toBe(false);
+    }
+  });
+
+  it('can return any beat type in the middle arc (chapter 8) — at least 2 distinct codes over 30 runs', () => {
+    const codes = new Set<string>();
+    for (let i = 0; i < 30; i++) {
+      const beat = selectBeat('single_couple', undefined, false, 8);
+      codes.add(beat.code);
+    }
+    // Randomness should produce at least 2 distinct beat codes across 30 runs
+    expect(codes.size).toBeGreaterThanOrEqual(2);
+  });
+});
