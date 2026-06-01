@@ -127,7 +127,9 @@ export type Database = {
     Functions: {
       increment_generation_count: { Args: { p_limit: number; p_user_id: string }; Returns: boolean }
       owns_arc: { Args: { p_arc: string }; Returns: boolean }
-      publish_chapter: { Args: { p_chapter_id: string }; Returns: undefined }
+      publish_chapter: { Args: { p_chapter_id: string }; Returns: void }
+      try_reserve_generation_slot: { Args: { p_user_id: string; p_limit: number }; Returns: boolean }
+      refund_generation_slot: { Args: { p_user_id: string }; Returns: void }
     }
     Enums: { [_ in never]: never }
     CompositeTypes: { [_ in never]: never }

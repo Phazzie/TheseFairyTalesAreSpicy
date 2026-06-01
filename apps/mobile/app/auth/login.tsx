@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Platform,
   ScrollView,
   ActivityIndicator,
+  TextInput,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -42,6 +43,7 @@ function getAuthErrorMessage(error: unknown): string {
 export default function LoginScreen() {
   const [authError, setAuthError] = useState<string | null>(null);
   const [resetMessage, setResetMessage] = useState<string | null>(null);
+  const passwordRef = useRef<TextInput>(null);
 
   const {
     control,
@@ -135,6 +137,8 @@ export default function LoginScreen() {
                   autoCorrect={false}
                   placeholder="you@example.com"
                   error={errors.email?.message}
+                  returnKeyType="next"
+                  onSubmitEditing={() => passwordRef.current?.focus()}
                 />
               )}
             />
@@ -147,6 +151,7 @@ export default function LoginScreen() {
               name="password"
               render={({ field: { onChange, onBlur, value } }) => (
                 <Input
+                  ref={passwordRef}
                   label="Password"
                   value={value}
                   onChangeText={onChange}
@@ -155,6 +160,8 @@ export default function LoginScreen() {
                   autoCapitalize="none"
                   placeholder="Your password"
                   error={errors.password?.message}
+                  returnKeyType="done"
+                  onSubmitEditing={handleSubmit(onSubmit)}
                 />
               )}
             />
@@ -171,6 +178,8 @@ export default function LoginScreen() {
             onPress={handleSubmit(onSubmit)}
             disabled={isSubmitting}
             activeOpacity={0.8}
+            accessibilityRole="button"
+            accessibilityState={{ disabled: isSubmitting }}
           >
             {isSubmitting ? (
               <ActivityIndicator color="#ffffff" />

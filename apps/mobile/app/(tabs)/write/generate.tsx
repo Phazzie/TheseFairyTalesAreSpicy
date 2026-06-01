@@ -75,6 +75,8 @@ export default function GenerateScreen() {
           onPress={() => router.back()}
           className="mr-3 w-9 h-9 items-center justify-center"
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          accessibilityRole="button"
+          accessibilityLabel="Go back"
         >
           <Text className="text-gray-400 text-xl">‹</Text>
         </TouchableOpacity>

@@ -25,7 +25,10 @@ export function Slider({ label, value, min, max, onChange, valueLabel }: SliderP
   return (
     <View className="w-full">
       <Text className="text-gray-300 text-sm font-medium mb-2">{label}</Text>
-      <View className="flex-row items-center justify-between bg-gray-900 border border-gray-700 rounded-xl p-1">
+      <View
+        className="flex-row items-center justify-between bg-gray-900 border border-gray-700 rounded-xl p-1"
+        accessibilityValue={{ now: value, min: min, max: max }}
+      >
         <TouchableOpacity
           onPress={decrement}
           disabled={!canDecrement}
@@ -33,6 +36,8 @@ export function Slider({ label, value, min, max, onChange, valueLabel }: SliderP
             canDecrement ? 'bg-gray-700' : 'bg-gray-800'
           }`}
           activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel={`Decrease ${label}, currently ${value}`}
         >
           <Text
             className={`text-xl font-bold ${canDecrement ? 'text-white' : 'text-gray-600'}`}
@@ -55,6 +60,8 @@ export function Slider({ label, value, min, max, onChange, valueLabel }: SliderP
             canIncrement ? 'bg-brand-purple' : 'bg-gray-800'
           }`}
           activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel={`Increase ${label}, currently ${value}`}
         >
           <Text
             className={`text-xl font-bold ${canIncrement ? 'text-white' : 'text-gray-600'}`}

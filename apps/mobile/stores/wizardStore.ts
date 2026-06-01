@@ -98,6 +98,13 @@ const DEFAULT_STATE = {
   creatureAbilities: '',
 };
 
+function getDefaultSecondarySense(primary: string): string {
+  const ORDER = ['visual', 'tactile', 'auditory', 'olfactory'];
+  const idx = ORDER.indexOf(primary);
+  // Pick the next sense in the rotation (wraps around)
+  return ORDER[(idx + 1) % ORDER.length] ?? 'tactile';
+}
+
 export const useWizardStore = create<WizardState>()(
   persist(
     (set, get) => ({
@@ -133,7 +140,7 @@ export const useWizardStore = create<WizardState>()(
       pacingRhythm: s.pacingRhythm,
       atmosphereArchetype: s.atmosphereArchetype ?? 'contemporary_urban',
       defaultSensePrimary: s.sensoryPrimary,
-      defaultSenseSecondary: s.sensoryPrimary === 'visual' ? 'tactile' : 'visual',
+      defaultSenseSecondary: getDefaultSecondarySense(s.sensoryPrimary),
       dialogueRatioPct: 40, // default
       hookDensity: 'medium' as const, // default
       sceneCountDefault: 1 as const, // default

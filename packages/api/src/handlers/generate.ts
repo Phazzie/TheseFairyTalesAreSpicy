@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import { z } from 'zod';
 import { validate } from '../middleware/validate.js';
+import { generateSchema, EMOTIONAL_ARC_VALUES, CLIFFHANGER_TYPE_VALUES } from '../schemas.js';
 import { authMiddleware, type Variables } from '../middleware/auth.js';
 import {
   assembleSystemPrompt,
@@ -22,16 +22,6 @@ import { generateStoryStreaming, generateSummary } from '../clients/grok.js';
 
 export const config = { runtime: 'edge' };
 
-const generateSchema = z.object({
-  arcId: z.string().uuid(),
-  chapterNumber: z.number().int().positive(),
-  spiceLevelOverride: z.number().min(1).max(5).optional(),
-  emotionalArcOverride: z.string().optional(),
-  cliffhangerTypeOverride: z.string().optional(),
-  wordCountOverride: z.number().min(200).max(5000).optional(),
-  userCreativeDirection: z.string().max(200).optional(),
-  pilotMode: z.boolean().optional(),
-}).strict();
 
 export const generateApp = new Hono<{ Variables: Variables }>();
 
@@ -60,6 +50,10 @@ generateApp.post('/', authMiddleware, validate(generateSchema), async (c) => {
     arcContext = await assembleArcContext(body.arcId, user.id, c.req.header('Authorization')?.slice(7));
   } catch (err) {
     console.error('[generate] assembleArcContext failed:', err);
+    // Refund the slot — the generation never started
+    void refundGenerationSlot(user.id).catch(e =>
+      console.error('[generate] Failed to refund slot after 404:', e)
+    );
     return c.json({ error: 'not_found', message: 'Arc not found' }, 404);
   }
 

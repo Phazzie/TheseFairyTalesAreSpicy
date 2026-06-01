@@ -84,7 +84,7 @@ export function ChapterCard({
           </View>
         </View>
 
-        <Text className="text-gray-600 text-xl self-center">›</Text>
+        <Text className="text-gray-600 text-xl self-center" accessible={false}>›</Text>
       </View>
     </Card>
   );

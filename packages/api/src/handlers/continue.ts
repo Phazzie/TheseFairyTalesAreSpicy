@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { z } from 'zod';
 import { validate } from '../middleware/validate.js';
+import { EMOTIONAL_ARC_VALUES, CLIFFHANGER_TYPE_VALUES } from '../schemas.js';
 import { authMiddleware, type Variables } from '../middleware/auth.js';
 import {
   assembleContinuationPrompt,
@@ -27,8 +28,8 @@ const continueSchema = z.object({
   chapterNumber: z.number().int().positive(),
   priorChapterId: z.string().uuid(),
   spiceLevelOverride: z.number().min(1).max(5).optional(),
-  emotionalArcOverride: z.string().optional(),
-  cliffhangerTypeOverride: z.string().optional(),
+  emotionalArcOverride: z.enum(EMOTIONAL_ARC_VALUES).optional(),
+  cliffhangerTypeOverride: z.enum(CLIFFHANGER_TYPE_VALUES).optional(),
   wordCountOverride: z.number().min(200).max(5000).optional(),
   userCreativeDirection: z.string().max(200).optional(),
   pilotMode: z.boolean().optional(),
@@ -61,6 +62,10 @@ continueApp.post('/', authMiddleware, validate(continueSchema), async (c) => {
     arcContext = await assembleArcContext(body.arcId, user.id, c.req.header('Authorization')?.slice(7));
   } catch (err) {
     console.error('[continue] assembleArcContext failed:', err);
+    // Refund the slot — the generation never started
+    void refundGenerationSlot(user.id).catch(e =>
+      console.error('[continue] Failed to refund slot after 404:', e)
+    );
     return c.json({ error: 'not_found', message: 'Arc not found' }, 404);
   }
 

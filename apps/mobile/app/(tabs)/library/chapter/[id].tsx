@@ -187,6 +187,8 @@ export default function ChapterDetailScreen() {
           onPress={() => router.back()}
           className="flex-row items-center gap-1"
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          accessibilityRole="button"
+          accessibilityLabel="Go back"
         >
           <Text className="text-gray-400 text-xl">‹</Text>
           <Text className="text-gray-400 text-sm">Library</Text>

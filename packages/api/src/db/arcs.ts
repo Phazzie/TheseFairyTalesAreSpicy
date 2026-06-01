@@ -1,4 +1,4 @@
-import type { ArcSettings } from '@story/engine';
+import type { ArcSettings, SpiceLevel } from '@story/engine';
 import { adminClient } from './supabase.js';
 import type { Database } from './database.types.js';
 
@@ -40,6 +40,28 @@ export type CreateArcInput = {
 export type UpdateArcInput = Partial<Omit<CreateArcInput, 'userId'>>;
 
 // ============================================================
+// RANGE GUARDS
+// ============================================================
+
+function assertSpiceLevel(value: number): SpiceLevel {
+  if (value >= 1 && value <= 5) return value as SpiceLevel;
+  console.warn(`[db/arcs] Invalid spice_level ${value} — defaulting to 2`);
+  return 2;
+}
+
+function assertSceneCount(value: number): ArcSettings['sceneCountDefault'] {
+  if (value === 1 || value === 2 || value === 3) return value as ArcSettings['sceneCountDefault'];
+  console.warn(`[db/arcs] Invalid scene_count_default ${value} — defaulting to 2`);
+  return 2;
+}
+
+function assertDialogueRatioPct(value: number): number {
+  if (value >= 10 && value <= 90) return value;
+  console.warn(`[db/arcs] Invalid dialogue_ratio_pct ${value} — defaulting to 50`);
+  return 50;
+}
+
+// ============================================================
 // MAPPERS
 // ============================================================
 
@@ -51,15 +73,15 @@ function dbRowToArcSettings(row: ArcRow): ArcSettings {
     creatureType: row.creature_type,
     arcType: row.arc_type,
     themes: row.themes,
-    defaultSpiceLevel: row.default_spice_level as ArcSettings['defaultSpiceLevel'],
+    defaultSpiceLevel: assertSpiceLevel(row.default_spice_level),
     povMode: row.pov_mode,
     tense: row.tense,
     narrativeDistance: row.narrative_distance,
     readingLevel: row.reading_level,
-    dialogueRatioPct: row.dialogue_ratio_pct,
+    dialogueRatioPct: assertDialogueRatioPct(row.dialogue_ratio_pct),
     hookDensity: row.hook_density,
     pacingRhythm: row.pacing_rhythm,
-    sceneCountDefault: row.scene_count_default as ArcSettings['sceneCountDefault'],
+    sceneCountDefault: assertSceneCount(row.scene_count_default),
     atmosphereArchetype: row.atmosphere_archetype as ArcSettings['atmosphereArchetype'],
     defaultSensoryPrimary: row.default_sense_primary,
     defaultSensorySecondary: row.default_sense_secondary,

@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import { z } from 'zod';
 import { validate } from '../middleware/validate.js';
+import { createArcSchema, updateArcSchema } from '../schemas.js';
 import { authMiddleware, type Variables } from '../middleware/auth.js';
 import {
   getArc,
@@ -15,61 +15,6 @@ import {
 import { getProfile } from '../db/profiles.js';
 import { createCharacter } from '../db/characters.js';
 import { adminClient } from '../db/supabase.js';
-
-// ============================================================
-// SCHEMAS
-// ============================================================
-
-const characterSchema = z.object({
-  displayName: z.string(),
-  species: z.enum(['human', 'vampire', 'werewolf', 'fairy']).default('human'),
-  statedDesire: z.string().optional(),
-  hiddenNeed: z.string().optional(),
-  wound: z.string().optional(),
-  flaw: z.string().optional(),
-  lie: z.string().optional(),
-}).strict();
-
-const creatureLoreSchema = z.object({
-  rules: z.array(z.string()).optional(),
-  weaknesses: z.array(z.string()).optional(),
-  abilities: z.array(z.string()).optional(),
-  societyNotes: z.string().optional(),
-}).strict();
-
-const arcBaseSchema = z.object({
-  title: z.string().max(200).optional(),
-  creatureType: z.enum(['vampire', 'werewolf', 'fairy']),
-  arcType: z.string(),
-  themes: z.array(z.string()).min(1).max(10),
-  defaultSpiceLevel: z.number().int().min(1).max(5),
-  povMode: z.enum(['first_person', 'third_limited', 'third_omniscient', 'rotating']),
-  tense: z.enum(['past', 'present']),
-  narrativeDistance: z.string(),
-  readingLevel: z.string(),
-  dialogueRatioPct: z.number().min(0).max(100),
-  hookDensity: z.string(),
-  pacingRhythm: z.string(),
-  sceneCountDefault: z.number().int().min(1).max(10),
-  atmosphereArchetype: z.string(),
-  defaultSensePrimary: z.string(),
-  defaultSenseSecondary: z.string(),
-  recurringMotif: z.string().max(200).optional(),
-  genreBlendPrimary: z.string(),
-  genreBlendSecondary: z.string().optional(),
-  genreBlendRatio: z.number().int().min(50).max(100).optional().default(80),
-  toneAllowance: z.string(),
-  isQuickStart: z.boolean().optional(),
-  coverImageUrl: z.string().url().startsWith('https://').optional(),
-});
-
-const createArcSchema = arcBaseSchema.extend({
-  protagonist: characterSchema.optional(),
-  loveInterest: characterSchema.optional(),
-  creatureLore: creatureLoreSchema.optional(),
-}).strict();
-
-const updateArcSchema = arcBaseSchema.partial().strict();
 
 // ============================================================
 // CONSTANTS

@@ -61,6 +61,8 @@ export function Button({
       className={containerClass}
       disabled={isDisabled}
       activeOpacity={0.75}
+      accessibilityRole="button"
+      accessibilityState={{ disabled: isDisabled }}
       {...props}
     >
       {loading ? (

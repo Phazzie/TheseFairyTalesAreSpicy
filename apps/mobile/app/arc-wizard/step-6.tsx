@@ -101,6 +101,7 @@ export default function WizardStep6() {
             placeholder="e.g. To expose the vampire court's corruption"
             helpText="Her stated desire — what she says she wants."
             multiline
+            blurOnSubmit={false}
             style={{ minHeight: 64, textAlignVertical: 'top' }}
           />
 
@@ -111,6 +112,7 @@ export default function WizardStep6() {
             placeholder="e.g. To trust someone again after being betrayed"
             helpText="Her hidden need — what would truly fulfill her."
             multiline
+            blurOnSubmit={false}
             style={{ minHeight: 64, textAlignVertical: 'top' }}
           />
 
@@ -121,6 +123,7 @@ export default function WizardStep6() {
             placeholder="e.g. Lost her mother to a vampire attack at age 12"
             helpText="The backstory trauma that drives her behavior."
             multiline
+            blurOnSubmit={false}
             style={{ minHeight: 64, textAlignVertical: 'top' }}
           />
 
@@ -131,6 +134,7 @@ export default function WizardStep6() {
             placeholder="e.g. Pushes people away when she starts to care"
             helpText="The active flaw that creates conflict."
             multiline
+            blurOnSubmit={false}
             style={{ minHeight: 64, textAlignVertical: 'top' }}
           />
 
@@ -141,6 +145,7 @@ export default function WizardStep6() {
             placeholder="e.g. I don't deserve to be loved"
             helpText="The false belief she holds about herself."
             multiline
+            blurOnSubmit={false}
             style={{ minHeight: 64, textAlignVertical: 'top' }}
           />
         </ScrollView>

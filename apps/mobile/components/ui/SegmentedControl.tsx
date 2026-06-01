@@ -22,7 +22,10 @@ export function SegmentedControl({
   scrollable = false,
 }: SegmentedControlProps) {
   const inner = (
-    <View className="flex-row bg-gray-900 border border-gray-700 rounded-xl p-1 gap-1">
+    <View
+      className="flex-row bg-gray-900 border border-gray-700 rounded-xl p-1 gap-1"
+      accessibilityRole="radiogroup"
+    >
       {options.map((opt) => {
         const isSelected = opt.value === value;
         return (
@@ -33,6 +36,9 @@ export function SegmentedControl({
               isSelected ? 'bg-brand-purple' : 'bg-gray-800'
             }`}
             activeOpacity={0.7}
+            accessibilityRole="radio"
+            accessibilityState={{ selected: opt.value === value }}
+            accessibilityLabel={opt.label}
           >
             <Text
               className={`text-xs font-semibold text-center ${
