@@ -17,6 +17,8 @@ import { SPICE_LEVEL_LABELS } from '../../../../lib/constants.js';
 import { useUIStore } from '../../../../stores/uiStore.js';
 import { supabase } from '../../../../lib/supabase.js';
 
+const SCROLL_CONTENT_STYLE = { paddingHorizontal: 24, paddingBottom: 60 } as const;
+
 interface ChapterRecord {
   id: string;
   arc_id: string;
@@ -162,7 +164,10 @@ export default function ChapterDetailScreen() {
     }
   }
 
+  const [discarding, setDiscarding] = useState(false);
+
   async function handleDiscardDraft() {
+    setDiscarding(true);
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) return;
@@ -176,6 +181,8 @@ export default function ChapterDetailScreen() {
       router.back();
     } catch {
       // silently fall back
+    } finally {
+      setDiscarding(false);
     }
   }
 
@@ -214,7 +221,7 @@ export default function ChapterDetailScreen() {
 
       <ScrollView
         className="flex-1"
-        contentContainerStyle={{ paddingHorizontal: 24, paddingBottom: 60 }}
+        contentContainerStyle={SCROLL_CONTENT_STYLE}
         showsVerticalScrollIndicator={false}
       >
         {/* Chapter number */}
@@ -283,7 +290,7 @@ export default function ChapterDetailScreen() {
               <Button variant="primary" onPress={() => { void handlePublishDraft(); }} loading={publishing} size="lg" className="w-full">
                 Publish This Version
               </Button>
-              <Button variant="destructive" onPress={() => { void handleDiscardDraft(); }} size="md" className="w-full">
+              <Button variant="destructive" onPress={() => { void handleDiscardDraft(); }} disabled={discarding} loading={discarding} size="md" className="w-full">
                 Discard Draft
               </Button>
             </View>

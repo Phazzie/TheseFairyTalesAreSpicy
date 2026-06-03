@@ -1,6 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '../lib/supabase.js';
 
+/** Narrower type for fields that can be updated on a plot thread. */
+export type PlotThreadUpdate = Pick<PlotThreadRecord, 'status' | 'resolved_in_chapter'>;
+
 /** Matches the actual plot_threads DB columns. */
 export interface PlotThreadRecord {
   id: string;
@@ -86,10 +89,7 @@ export function useResolveThread() {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async ({ threadId, arcId, resolvedChapter }: ResolveThreadInput) => {
-      const updatePayload: Partial<PlotThreadRecord> = { status: 'resolved' };
-      if (resolvedChapter !== undefined) {
-        updatePayload.resolved_in_chapter = resolvedChapter;
-      }
+      const updatePayload: PlotThreadUpdate = { status: 'resolved', resolved_in_chapter: resolvedChapter ?? null };
       const { data, error } = await supabase
         .from('plot_threads')
         .update(updatePayload)

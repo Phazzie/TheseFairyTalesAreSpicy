@@ -45,7 +45,8 @@ export default function WriteIndexScreen() {
   React.useEffect(() => {
     if (!currentArcId && arcs && arcs.length > 0) {
       const firstArc = arcs[0] as Record<string, unknown>;
-      setCurrentArcId(firstArc.id as string);
+      const arcId = firstArc?.id;
+      if (arcId) setCurrentArcId(arcId as string);
     }
   }, [arcs, currentArcId, setCurrentArcId]);
 
@@ -119,7 +120,7 @@ export default function WriteIndexScreen() {
         {/* Header */}
         <View className="gap-1">
           <TouchableOpacity
-            onPress={() => useAuthStore.getState().signOut()}
+            onPress={() => { void useAuthStore.getState().signOut().catch(e => console.error('Sign out failed:', e)); }}
             className="absolute top-4 right-4 p-2"
             accessibilityLabel="Sign out"
           >

@@ -64,6 +64,7 @@ function ThreadCard({ thread, onTap }: ThreadCardProps) {
     <TouchableOpacity
       onPress={onTap}
       activeOpacity={0.75}
+      accessibilityRole="button"
       className={`bg-gray-900/80 rounded-xl p-4 mb-3 ${borderClass}`}
     >
       <View className="flex-row items-start justify-between gap-2">

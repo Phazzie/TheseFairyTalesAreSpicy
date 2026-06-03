@@ -110,7 +110,7 @@ export async function* continueChapter(
     userCreativeDirection?: string;
   },
   signal?: AbortSignal,
-): AsyncGenerator<{ type: 'token'; content: string } | { type: 'complete'; chapterId: string; title: string }> {
+): AsyncGenerator<{ type: 'token'; content: string } | { type: 'complete'; chapterId: string; title: string } | { type: 'error'; message: string }> {
   const headers = await getAuthHeaders();
   const response = await fetch(`${API_BASE}/api/continue`, {
     method: 'POST',
@@ -139,7 +139,7 @@ export async function* continueChapter(
       if (!line.startsWith('data: ')) continue;
       const data = line.slice(6);
       if (data === '[DONE]') return;
-      try { yield JSON.parse(data) as { type: 'token'; content: string } | { type: 'complete'; chapterId: string; title: string }; }
+      try { yield JSON.parse(data) as { type: 'token'; content: string } | { type: 'complete'; chapterId: string; title: string } | { type: 'error'; message: string }; }
       catch { /* skip malformed */ }
     }
   }

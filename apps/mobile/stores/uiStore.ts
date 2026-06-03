@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { WIZARD_TOTAL_STEPS } from '../lib/constants.js';
 
 interface UIState {
   activeTab: 'write' | 'bible' | 'threads' | 'library';
@@ -18,7 +19,7 @@ export const useUIStore = create<UIState>((set) => ({
   showUpgradeSheet: false,
   setActiveTab: (activeTab) => set({ activeTab }),
   setWizardStep: (wizardStep) => set({ wizardStep }),
-  nextWizardStep: () => set((state) => ({ wizardStep: state.wizardStep + 1 })),
+  nextWizardStep: () => set((state) => ({ wizardStep: Math.min(state.wizardStep + 1, WIZARD_TOTAL_STEPS) })),
   prevWizardStep: () => set((state) => ({ wizardStep: Math.max(1, state.wizardStep - 1) })),
   openUpgradeSheet: () => set({ showUpgradeSheet: true }),
   closeUpgradeSheet: () => set({ showUpgradeSheet: false }),

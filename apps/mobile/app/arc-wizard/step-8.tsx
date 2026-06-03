@@ -31,7 +31,22 @@ function SummaryRow({ label, value }: { label: string; value?: string }) {
 
 export default function WizardStep8() {
   const router = useRouter();
-  const wizard = useWizardStore();
+  const creatureType = useWizardStore((s) => s.creatureType);
+  const spiceLevel = useWizardStore((s) => s.spiceLevel);
+  const tense = useWizardStore((s) => s.tense);
+  const povMode = useWizardStore((s) => s.povMode);
+  const pacingRhythm = useWizardStore((s) => s.pacingRhythm);
+  const protagonistName = useWizardStore((s) => s.protagonistName);
+  const protagonistSpecies = useWizardStore((s) => s.protagonistSpecies);
+  const loveInterestName = useWizardStore((s) => s.loveInterestName);
+  const loveInterestSpecies = useWizardStore((s) => s.loveInterestSpecies);
+  const themes = useWizardStore((s) => s.themes);
+  const creatureRules = useWizardStore((s) => s.creatureRules);
+  const creatureWeaknesses = useWizardStore((s) => s.creatureWeaknesses);
+  const creatureAbilities = useWizardStore((s) => s.creatureAbilities);
+  const setField = useWizardStore((s) => s.setField);
+  const resetWizard = useWizardStore((s) => s.reset);
+  const toArcInsert = useWizardStore((s) => s.toArcInsert);
   const prevWizardStep = useUIStore((s) => s.prevWizardStep);
   const setWizardStep = useUIStore((s) => s.setWizardStep);
   const setCurrentArcId = useArcStore((s) => s.setCurrentArcId);
@@ -48,17 +63,17 @@ export default function WizardStep8() {
   const handleCreate = async () => {
     setError(null);
     const payload = {
-      ...wizard.toArcInsert(),
+      ...toArcInsert(),
       title:
         arcTitle.trim() ||
-        `${wizard.protagonistName || 'Untitled'} & ${wizard.loveInterestName || 'Unknown'}`,
+        `${protagonistName || 'Untitled'} & ${loveInterestName || 'Unknown'}`,
     };
 
     try {
       const newArc = await createArc.mutateAsync(payload);
       const arcRecord = newArc as Record<string, unknown>;
       setCurrentArcId(arcRecord.id as string);
-      wizard.reset();
+      resetWizard();
       setWizardStep(1);
       // Small delay to allow store updates to propagate before routing
       setTimeout(() => {
@@ -103,7 +118,7 @@ export default function WizardStep8() {
             label="Arc Title (optional)"
             value={arcTitle}
             onChangeText={setArcTitle}
-            placeholder={`${wizard.protagonistName || 'Elara'} & ${wizard.loveInterestName || 'Caspian'}`}
+            placeholder={`${protagonistName || 'Elara'} & ${loveInterestName || 'Caspian'}`}
             helpText="Leave blank to auto-generate from character names."
           />
 
@@ -111,11 +126,11 @@ export default function WizardStep8() {
           <Card className="gap-3">
             <Text className="text-white text-base font-semibold mb-1">Story Summary</Text>
 
-            {wizard.creatureType ? (
+            {creatureType ? (
               <View className="flex-row items-center gap-2">
                 <Text className="text-gray-500 text-sm w-28">Creature</Text>
                 <Badge
-                  label={CREATURE_LABELS[wizard.creatureType] ?? wizard.creatureType}
+                  label={CREATURE_LABELS[creatureType] ?? creatureType}
                   variant="creature"
                 />
               </View>
@@ -123,33 +138,33 @@ export default function WizardStep8() {
 
             <SummaryRow
               label="Spice Level"
-              value={SPICE_LEVEL_LABELS[wizard.spiceLevel]}
+              value={SPICE_LEVEL_LABELS[spiceLevel]}
             />
-            <SummaryRow label="Tense" value={wizard.tense} />
-            <SummaryRow label="POV" value={wizard.povMode.replace(/_/g, ' ')} />
-            <SummaryRow label="Pacing" value={wizard.pacingRhythm.replace(/_/g, ' ')} />
+            <SummaryRow label="Tense" value={tense} />
+            <SummaryRow label="POV" value={povMode.replace(/_/g, ' ')} />
+            <SummaryRow label="Pacing" value={pacingRhythm.replace(/_/g, ' ')} />
             <SummaryRow
               label="Protagonist"
               value={
-                wizard.protagonistName
-                  ? `${wizard.protagonistName} (${wizard.protagonistSpecies})`
+                protagonistName
+                  ? `${protagonistName} (${protagonistSpecies})`
                   : undefined
               }
             />
             <SummaryRow
               label="Love Interest"
               value={
-                wizard.loveInterestName
-                  ? `${wizard.loveInterestName} (${wizard.loveInterestSpecies})`
+                loveInterestName
+                  ? `${loveInterestName} (${loveInterestSpecies})`
                   : undefined
               }
             />
 
-            {wizard.themes.length > 0 ? (
+            {themes.length > 0 ? (
               <View className="gap-1">
                 <Text className="text-gray-500 text-sm">Themes</Text>
                 <View className="flex-row flex-wrap gap-1">
-                  {wizard.themes.map((t) => (
+                  {themes.map((t) => (
                     <Badge key={t} label={t} variant="theme" />
                   ))}
                 </View>
@@ -167,8 +182,8 @@ export default function WizardStep8() {
 
           <Input
             label="Rules"
-            value={wizard.creatureRules}
-            onChangeText={(v) => wizard.setField('creatureRules', v)}
+            value={creatureRules}
+            onChangeText={(v) => setField('creatureRules', v)}
             placeholder={"Cannot enter a home uninvited\nBurns in direct sunlight"}
             multiline
             numberOfLines={4}
@@ -177,8 +192,8 @@ export default function WizardStep8() {
 
           <Input
             label="Weaknesses"
-            value={wizard.creatureWeaknesses}
-            onChangeText={(v) => wizard.setField('creatureWeaknesses', v)}
+            value={creatureWeaknesses}
+            onChangeText={(v) => setField('creatureWeaknesses', v)}
             placeholder={"Silver\nRunning water\nHoly symbols"}
             multiline
             numberOfLines={4}
@@ -187,8 +202,8 @@ export default function WizardStep8() {
 
           <Input
             label="Abilities"
-            value={wizard.creatureAbilities}
-            onChangeText={(v) => wizard.setField('creatureAbilities', v)}
+            value={creatureAbilities}
+            onChangeText={(v) => setField('creatureAbilities', v)}
             placeholder={"Compulsion\nShapeshift\nHeightened senses"}
             multiline
             numberOfLines={4}
@@ -213,7 +228,7 @@ export default function WizardStep8() {
             size="lg"
             onPress={handleCreate}
             loading={createArc.isPending}
-            disabled={!wizard.creatureType || !wizard.protagonistName}
+            disabled={!creatureType || !protagonistName}
             style={{ flex: 2 }}
           >
             Create Arc

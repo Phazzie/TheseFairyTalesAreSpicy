@@ -69,12 +69,15 @@ export function useGeneration() {
                 const newChapter: Record<string, unknown> = {
                   id: completeEvent.chapterId,
                   arc_id: params.arcId,
-                  chapter_number: params.chapterNumber,
-                  title: completeEvent.title,
+                  chapter_number: Number(params.chapterNumber ?? 1),
+                  title: completeEvent.title ?? 'Untitled Chapter',
                   status: 'published',
-                  cliffhanger_type: completeEvent.cliffhangerType,
-                  word_count: completeEvent.wordCount,
+                  cliffhanger_type: completeEvent.cliffhangerType ?? 'none',
+                  word_count: completeEvent.wordCount ?? 0,
+                  spice_level_used: 2,
+                  generation_attempt: 1,
                   generated_at: new Date().toISOString(),
+                  content: '',
                 };
                 return old ? [...old, newChapter] : [newChapter];
               },

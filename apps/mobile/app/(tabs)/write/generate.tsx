@@ -14,6 +14,8 @@ import { GenerationPanel } from '../../../components/generation/GenerationPanel.
 import { StreamingText } from '../../../components/generation/StreamingText.js';
 import { Button } from '../../../components/ui/Button.js';
 
+const SCROLL_CONTENT_STYLE = { paddingBottom: 32, gap: 16 } as const;
+
 export default function GenerateScreen() {
   const router = useRouter();
   const params = useLocalSearchParams<{ arcId: string; chapterNumber: string; priorChapterId?: string }>();
@@ -93,7 +95,7 @@ export default function GenerateScreen() {
       <ScrollView
         className="flex-1 px-5"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 32, gap: 16 }}
+        contentContainerStyle={SCROLL_CONTENT_STYLE}
         keyboardShouldPersistTaps="handled"
       >
         {/* Generation panel — hidden while generating or streaming, shown when showForm=true */}
@@ -122,7 +124,11 @@ export default function GenerateScreen() {
 
         {/* Waiting for first token — show a loading indicator so it doesn't look like a crash */}
         {waitingForFirstToken && (
-          <View className="flex-1 items-center justify-center px-8">
+          <View
+            className="flex-1 items-center justify-center px-8"
+            accessibilityLiveRegion="polite"
+            accessibilityLabel="Generating your chapter, please wait"
+          >
             <ActivityIndicator color="#7c3aed" size="large" />
             <Text className="text-gray-400 text-sm mt-4 text-center">
               Conjuring your story…{'\n'}This typically takes 30–60 seconds.
@@ -149,7 +155,10 @@ export default function GenerateScreen() {
 
         {/* Post-generation success state — prominent centered banner */}
         {generationComplete && !isGenerating ? (
-          <View className="flex-1 items-center justify-center px-8 py-12">
+          <View
+            className="flex-1 items-center justify-center px-8 py-12"
+            accessibilityLiveRegion="assertive"
+          >
             <Text className="text-5xl mb-4">✨</Text>
             <Text className="text-white text-xl font-bold mb-2">
               {completedTitle ?? 'Chapter saved!'}

@@ -21,7 +21,7 @@ export default function BibleIndexScreen() {
   const router = useRouter();
   const currentArcId = useArcStore((s) => s.currentArcId);
   const setCurrentArcId = useArcStore((s) => s.setCurrentArcId);
-  const { data: arcs } = useArcs();
+  const { data: arcs, isLoading: arcsLoading, error: arcsError } = useArcs();
   const { data, isLoading, error, refetch } = useArcWithDetails(currentArcId);
   const [refreshing, setRefreshing] = useState(false);
   const [showBibleCard, setShowBibleCard] = useState(false);
@@ -102,7 +102,7 @@ export default function BibleIndexScreen() {
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#7c3aed" />}
       >
         {/* Arc Switcher */}
-        {arcs && arcs.length > 1 && (
+        {!arcsLoading && !arcsError && arcs && arcs.length > 1 && (
           <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-2 -mx-5 px-5">
             <View className="flex-row gap-2">
               {arcs.map((a) => {
@@ -111,6 +111,8 @@ export default function BibleIndexScreen() {
                   <TouchableOpacity
                     key={arcItem.id as string}
                     onPress={() => setCurrentArcId(arcItem.id as string)}
+                    accessibilityRole="radio"
+                    accessibilityState={{ selected: arcItem.id === currentArcId }}
                     className={`px-3 py-1.5 rounded-full border ${
                       arcItem.id === currentArcId
                         ? 'bg-brand-purple border-brand-purple'
@@ -230,7 +232,7 @@ export default function BibleIndexScreen() {
             <Card className="gap-3">
               {creatureLore ? (
                 <>
-                  {creatureLore.rules && (creatureLore.rules as string[]).length > 0 ? (
+                  {Array.isArray(creatureLore.rules) && creatureLore.rules.length > 0 ? (
                     <View>
                       <Text className="text-gray-500 text-xs uppercase tracking-wide mb-1">
                         Rules
@@ -242,7 +244,7 @@ export default function BibleIndexScreen() {
                       ))}
                     </View>
                   ) : null}
-                  {creatureLore.weaknesses && (creatureLore.weaknesses as string[]).length > 0 ? (
+                  {Array.isArray(creatureLore.weaknesses) && creatureLore.weaknesses.length > 0 ? (
                     <View>
                       <Text className="text-gray-500 text-xs uppercase tracking-wide mb-1">
                         Weaknesses
@@ -254,7 +256,7 @@ export default function BibleIndexScreen() {
                       ))}
                     </View>
                   ) : null}
-                  {creatureLore.abilities && (creatureLore.abilities as string[]).length > 0 ? (
+                  {Array.isArray(creatureLore.abilities) && creatureLore.abilities.length > 0 ? (
                     <View>
                       <Text className="text-gray-500 text-xs uppercase tracking-wide mb-1">
                         Abilities
@@ -266,7 +268,7 @@ export default function BibleIndexScreen() {
                       ))}
                     </View>
                   ) : null}
-                  {!creatureLore.rules && !creatureLore.weaknesses && !creatureLore.abilities ? (
+                  {!Array.isArray(creatureLore.rules) && !Array.isArray(creatureLore.weaknesses) && !Array.isArray(creatureLore.abilities) ? (
                     <Text className="text-gray-600 text-sm italic">
                       No lore defined yet.
                     </Text>
